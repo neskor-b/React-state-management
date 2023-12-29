@@ -3,55 +3,43 @@ import { createBrowserRouter } from "react-router-dom";
 
 // pages
 import App  from "apps/App";
-import ReduxConnect from "apps/ReduxConnect";
-import ReduxHooks from "apps/ReduxHooks";
-import ReduxToolkit from "apps/ReduxToolkit";
+import Redux from "apps/Redux";
 
 export const appsRoutes = [
     {
-        path: "/redux-connect",
-        name: 'Redux connect',
-        element: <ReduxConnect />
-    },
-    {
-        path: "/redux-hooks",
-        name: 'Redux hooks',
-        element: <ReduxHooks />
-    },
-    {
-        path: "/redux-toolkit",
-        name: 'Redux toolkit',
-        element: <ReduxToolkit />
+        path: "/redux",
+        name: 'Redux',
+        element: <Redux />
     },
     {
         path: "/Hookstate",
         name: 'Hookstate',
-        element: <ReduxToolkit />
+        element: <Redux />
     },
     {
         path: "/mobx",
         name: 'Mobx',
-        element: <ReduxToolkit />
+        element: <Redux />
     },
     {
         path: "/recoil",
         name: 'Recoil',
-        element: <ReduxToolkit />
+        element: <Redux />
     },
     {
         path: "/jotai",
         name: 'Jotai',
-        element: <ReduxToolkit />
+        element: <Redux />
     },
     {
         path: "/rematch",
         name: 'Rematch',
-        element: <ReduxToolkit />
+        element: <Redux />
     },
     {
         path: "/zustand",
         name: 'Zustand',
-        element: <ReduxToolkit />
+        element: <Redux />
     }
 ]
 

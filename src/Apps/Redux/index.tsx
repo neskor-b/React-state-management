@@ -1,11 +1,11 @@
 import React from 'react';
 
-const ReduxHooks = () => {
+const Redux = () => {
     return (
         <div>
-            ReduxHooks
+            Redux
         </div>
     );
 }
 
-export default ReduxHooks;
+export default Redux;
