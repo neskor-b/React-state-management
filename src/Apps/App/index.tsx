@@ -1,39 +1,19 @@
-import React, { FC, useState, useEffect } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import React, { FC } from "react";
+import { Outlet } from "react-router-dom";
 
-// data
-import { appsRoutes } from "router";
+// components
+import Navigation from "sharedComponents/Navigation";
 
 // UI
-import { Tabs, Tab, TabList, Box } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
-const App: FC = () => {
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
-    const [activeIndex, setActiveIndex] = useState(0);
-
-    const onPageChange = (index: number) => {
-        navigate(appsRoutes[index].path)
-    }
-
-    useEffect(() => {
-        appsRoutes.forEach((route, index) => {
-            if (route.path === pathname) {
-                setActiveIndex(index);
-            }
-        });
-    }, [pathname]);
-
-    return (
-        <Box pt={2}>
-            <Tabs index={activeIndex} onChange={onPageChange} isFitted variant='enclosed-colored'>
-                <TabList mb='1em'>
-                    {appsRoutes.map(page =>  <Tab aria-selected={false} key={page.name}>{page.name}</Tab>)}
-                </TabList>
-            </Tabs>
+const App: FC = () => (
+    <Box>
+        <Navigation />
+        <Box p={'25px'}>
             <Outlet />
         </Box>
-      );
-}
+    </Box>
+)
 
 export default App;

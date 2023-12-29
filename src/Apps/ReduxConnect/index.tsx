@@ -1,11 +1,11 @@
 import React from 'react';
 
 const ReduxConnect = () => {
-  return (
-    <div>
-      ReduxConnect
-    </div>
-  );
+    return (
+        <div>
+            ReduxConnect
+        </div>
+    );
 }
 
 export default ReduxConnect;

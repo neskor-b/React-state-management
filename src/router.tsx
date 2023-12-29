@@ -11,26 +11,56 @@ export const appsRoutes = [
     {
         path: "/redux-connect",
         name: 'Redux connect',
-        element: <ReduxConnect />,
+        element: <ReduxConnect />
     },
     {
         path: "/redux-hooks",
         name: 'Redux hooks',
-        element: <ReduxHooks />,
+        element: <ReduxHooks />
     },
     {
         path: "/redux-toolkit",
         name: 'Redux toolkit',
-        element: <ReduxToolkit />,
+        element: <ReduxToolkit />
     },
+    {
+        path: "/Hookstate",
+        name: 'Hookstate',
+        element: <ReduxToolkit />
+    },
+    {
+        path: "/mobx",
+        name: 'Mobx',
+        element: <ReduxToolkit />
+    },
+    {
+        path: "/recoil",
+        name: 'Recoil',
+        element: <ReduxToolkit />
+    },
+    {
+        path: "/jotai",
+        name: 'Jotai',
+        element: <ReduxToolkit />
+    },
+    {
+        path: "/rematch",
+        name: 'Rematch',
+        element: <ReduxToolkit />
+    },
+    {
+        path: "/zustand",
+        name: 'Zustand',
+        element: <ReduxToolkit />
+    }
 ]
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        children: appsRoutes,
-      },
+        children: appsRoutes
+    }
 ]);
 
 export default router;
