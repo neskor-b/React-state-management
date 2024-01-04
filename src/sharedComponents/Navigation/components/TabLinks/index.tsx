@@ -2,46 +2,49 @@ import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 
 // UI
-import { Tabs, Tab, TabList, Box, TabsProps, SystemStyleObject } from "@chakra-ui/react";
+import { Tabs, Tab, TabList, Box, useBreakpointValue } from "@chakra-ui/react";
+
+// data
+import { breakpointTabsProps } from "sharedComponents/Navigation/data";
+
+// types
+import { TBreakpointTabsProps } from "sharedComponents/Navigation/types";
 
 type TabLinksProps = {
     activeIndex: number,
-    routes: {
+    links: {
         path: string;
         name: string;
         key: string;
     }[],
-    tabsProps?: TabsProps;
-    tabStyles?: {
-        active?: SystemStyleObject,
-        hover?: SystemStyleObject,
-        inactive?: React.CSSProperties,
-    };
 }
 
-const TabLinks: FC<TabLinksProps> = ({ activeIndex, routes, tabsProps, tabStyles }) => {
+const TabLinks: FC<TabLinksProps> = ({ activeIndex, links }) => {
+    const responsive = useBreakpointValue<TBreakpointTabsProps>(breakpointTabsProps);
     return (
         <Box p={2}>
             <Tabs
                 index={activeIndex}
-                {...tabsProps}
+                {...responsive?.tabsProps}
             >
                 <TabList width={'100%'}>
-                    {routes.map(page => (
+                    {links.map(link => (
                         <Tab
-                            key={page.key}
-                            _selected={tabStyles?.active}
+                            key={link.key}
+                            _selected={responsive?.tabStyle?.active}
+                            _hover={{ color: 'blue.300' }}
                             padding={0}
-                            style={tabStyles?.inactive}
+                            style={responsive?.tabStyle?.inactive}
+                            cursor="pointer"
                         >
                             <NavLink 
-                                to={page.path} 
-                                key={page.key}
+                                to={link.path} 
+                                key={link.key}
                                 style={{ width: '100%', height: '100%', padding: 10 }}
-                                state={{ pageKey: page.key }}
+                                state={{ pageKey: link.key }}
 
                             >
-                                {page.name}
+                                {link.name}
                             </NavLink>
                         </Tab>
                     ))}

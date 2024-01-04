@@ -1,9 +1,7 @@
-import { TNavigationResponsiveTabsData } from "./types";
+import { TBreakpointTabsProps, TBreakpointNavigation } from "./types";
 
-export const navigationResponsiveTabsData: Record<string, TNavigationResponsiveTabsData> = {
+export const breakpointTabsProps: Record<string, TBreakpointTabsProps> = {
     md: {
-        showTabs: true,
-        showMenu: false,
         tabsProps: {
             isFitted: true,
             variant: 'enclosed',
@@ -12,17 +10,26 @@ export const navigationResponsiveTabsData: Record<string, TNavigationResponsiveT
         }
     },
     base: {
-        showTabs: false,
-        showMenu: true,
         tabsProps: {
             isFitted: true,
             variant: 'unstyled',
             children: null,
             orientation: 'vertical'
         },
-        tabStyles: {
+        tabStyle: {
             active: { color: 'blue.500', borderBottomWidth: '1px', borderBottomColor: 'blue.500', textAlign: 'left' },
             inactive: { width: '100%', textAlign: 'left' }
         }
+    }
+}
+
+export const breakpointNavigation: Record<string, TBreakpointNavigation> = {
+    md: {
+        showTabs: true,
+        showMenu: false
+    },
+    base: {
+        showTabs: false,
+        showMenu: true
     }
 }

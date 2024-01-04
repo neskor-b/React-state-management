@@ -10,14 +10,14 @@ import Menu from "./components/Menu";
 
 // data
 import { appsRoutes } from "routes";
-import { navigationResponsiveTabsData } from "./data";
+import { breakpointNavigation } from "./data";
 
 // types
-import { TNavigationResponsiveTabsData } from "./types";
+import { TBreakpointNavigation } from "./types";
 
 const Navigation: FC = () => {
     const { state } = useLocation();
-    const tabsResponsiveData = useBreakpointValue<TNavigationResponsiveTabsData>(navigationResponsiveTabsData);
+    const responsive = useBreakpointValue<TBreakpointNavigation>(breakpointNavigation);
 
     const showTip = !state?.pageKey;
     const appsRoutesArray = Object.values(appsRoutes);
@@ -25,21 +25,18 @@ const Navigation: FC = () => {
 
     return (
         <Box p={2}>
-            {tabsResponsiveData?.showTabs && (
+            {responsive?.showTabs && (
                 <TabLinks 
                     activeIndex={activeIndex} 
-                    routes={appsRoutesArray}
-                    tabsProps={tabsResponsiveData?.tabsProps}
+                    links={appsRoutesArray}
                     
                 />
             )}
-            {tabsResponsiveData?.showMenu && (
+            {responsive?.showMenu && (
                 <Menu>
                     <TabLinks
-                        routes={appsRoutesArray} 
-                        activeIndex={activeIndex} 
-                        tabsProps={tabsResponsiveData?.tabsProps}
-                        tabStyles={tabsResponsiveData?.tabStyles}
+                        activeIndex={activeIndex}
+                        links={appsRoutesArray} 
                     />
                 </Menu>
             )}
@@ -50,7 +47,7 @@ const Navigation: FC = () => {
                     textAlign="center"
                     p={'20%'}
                 >
-                    Select state management
+                    Select state manager
                 </Text>
             )}
         </Box>
