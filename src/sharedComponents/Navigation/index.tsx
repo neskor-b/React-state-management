@@ -1,41 +1,49 @@
 import React, { FC } from "react";
+import { useLocation } from "react-router-dom";
 
 // UI
 import { Box, Text, useBreakpointValue } from "@chakra-ui/react";
 
 // components
-import TabsNavigation from "./components/TabsNavigation";
+import TabLinks from "./components/TabLinks";
+import Menu from "./components/Menu";
 
-// hooks
-import { useNavigation } from "./hooks/useNavigation";
+// data
+import { appsRoutes } from "routes";
+import { navigationResponsiveTabsData } from "./data";
 
 // types
-import { TActiveMenuType } from "./types";
-
+import { TNavigationResponsiveTabsData } from "./types";
 
 const Navigation: FC = () => {
-    const { tabsNavigation } = useNavigation();
+    const { state } = useLocation();
+    const tabsResponsiveData = useBreakpointValue<TNavigationResponsiveTabsData>(navigationResponsiveTabsData);
 
-    const activeMenuType = useBreakpointValue<TActiveMenuType>({
-        md: {
-            tabs: true,
-            menu: false
-        },
-        base: {
-            tabs: false,
-            menu: true
-        }
-    })
-
-    const showTip = false;
+    const showTip = !state?.pageKey;
+    const appsRoutesArray = Object.values(appsRoutes);
+    const activeIndex = appsRoutesArray.findIndex(page => page.key === state?.pageKey);
 
     return (
         <Box p={2}>
-            <TabsNavigation
-                activeTab={tabsNavigation.activeValue}
-                show={activeMenuType?.tabs}
-                onChange={tabsNavigation.onChange}
-            />
+            {tabsResponsiveData?.showTabs && (
+                <TabLinks 
+                    activeIndex={activeIndex} 
+                    routes={appsRoutesArray}
+                    tabsProps={tabsResponsiveData?.tabsProps}
+                    
+                />
+            )}
+            {tabsResponsiveData?.showMenu && (
+                <Menu>
+                    <TabLinks
+                        routes={appsRoutesArray} 
+                        activeIndex={activeIndex} 
+                        tabsProps={tabsResponsiveData?.tabsProps}
+                        tabStyles={tabsResponsiveData?.tabStyles}
+                    />
+                </Menu>
+            )}
+            
             {showTip && (
                 <Text
                     fontSize="2xl"

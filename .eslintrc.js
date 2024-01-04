@@ -86,6 +86,7 @@ module.exports = {
         "prefer-stateless-function": "off",
         "import/prefer-default-export": "off",
         "jsx-a11y/no-static-element-interactions": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "max-len": [
             "warn",
             {
