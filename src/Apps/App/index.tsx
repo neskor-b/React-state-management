@@ -6,14 +6,12 @@ import Navigation from "sharedComponents/Navigation";
 
 // UI
 import { Box } from "@chakra-ui/react";
-
-// style
-import { OFFSET } from "style/offsets";
+import { spacing } from "theme";
 
 const App: FC = () => (
-    <Box>
+    <Box p={spacing['1']}>
         <Navigation />
-        <Box p={OFFSET.medium.xs}>
+        <Box p={spacing['2']}>
             <Outlet />
         </Box>
     </Box>

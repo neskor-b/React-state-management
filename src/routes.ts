@@ -1,11 +1,11 @@
-type RouteItem = {
+export type TRouteItem = {
     path: string;
     name: string;
     key: string;
 };
 
 type AppsRoutes = {
-    [key: string]: RouteItem;
+    [key: string]: TRouteItem;
 };
 
 export const appsRoutes: AppsRoutes = {
