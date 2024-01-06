@@ -1,4 +1,14 @@
-export const appsRoutes = {
+type RouteItem = {
+    path: string;
+    name: string;
+    key: string;
+};
+
+type AppsRoutes = {
+    [key: string]: RouteItem;
+};
+
+export const appsRoutes: AppsRoutes = {
     redux: {
         path: "/redux",
         name: 'Redux',

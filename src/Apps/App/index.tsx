@@ -7,10 +7,13 @@ import Navigation from "sharedComponents/Navigation";
 // UI
 import { Box } from "@chakra-ui/react";
 
+// style
+import { OFFSET } from "style/offsets";
+
 const App: FC = () => (
     <Box>
         <Navigation />
-        <Box p={'25px'}>
+        <Box p={OFFSET.medium.xs}>
             <Outlet />
         </Box>
     </Box>
