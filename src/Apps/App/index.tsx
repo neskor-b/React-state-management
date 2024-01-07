@@ -6,12 +6,11 @@ import Navigation from "sharedComponents/Navigation";
 
 // UI
 import { Box } from "@chakra-ui/react";
-import { spacing } from "theme";
 
 const App: FC = () => (
-    <Box p={spacing['1']}>
+    <Box p={1}>
         <Navigation />
-        <Box p={spacing['2']}>
+        <Box p={2}>
             <Outlet />
         </Box>
     </Box>

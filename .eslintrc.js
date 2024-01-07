@@ -71,7 +71,7 @@ module.exports = {
         "react/jsx-props-no-spreading": "off",
         "react/jsx-one-expression-per-line": "off",
         "react/function-component-definition": "off",
-        "react/no-multi-comp": "warn",
+        "react/no-multi-comp": "off",
         "react/no-danger": "warn",
         "react/jsx-first-prop-new-line": ["error", "multiline-multiprop"],
         "react/jsx-max-props-per-line": ["error", { "maximum": { "single": 2, "multi": 1 } }],

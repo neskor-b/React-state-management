@@ -1,7 +1,7 @@
 import { extendTheme, type ThemeConfig  } from '@chakra-ui/react'
 
 
-export const spacing = {
+const spacing = {
     px: "1px",
     0.5: "0.125rem",
     1: "0.25rem",
@@ -37,7 +37,7 @@ export const spacing = {
     96: "24rem"
 }
 
-export const fontSizes = {
+const fontSizes = {
     xs: "0.75rem",
     sm: "0.875rem",
     md: "1rem",
