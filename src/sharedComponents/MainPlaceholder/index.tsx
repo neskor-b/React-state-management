@@ -4,7 +4,7 @@ import React from "react";
 import { Text } from "@chakra-ui/react";
 
 
-const PlaceholderPage = () => (
+const Placeholder = () => (
     <Text
         textAlign="center"
         p={10}
@@ -16,4 +16,4 @@ const PlaceholderPage = () => (
     </Text>
 )
 
-export default PlaceholderPage;
+export default Placeholder;

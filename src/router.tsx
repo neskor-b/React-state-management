@@ -13,11 +13,11 @@ import Recoil from "apps/Recoil";
 import Jotai from "apps/Jotai";
 import Rematch from "apps/Rematch";
 import Zustand from "apps/Zustand";
-import PlaceholderPage from "sharedComponents/PlaceholderPage";
+import Placeholder from "sharedComponents/MainPlaceholder";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
-        <Route path="/" element={<PlaceholderPage />} />
+        <Route path="/" element={<Placeholder />} />
         <Route path={appsRoutes.redux.path} element={<Redux />} />
         <Route path={appsRoutes.hookstate.path} element={<Hookstate />} />
         <Route path={appsRoutes.mobx.path} element={<Mobx />} />

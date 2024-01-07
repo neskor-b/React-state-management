@@ -1,7 +1,7 @@
 import { extendTheme, type ThemeConfig  } from '@chakra-ui/react'
 
 
-const spacing = {
+const space = {
     px: "1px",
     0.5: "0.125rem",
     1: "0.25rem",
@@ -53,13 +53,11 @@ const fontSizes = {
     "9xl": "8rem"
 }
 
-
-
 const config: ThemeConfig = {
     initialColorMode: 'light',
     useSystemColorMode: false
 }
 
-const theme = extendTheme({ config, space: spacing, fontSizes })
+const theme = extendTheme({ config, space, fontSizes })
 
 export default theme

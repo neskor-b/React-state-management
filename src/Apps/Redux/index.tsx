@@ -1,10 +1,13 @@
 import React from 'react';
 
+// components
+import App from 'apps/Redux/App/index';
+
 const Redux = () => {
     return (
-        <div>
-            Redux
-        </div>
+        <>
+            <App />
+        </>
     );
 }
 
