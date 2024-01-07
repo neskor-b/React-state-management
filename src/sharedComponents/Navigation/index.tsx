@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons';
 
+// styled components
 import { Container, TabLink, MenuItemLink } from "./styled";
 
 // data
