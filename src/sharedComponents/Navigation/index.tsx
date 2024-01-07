@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons';
 
-import { Container, Nav, MenuItemLink } from "./styled";
+import { Container, TabLink, MenuItemLink } from "./styled";
 
 // data
 import { appsRoutes } from "routes";
@@ -34,9 +34,9 @@ const Navigation: FC = () => {
                     style={{ width: "100%" }}
                 >
                     {({ isActive }) => (
-                        <Nav isActive={isActive}>
+                        <TabLink isActive={isActive}>
                             {link.name}
-                        </Nav>
+                        </TabLink>
                     )}
                 </NavLink>
             )}

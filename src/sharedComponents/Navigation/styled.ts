@@ -11,7 +11,7 @@ export const Container = styled(Box, {
     borderBottomColor: "gray.500"
 })
 
-export const Nav = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
+export const TabLink = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
     { 
         fontSize: "lg",
         p: 1,
