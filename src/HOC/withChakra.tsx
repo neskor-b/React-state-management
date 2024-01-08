@@ -14,6 +14,6 @@ const withChakra = <P extends object>(
     };
 };
 
-withChakra.tag = chakra;
+withChakra.chakra = chakra;
 
 export default withChakra;
