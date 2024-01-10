@@ -21,6 +21,7 @@ export const TabLink = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
         },
         color: isActive ? "blue.500" : "gray.500",
         position: "relative",
+        whiteSpace: "nowrap",
         _before: {
             content: "''",
             display: "block",

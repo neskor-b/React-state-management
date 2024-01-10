@@ -43,5 +43,10 @@ export const appsRoutes: AppsRoutes = {
         path: "/zustand",
         name: 'Zustand',
         key: 'zustand'
+    },
+    preactSignal: {
+        path: "/preact-signal",
+        name: 'Preact signal',
+        key: 'preact_signal'
     }
 };
