@@ -22,7 +22,6 @@ const CHECKED: Record<Ttodo['status'], boolean> = {
 
 const TodoItem: FC<TodoItemProps> = ({ todo }) => {
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
-    console.log({todo, mode, setMode})
     return (
         <Card>
             <CardBody>
