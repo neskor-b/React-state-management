@@ -2,7 +2,7 @@ import React, { FC, useRef } from "react";
 import { v4 as uuid4 } from 'uuid'
 
 // components
-import FormFieldInput from "sharedComponents/FormField";
+import FormField from "sharedComponents/FormField";
 import { Button, Box, InputGroup, InputRightElement } from "@chakra-ui/react";
 import Form from "sharedComponents/Form";
 
@@ -45,7 +45,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
                     gap={2}
                 >
                     <InputGroup size='md'>
-                        <FormFieldInput
+                        <FormField.Input
                             name="todo"
                             control={control}
                             placeholder="Add Todo..."

@@ -12,7 +12,10 @@ const App = () => {
                 <TodoForm onSubmit={(values => console.log(values))}/>
             </Layout.Header>
             <Layout.Body>
-                <TodoItem todo={{ id: '1', title: 'test', status: 'active', createdAt: new Date().toISOString() }}/>
+                <TodoItem 
+                    isLoading={false}
+                    onChange={() => {}} 
+                    todo={{ id: '1', title: 'test', status: 'active', createdAt: new Date().toISOString() }}/>
             </Layout.Body>
         </Layout>
     );

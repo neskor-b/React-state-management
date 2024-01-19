@@ -1,20 +1,12 @@
-import React, { FC, ChangeEvent } from 'react';
-
 // UI
-import { Input, InputProps } from '@chakra-ui/react'
+import { Input as ChakraInput, InputProps } from '@chakra-ui/react'
 
 // HOC
 import WithForm from 'HOC/withForm';
 
-type FormFieldProps = {
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
-} & InputProps
 
-const FormFieldInput: FC<FormFieldProps> = props => {    
-    return (
-        <Input {...props} />
-    )
-}
+const Input = WithForm<InputProps>(ChakraInput)
 
-export default WithForm(FormFieldInput);
+export default {
+    Input
+};
