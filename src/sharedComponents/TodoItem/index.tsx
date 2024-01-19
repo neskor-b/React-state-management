@@ -1,11 +1,11 @@
-import React, { FC, useState, ChangeEvent } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 
 // UI
 import { Card, CardBody, Checkbox, Flex, Input, IconButton } from '@chakra-ui/react'
-import { EditIcon, CheckIcon } from '@chakra-ui/icons'
+import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 
-// // components
-// import Form from "sharedComponents/Form";
+// hooks
+import useTodo from 'hooks/useTodo';
 
 
 // types
@@ -16,8 +16,6 @@ type TodoItemProps = {
     isLoading: boolean,
     onChange: (data: Ttodo) => void,
 }
-
-type TEditValues = Exclude<keyof Ttodo, 'id' | 'createdAt'>
 
 const MODE = {
     view: 'view',
@@ -39,27 +37,26 @@ const ICONS = {
     [MODE.view]: <EditIcon />
 }
 
-const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange }) => {
-    // const formRef = useRef<any>(null);
-    const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
-    const [title, setTitle] = useState(todo.title);
 
-    const updateTodo = (updatedKey: TEditValues, value: Ttodo[TEditValues]) => {
-        setMode(MODE.view);
-        return {...todo, [updatedKey]: value}
-    };
-    const changeTitle = (value: ChangeEvent<HTMLInputElement>) => setTitle(value.target.value);
+const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-    const onChangeChecked = (value: ChangeEvent<HTMLInputElement>) => onChange(updateTodo('status', value.target.checked ? 'completed' : 'active'))
-    const onChangeTitle = () => onChange(updateTodo('title', title));
+    const {  
+        mode,
+        todo,
+        onChangeTitle,
+        onSubmitTitle,
+        onChangeChecked,
+        resetTodo
+    } = useTodo({ initialData, onSumbitTodo: onChange });
 
 
-    const ICON_ACTION = {
-        [MODE.edit]: () => {
-            onChangeTitle();
-        },
-        [MODE.view]: () => setMode(MODE.edit)
-    }
+    useEffect(() => {
+        if (mode === MODE.edit, inputRef.current) {
+            inputRef.current.focus();            
+        }
+    }, [mode]);
+
     return (
         <Card>
             <CardBody>
@@ -73,55 +70,34 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange }) => {
                         size="lg"
                         onChange={onChangeChecked}
                     />
-                    <Input 
-                        variant={INPUT_MODE[mode]} 
-                        value={title}
+                    <Input
+                        ref={inputRef}
+                        variant={INPUT_MODE[mode]}
+                        value={todo.title}
                         disabled={mode === MODE.view}
+                        isInvalid={!todo.title}
                         _disabled={{
                             color: 'Black',
                             height: '40px',
                             paddingLeft: '16px'
                         }}
-                        onChange={changeTitle}
+                        onChange={onChangeTitle}
                     />
                     <IconButton 
                         aria-label='edit todo' 
                         icon={ICONS[mode]} 
                         size="sm"
-                        onClick={ICON_ACTION[mode]}
+                        onClick={onSubmitTitle}
                     />
-                </Flex>
-                {/* <Form 
-                    formRef={formRef} 
-                    onSubmit={onSubmitHandler} 
-                    formConfig={{ defaultValues: todo }}
-                >
-                    {({ control }) => (
-                        <Box 
-                            display="flex" 
-                            alignItems="center" 
-                            gap={2}
-                        >
-                            <InputGroup size='md'>
-                                <FormFieldInput
-                                    name="todo"
-                                    control={control}
-                                    placeholder="Add Todo..."
-                                    rules={{ required: "This field is required" }} 
-                                />
-                                <InputRightElement width='4.5rem'>
-                                    <Button
-                                        h='1.75rem'
-                                        size='sm'
-                                        type="submit"
-                                    >
-                                        Add
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                        </Box>
+                    {mode === MODE.edit && (
+                        <IconButton 
+                            aria-label='edit todo' 
+                            icon={<CloseIcon />} 
+                            size="sm"
+                            onClick={resetTodo}
+                        />
                     )}
-                </Form> */}
+                </Flex>
             </CardBody>
         </Card>
     );

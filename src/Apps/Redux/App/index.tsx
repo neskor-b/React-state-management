@@ -14,7 +14,7 @@ const App = () => {
             <Layout.Body>
                 <TodoItem 
                     isLoading={false}
-                    onChange={() => {}} 
+                    onChange={(values => console.log(values))} 
                     todo={{ id: '1', title: 'test', status: 'active', createdAt: new Date().toISOString() }}/>
             </Layout.Body>
         </Layout>
