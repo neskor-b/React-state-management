@@ -20,7 +20,8 @@ type IFormInput = {
 const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
     const formRef = useRef<any>(null);
 
-    const onSubmitHandler = (data: IFormInput) => {        
+    const onSubmitHandler = (data: IFormInput) => {    
+        const { reset } = formRef.current || {};   
         const newTodo: Ttodo = {
             id: uuid4(),
             title: data?.todo || '',
@@ -29,7 +30,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
         }
         
         onSubmit(newTodo)
-        formRef?.current?.reset({ todo: '' });
+        reset({ todo: '' });
     }
 
     return(
@@ -38,31 +39,28 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
             onSubmit={onSubmitHandler} 
             formConfig={{ defaultValues: { todo: '' } }}
         >
-            {({ control }) => (
-                <Box 
-                    display="flex" 
-                    alignItems="center" 
-                    gap={2}
-                >
-                    <InputGroup size='md'>
-                        <FormField.Input
-                            name="todo"
-                            control={control}
-                            placeholder="Add Todo..."
-                            rules={{ required: "This field is required" }} 
-                        />
-                        <InputRightElement width='4.5rem'>
-                            <Button
-                                h='1.75rem'
-                                size='sm'
-                                type="submit"
-                            >
-                                Add
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                </Box>
-            )}
+            <Box 
+                display="flex" 
+                alignItems="center" 
+                gap={2}
+            >
+                <InputGroup size='md'>
+                    <FormField.Input
+                        name="todo"
+                        placeholder="Add Todo..."
+                        rules={{ required: "This field is required" }} 
+                    />
+                    <InputRightElement width='4.5rem'>
+                        <Button
+                            h='1.75rem'
+                            size='sm'
+                            type="submit"
+                        >
+                            Add
+                        </Button>
+                    </InputRightElement>
+                </InputGroup>
+            </Box>
         </Form>
     )
 }

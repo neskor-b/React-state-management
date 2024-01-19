@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
-import React from 'react';
-import { Controller, Control, RegisterOptions } from 'react-hook-form';
+import React, { useContext } from 'react';
+import { Controller, RegisterOptions } from 'react-hook-form';
 
 import {
     FormControl,
@@ -10,17 +10,19 @@ import {
     FormHelperText
 } from '@chakra-ui/react'
 
+import { FormContext } from 'sharedComponents/Form';
+
 type WithFormProps = {
     helperText?: string;
     label?: string;
     name: string;
-    control: Control;
     rules?: RegisterOptions
 }
 
 
 const WithForm = <P extends object>(Component: React.ComponentType<P>) => (props: WithFormProps & P) => {
-    const { helperText, label, name, control, rules, ...rest } = props;
+    const { helperText, label, name, rules, ...rest } = props;
+    const { control } = useContext(FormContext) || {};
     return ( 
         <Controller
             name={name}
