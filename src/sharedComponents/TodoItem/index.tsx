@@ -3,6 +3,7 @@ import React, { FC, useRef, useEffect } from 'react';
 // UI
 import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import Spinner from 'sharedComponents/Spinner';
 
 // hooks
 import useTodo from 'hooks/useTodo';
@@ -52,44 +53,47 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
 
 
     return (
-        <Card {...getCartStyles({ isInvalid, mode })} mb={5}>
-            <CardBody>
-                <Flex 
-                    gap={2} 
-                    align="center"
-                >
-                    <Checkbox 
-                        isChecked={CHECKED[todo.status]}
-                        disabled={isLoading || isInvalid}
-                        size="lg"
-                        onChange={onChangeStatus}
-                    />
-                    {mode === MODE.view && <Text pl="16px" flex={1}>{todo.title}</Text>}
-                    {mode === MODE.edit && (
-                        <Input
-                            ref={inputRef}
-                            variant={INPUT_MODE[mode]}
-                            value={todo.title}
-                            onChange={onChangeTitle}
+        <Spinner isLoading={isLoading}>
+            <Card {...getCartStyles({ isInvalid, mode })} mb={5}>
+                <CardBody>
+                    <Flex 
+                        gap={2} 
+                        align="center"
+                    >
+                        <Checkbox 
+                            isChecked={CHECKED[todo.status]}
+                            disabled={isLoading || isInvalid}
+                            size="lg"
+                            onChange={onChangeStatus}
                         />
-                    )}
-                    <IconButton 
-                        aria-label='edit todo' 
-                        icon={ICONS[mode]} 
-                        size="sm"
-                        onClick={onSubmitTitle}
-                    />
-                    {mode === MODE.edit && (
+                        {mode === MODE.view && <Text pl="16px" flex={1}>{todo.title}</Text>}
+                        {mode === MODE.edit && (
+                            <Input
+                                ref={inputRef}
+                                variant={INPUT_MODE[mode]}
+                                value={todo.title}
+                                onChange={onChangeTitle}
+                            />
+                        )}
                         <IconButton 
                             aria-label='edit todo' 
-                            icon={<CloseIcon />} 
+                            icon={ICONS[mode]} 
                             size="sm"
-                            onClick={resetTodo}
+                            onClick={onSubmitTitle}
                         />
-                    )}
-                </Flex>
-            </CardBody>
-        </Card>
+                        {mode === MODE.edit && (
+                            <IconButton 
+                                aria-label='edit todo' 
+                                icon={<CloseIcon />} 
+                                size="sm"
+                                onClick={resetTodo}
+                            />
+                        )}
+                    </Flex>
+                </CardBody>
+            </Card>
+        </Spinner>
+
     );
 };
 
