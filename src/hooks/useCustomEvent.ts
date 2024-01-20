@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 
 export const EVENT_NAMES = {
-    CLOSE_TODO_EDIT_MODE: 'CLOSE_TODO_EDIT_MODE'
+    TODO_FOCUS: 'TODO_FOCUS'
 } as const
 
 interface CustomEventOptions<T> {

@@ -39,7 +39,7 @@ const useTodo = ({ initialData, onSumbitTodo}: TuseTodo) => {
     };
 
     const { dispatchCustomEvent } = useCustomEvent<string>({
-        eventName: EVENT_NAMES.CLOSE_TODO_EDIT_MODE,
+        eventName: EVENT_NAMES.TODO_FOCUS,
         callback: (todoId: string) => {
             if (todoId !== todo.id && mode === MODE.edit) {
                 resetTodo();
@@ -53,9 +53,9 @@ const useTodo = ({ initialData, onSumbitTodo}: TuseTodo) => {
 
     const onSumbitHandler = () => {
         const isValid = validateTodo(todo);
+        dispatchCustomEvent(todo.id);
         if (!isValid) {
             toast({
-                title: 'Warning',
                 description: "Title can't be empty!",
                 status: 'warning',
                 duration: 3000,
@@ -71,11 +71,11 @@ const useTodo = ({ initialData, onSumbitTodo}: TuseTodo) => {
     const onChangeStatus = (value: ChangeEvent<HTMLInputElement>) => updateTodo('status', value.target.checked ? 'completed' : 'active');
     
     const onSubmitTitle = () => {
+        dispatchCustomEvent(todo.id);
         if (mode === MODE.edit) {
             onSumbitHandler();
         } else {
             setMode(MODE.edit)
-            dispatchCustomEvent(todo.id);
         }
     };
 

@@ -5,7 +5,8 @@ import { useForm, UseFormProps, UseFormReturn, SubmitHandler } from "react-hook-
 
 export const FormContext = createContext<UseFormReturn | null>(null);
 type FormProps = {
-    onSubmit: (data: any) => void
+    onSubmit: (data: any) => void,
+    onUpdate?: (data: UseFormProps) => void,
     children: ((data: any) => React.ReactNode) | React.ReactNode,
     formConfig?: UseFormProps,
     formRef?: MutableRefObject<any>;

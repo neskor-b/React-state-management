@@ -1,7 +1,7 @@
 import React, { FC, useRef, useEffect } from 'react';
 
 // UI
-import { Card, CardBody, Checkbox, Flex, Input, IconButton } from '@chakra-ui/react'
+import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 
 // hooks
@@ -64,18 +64,15 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                         size="lg"
                         onChange={onChangeStatus}
                     />
-                    <Input
-                        ref={inputRef}
-                        variant={INPUT_MODE[mode]}
-                        value={todo.title}
-                        disabled={mode === MODE.view}
-                        _disabled={{
-                            color: 'Black',
-                            height: '40px',
-                            paddingLeft: '16px'
-                        }}
-                        onChange={onChangeTitle}
-                    />
+                    {mode === MODE.view && <Text pl="16px" flex={1}>{todo.title}</Text>}
+                    {mode === MODE.edit && (
+                        <Input
+                            ref={inputRef}
+                            variant={INPUT_MODE[mode]}
+                            value={todo.title}
+                            onChange={onChangeTitle}
+                        />
+                    )}
                     <IconButton 
                         aria-label='edit todo' 
                         icon={ICONS[mode]} 

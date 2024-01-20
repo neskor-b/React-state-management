@@ -107,7 +107,7 @@ module.exports = {
         ],
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", 4],
-        "no-console": "warn",
+        "no-console": "off",
         "no-alert": "warn",
         "consistent-return": "warn",
         "no-bitwise": [
