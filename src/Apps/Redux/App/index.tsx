@@ -9,9 +9,9 @@ import TodoItem from 'sharedComponents/TodoItem';
 import Ttodo from 'types/todo';
 
 const MOCK_TODOS: Ttodo[] =[
-    { id: '1', title: 'test', isCompleted: true, createdAt: new Date().toISOString() },
-    { id: '2', title: 'test2', isCompleted: false, createdAt: new Date().toISOString() },
-    { id: '3', title: 'test3', isCompleted: false, createdAt: new Date().toISOString() }
+    { id: '1', title: 'test', status: 'active', createdAt: new Date().toISOString() },
+    { id: '2', title: 'test2', status: 'completed', createdAt: new Date().toISOString() },
+    { id: '3', title: 'test3', status: 'active', createdAt: new Date().toISOString() }
 ];
 
 const arrayToObject = (arr: Ttodo[]) => {
