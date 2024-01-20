@@ -1,7 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 
 // UI
 import { useToast } from '@chakra-ui/react'
+
+// hooks
+import useCustomEvent, { EVENT_NAMES } from 'hooks/useCustomEvent';
 
 // types
 import Ttodo from 'types/todo';
@@ -18,56 +21,76 @@ type TuseTodo = {
     onSumbitTodo: (data: Ttodo) => void
 }
 
+const validateTodo = (todo: Ttodo) => {
+    if (!todo.title) {
+        return false
+    }
+    return true
+}
+
 const useTodo = ({ initialData, onSumbitTodo}: TuseTodo) => {
     const [todo, setTodo] = useState<Ttodo>({...initialData, updatedAt: new Date().toISOString()});
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
     const toast = useToast()
-
-    const updateTodo = (updatedKey: TEditValues, value: Ttodo[TEditValues]) => {
-        setTodo({...todo, [updatedKey]: value})
-    };
 
     const resetTodo = () => {
         setTodo(initialData)
         setMode(MODE.view)
     };
 
-    const onSumbitHandler = (cb?: () => void) => {
-        if (!todo.title) {
+    const { dispatchCustomEvent } = useCustomEvent<string>({
+        eventName: EVENT_NAMES.CLOSE_TODO_EDIT_MODE,
+        callback: (todoId: string) => {
+            if (todoId !== todo.id && mode === MODE.edit) {
+                resetTodo();
+            }
+        }
+    })
+
+    const updateTodo = (updatedKey: TEditValues, value: Ttodo[TEditValues]) => {
+        setTodo({...todo, [updatedKey]: value})
+    };
+
+    const onSumbitHandler = () => {
+        const isValid = validateTodo(todo);
+        if (!isValid) {
             toast({
                 title: 'Warning',
-                description: "Todoʼs title can't be empty!",
+                description: "Title can't be empty!",
                 status: 'warning',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true
             });
         } else {
             onSumbitTodo(todo)
             setMode(MODE.view)
-            cb && cb();
         }
     };
 
     const onChangeTitle = (event: ChangeEvent<any>) => updateTodo('title', event.target.value);
+    const onChangeStatus = (value: ChangeEvent<HTMLInputElement>) => updateTodo('status', value.target.checked ? 'completed' : 'active');
     
     const onSubmitTitle = () => {
         if (mode === MODE.edit) {
             onSumbitHandler();
         } else {
             setMode(MODE.edit)
+            dispatchCustomEvent(todo.id);
         }
     };
 
-    const onChangeChecked = (value: ChangeEvent<HTMLInputElement>) => {
-        onSumbitHandler(() => updateTodo('status', value.target.checked ? 'completed' : 'active'));
-    }
+    useEffect(() => {
+        onSumbitHandler();
+    }, [todo.status])
+
 
     return ({
         mode,
         todo,
+        isInvalid: !validateTodo(todo),
         onChangeTitle,
         onSubmitTitle,
-        onChangeChecked,
+        onChangeStatus,
         resetTodo
     })
 }

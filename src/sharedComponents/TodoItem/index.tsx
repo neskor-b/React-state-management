@@ -38,15 +38,39 @@ const ICONS = {
 }
 
 
+const getCartStyles = ({ isInvalid, mode }: { isInvalid: boolean, mode: keyof typeof MODE }) => {
+    const initialStyles = {
+        _hover: {
+            boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;'
+        }
+    }
+    if (isInvalid) {
+        return {
+            border: '1px solid',
+            borderColor: 'red.300',
+            ...initialStyles
+        }
+    }
+    if (mode === MODE.edit) {
+        return {
+            boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;',
+            ...initialStyles
+        }
+    }
+    return initialStyles
+};
+
+
 const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange }) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const {  
         mode,
         todo,
+        isInvalid,
         onChangeTitle,
         onSubmitTitle,
-        onChangeChecked,
+        onChangeStatus,
         resetTodo
     } = useTodo({ initialData, onSumbitTodo: onChange });
 
@@ -57,8 +81,9 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
         }
     }, [mode]);
 
+
     return (
-        <Card>
+        <Card {...getCartStyles({ isInvalid, mode })} mb={5}>
             <CardBody>
                 <Flex 
                     gap={2} 
@@ -66,16 +91,15 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                 >
                     <Checkbox 
                         isChecked={CHECKED[todo.status]}
-                        disabled={isLoading}
+                        disabled={isLoading || isInvalid}
                         size="lg"
-                        onChange={onChangeChecked}
+                        onChange={onChangeStatus}
                     />
                     <Input
                         ref={inputRef}
                         variant={INPUT_MODE[mode]}
                         value={todo.title}
                         disabled={mode === MODE.view}
-                        isInvalid={!todo.title}
                         _disabled={{
                             color: 'Black',
                             height: '40px',
