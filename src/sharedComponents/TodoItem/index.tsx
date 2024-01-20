@@ -7,6 +7,12 @@ import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 // hooks
 import useTodo from 'hooks/useTodo';
 
+// utils
+import { getCartStyles } from 'sharedComponents/TodoItem/utils';
+
+// data
+import { MODE, CHECKED, INPUT_MODE } from 'sharedComponents/TodoItem/constants'
+
 
 // types
 import Ttodo from 'types/todo';
@@ -17,48 +23,11 @@ type TodoItemProps = {
     onChange: (data: Ttodo) => void,
 }
 
-const MODE = {
-    view: 'view',
-    edit: 'edit'
-} as const;
 
-const INPUT_MODE = {
-    [MODE.edit]: 'outline',
-    [MODE.view]: 'unstyled'
-} as const;
-
-const CHECKED: Record<Ttodo['status'], boolean> = {
-    active: false,
-    completed: true
-}
-
-const ICONS = {
+export const ICONS = {
     [MODE.edit]: <CheckIcon />,
     [MODE.view]: <EditIcon />
 }
-
-
-const getCartStyles = ({ isInvalid, mode }: { isInvalid: boolean, mode: keyof typeof MODE }) => {
-    const initialStyles = {
-        _hover: {
-            boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;'
-        }
-    }
-    if (isInvalid) {
-        return {
-            border: '1px solid',
-            borderColor: 'red.300',
-            ...initialStyles
-        }
-    }
-    if (mode === MODE.edit) {
-        return {
-            boxShadow: 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;',
-            ...initialStyles
-        }
-    }
-    return initialStyles
-};
 
 
 const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange }) => {
