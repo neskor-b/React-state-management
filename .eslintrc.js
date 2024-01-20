@@ -129,7 +129,7 @@ module.exports = {
         "no-use-before-define": [
             "error",
             {
-                "functions": true,
+                "functions": false,
                 "classes": true
             }
         ],

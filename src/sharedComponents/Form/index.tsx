@@ -1,9 +1,9 @@
 import React, { MutableRefObject, createContext } from "react";
 
 // form
-import { useForm, UseFormProps, UseFormReturn, SubmitHandler } from "react-hook-form"
+import { useForm, UseFormProps, SubmitHandler,  UseFormReturn } from "react-hook-form"
 
-export const FormContext = createContext<UseFormReturn | null>(null);
+export const FormContext = createContext<UseFormReturn>({} as UseFormReturn);
 type FormProps = {
     onSubmit: (data: any) => void,
     onUpdate?: (data: UseFormProps) => void,

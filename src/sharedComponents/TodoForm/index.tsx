@@ -3,7 +3,7 @@ import { v4 as uuid4 } from 'uuid'
 
 // components
 import FormField from "sharedComponents/FormField";
-import { Button, Box, InputGroup, Input, InputRightElement, useToast } from "@chakra-ui/react";
+import { Button, Box, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
 import Form from "sharedComponents/Form";
 
 // Hhooks
@@ -24,7 +24,6 @@ type IFormInput = {
 const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
     const formRef = useRef<any>(null);
     const clickOutsideRef = useRef(null);
-    const toast = useToast()
 
     const { reset } = formRef.current || {}
 
@@ -45,12 +44,6 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
         onSubmit(newTodo)
         reset({ todo: '' });
         dispatchCustomEvent('');
-        toast({
-            description: "Todo created!",
-            status: 'success',
-            duration: 3000,
-            isClosable: true
-        });
     }
 
     return(
