@@ -54,7 +54,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
 
     return (
         <Spinner isLoading={isLoading}>
-            <Card {...getCartStyles({ isInvalid, mode })} mb={5}>
+            <Card {...getCartStyles({ isInvalid, mode, status: todo.status })} mb={5}>
                 <CardBody>
                     <Flex 
                         gap={2} 
@@ -66,7 +66,12 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                             size="lg"
                             onChange={onChangeStatus}
                         />
-                        {mode === MODE.view && <Text pl="16px" flex={1}>{todo.title}</Text>}
+                        {mode === MODE.view && 
+                        <Text 
+                            pl="16px" 
+                            flex={1}>
+                            {todo.title}
+                        </Text>}
                         {mode === MODE.edit && (
                             <Input
                                 ref={inputRef}
