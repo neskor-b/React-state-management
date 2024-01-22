@@ -25,7 +25,6 @@ const useCustomEvent = <T>({ eventName, callback }: CustomEventOptions<T>) => {
         };
 
         window.addEventListener(eventName, eventHandler);
-        window.addEventListener(eventName , eventHandler);
 
         return () => {
             window.removeEventListener(eventName, eventHandler);
