@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // components
 import TodoForm from 'sharedComponents/TodoForm';
 import Layout from 'sharedComponents/Layout';
-import TodoItem from 'sharedComponents/TodoItem';
+import TodoList from 'sharedComponents/TodoList';
 
 // types
 import Ttodo from 'types/todo';
@@ -23,7 +23,8 @@ const arrayToObject = (arr: Ttodo[]) => {
 
 
 const App = () => {
-    const [todos, setTodos] = useState<Ttodo[]>(arrayToObject(MOCK_TODOS));
+    const [todos, setTodos] = useState<Record<string, Ttodo>>(arrayToObject(MOCK_TODOS));
+
     const onChangeTodo = (data: Ttodo) => {
         setTodos({
             ...todos,
@@ -36,14 +37,11 @@ const App = () => {
                 <TodoForm onSubmit={(values => console.log(values))}/>
             </Layout.Header>
             <Layout.Body>
-                {Object.keys(todos).map((todoId: any) => 
-                    <TodoItem
-                        key={todoId}
-                        isLoading={false}
-                        onChange={onChangeTodo}
-                        todo={todos[todoId]} 
-                    />
-                )}
+                <TodoList
+                    loading={{}}
+                    todos={todos} 
+                    onChange={onChangeTodo}
+                />
             </Layout.Body>
         </Layout>
     );
