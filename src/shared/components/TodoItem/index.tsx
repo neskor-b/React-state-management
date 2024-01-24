@@ -112,6 +112,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                         {isViewMode && 
                             <Text 
                                 pl="16px" 
+                                lineHeight="40.8px"
                                 flex={1}>
                                 {todo.title}
                             </Text>}
