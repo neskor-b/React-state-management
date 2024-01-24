@@ -92,6 +92,9 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
         setIsInvalid(validateTodo(title));
     }, [title])
 
+    const isViewMode = mode === MODE.view;
+    const isEditMode = mode === MODE.edit;
+
     return (
         <Spinner isLoading={isLoading}>
             <Card {...getCartStyles({ isInvalid, mode, status: todo.status, colorMode })}>
@@ -106,7 +109,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                             size="lg"
                             onChange={onChangeStatus}
                         />
-                        {mode === MODE.view && 
+                        {isViewMode && 
                             <Text 
                                 pl="16px" 
                                 flex={1}>
@@ -120,7 +123,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 onChange={onTitleChange}
                             />
                         )}
-                        {mode === MODE.view && (
+                        {isViewMode && (
                             <IconButton 
                                 aria-label='toggle edit' 
                                 icon={<EditIcon />} 
@@ -128,7 +131,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 onClick={enableEditMode}
                             />
                         )}
-                        {mode === MODE.edit && (
+                        {isEditMode && (
                             <IconButton 
                                 aria-label='submit title' 
                                 icon={<CheckIcon />} 
@@ -136,7 +139,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 onClick={onSubmitTitle}
                             />
                         )}
-                        {mode === MODE.edit && (
+                        {isEditMode && (
                             <IconButton 
                                 aria-label='reset todo' 
                                 icon={<CloseIcon />} 
@@ -144,7 +147,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 onClick={resetTodo}
                             />
                         )}
-                        {mode === MODE.view && (
+                        {isViewMode && (
                             <ConfirmAlert 
                                 text="Are you sure you want to delete this todo?"
                                 headerText="Delete Todo" 
