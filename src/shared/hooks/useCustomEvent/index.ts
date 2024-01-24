@@ -18,7 +18,7 @@ const useCustomEvent = <T>({ eventName, callback }: CustomEventOptions<T>) => {
     }, [callback]);
 
     useEffect(() => {
-        const eventHandler = (event: any) => {
+        const eventHandler = (event: any) => {            
             if (callbackRef.current) {
                 callbackRef.current(event.detail);
             }

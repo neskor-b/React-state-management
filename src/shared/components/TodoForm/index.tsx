@@ -6,7 +6,7 @@ import FormField from "shared/components/FormField";
 import { Button, Box, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
 import Form from "shared/components/Form";
 
-// Hhooks
+// hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 import useClickOutside from 'shared/hooks/useClickOutside';
 
@@ -17,34 +17,35 @@ type TodoFormProps = {
     onSubmit: (data: Ttodo) => void,
 }
 
-type IFormInput = {
-    todo?: string
+type TFormValues = {
+    title?: string
 }
 
 const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
     const formRef = useRef<any>(null);
     const clickOutsideRef = useRef(null);
 
-    const { reset } = formRef.current || {}
-
-    useClickOutside(clickOutsideRef, () => reset && reset());
+    useClickOutside(clickOutsideRef, () => formRef.current?.reset());
 
     const { dispatchCustomEvent } = useCustomEvent<string>({
         eventName: EVENT_NAMES.TODO_FOCUS,
-        callback: () => reset && reset()
+        callback: () => formRef.current?.reset()
     })
 
-    const onSubmitHandler = (data: IFormInput) => {    
+    const onSubmitHandler = ({ title }: TFormValues) => {    
         const newTodo: Ttodo = {
             id: uuid4(),
-            title: data?.todo || '',
+            title: title|| '',
             status: "active",
             createdAt: new Date().toISOString()
         }
+        console.log(newTodo);
+        
         onSubmit(newTodo)
-        reset({ todo: '' });
+        formRef.current?.reset({ title: '' });
         dispatchCustomEvent('');
     }
+
 
     return(
         <Form 
@@ -55,12 +56,12 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
             <Box 
                 display="flex" 
                 alignItems="center" 
-                gap={2}
+                mb={3}
                 ref={clickOutsideRef}
             >
                 <InputGroup size='md'>
                     <FormField.Field
-                        name="todo"
+                        name="title"
                         rules={{ required: "This field is required" }}
                     >
                         {({ formState, ...rest }) => {

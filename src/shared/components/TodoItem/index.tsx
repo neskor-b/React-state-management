@@ -1,15 +1,16 @@
-import React, { FC, useRef, useEffect } from 'react';
+import React, { FC, useRef, useEffect, useState, ChangeEvent } from 'react';
 
 // UI
-import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode } from '@chakra-ui/react'
-import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
+import { EditIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
 import Spinner from 'shared/components/Spinner';
-
-// hooks
-import useTodo from 'shared/hooks/useTodo';
+import ConfirmAlert from 'shared/components/ConfirmAlert';
 
 // utils
-import { getCartStyles } from 'shared/components/TodoItem/utils';
+import { getCartStyles, validateTodo } from 'shared/components/TodoItem/utils';
+
+// hooks
+import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 
 // data
 import { MODE, CHECKED, INPUT_MODE } from 'shared/components/TodoItem/constants'
@@ -22,36 +23,74 @@ type TodoItemProps = {
     todo: Ttodo,
     isLoading: boolean,
     onChange: (data: Ttodo) => void,
+    onDelete: (data: Ttodo) => void,
 }
 
 
-export const ICONS = {
-    [MODE.edit]: <CheckIcon />,
-    [MODE.view]: <EditIcon />
-}
-
-
-const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange }) => {
+const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
+    const [title, setTitle] = useState(todo.title);
+    const [isInvalid, setIsInvalid] = useState(false);
     const { colorMode } = useColorMode();
+    const toast = useToast()
+    
+    const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
-    const {  
-        mode,
-        todo,
-        isInvalid,
-        onChangeTitle,
-        onSubmitTitle,
-        onChangeStatus,
-        resetTodo
-    } = useTodo({ initialData, onSumbitTodo: onChange });
+    const onSubmitTitle = () => {
+        if (isInvalid){
+            toast({
+                description: "Title can't be empty!",
+                status: 'warning',
+                duration: 3000,
+                isClosable: true
+            });
+        } else {
+            onChange({ ...todo, title });
+            setMode(MODE.view);
+        }
 
+    }
 
+    const resetTodo = () => {
+        setMode(MODE.view);
+        setTitle(todo.title);
+    };
+
+    const { dispatchCustomEvent } = useCustomEvent<string>({
+        eventName: EVENT_NAMES.TODO_FOCUS,
+        callback: (todoId: string) => {
+            if (todoId !== todo.id && mode === MODE.edit) {
+                resetTodo();
+            }
+        }
+    })
+
+    const enableEditMode = () => {
+        setMode(MODE.edit)
+        dispatchCustomEvent(todo.id);
+    };
+
+    const onChangeStatus = () => {
+        onChange({ ...todo, status: todo.status === 'active' ? 'completed' : 'active'});
+        resetTodo();
+    };
+
+    const onDeleteTodo = () => {
+        onDelete(todo);
+        resetTodo();
+        dispatchCustomEvent(todo.id);
+    };
+    
     useEffect(() => {
         if (mode === MODE.edit, inputRef.current) {
             inputRef.current.focus();            
         }
     }, [mode]);
 
+    useEffect(() => {
+        setIsInvalid(validateTodo(title));
+    }, [title])
 
     return (
         <Spinner isLoading={isLoading}>
@@ -77,23 +116,48 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                             <Input
                                 ref={inputRef}
                                 variant={INPUT_MODE[mode]}
-                                value={todo.title}
-                                onChange={onChangeTitle}
+                                value={title}
+                                onChange={onTitleChange}
                             />
                         )}
-                        <IconButton 
-                            aria-label='edit todo' 
-                            icon={ICONS[mode]} 
-                            size="sm"
-                            onClick={onSubmitTitle}
-                        />
+                        {mode === MODE.view && (
+                            <IconButton 
+                                aria-label='toggle edit' 
+                                icon={<EditIcon />} 
+                                size="sm"
+                                onClick={enableEditMode}
+                            />
+                        )}
                         {mode === MODE.edit && (
                             <IconButton 
-                                aria-label='edit todo' 
+                                aria-label='submit title' 
+                                icon={<CheckIcon />} 
+                                size="sm"
+                                onClick={onSubmitTitle}
+                            />
+                        )}
+                        {mode === MODE.edit && (
+                            <IconButton 
+                                aria-label='reset todo' 
                                 icon={<CloseIcon />} 
                                 size="sm"
                                 onClick={resetTodo}
                             />
+                        )}
+                        {mode === MODE.view && (
+                            <ConfirmAlert 
+                                text="Are you sure you want to delete this todo?"
+                                headerText="Delete Todo" 
+                                cancelText="Cancel"
+                                confirmText="Delete"
+                                onConfirm={onDeleteTodo}
+                            >
+                                <IconButton 
+                                    aria-label='delete todo' 
+                                    icon={<DeleteIcon />} 
+                                    size="sm"
+                                />
+                            </ConfirmAlert>
                         )}
                     </Flex>
 

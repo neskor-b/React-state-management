@@ -5,15 +5,19 @@ import { Outlet } from "react-router-dom";
 import Navigation from "shared/components/Navigation";
 
 // UI
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 const App: FC = () => (
-    <Box p={1}>
+    <Flex 
+        p={1} 
+        direction="column" 
+        height="100%"
+    >
         <Navigation />
-        <Box p={2}>
+        <Box p={2} flexGrow={1}>
             <Outlet />
         </Box>
-    </Box>
+    </Flex>
 )
 
 export default App;

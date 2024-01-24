@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // components
 import TodoForm from 'shared/components/TodoForm';
@@ -6,7 +6,7 @@ import Layout from 'shared/components/Layout';
 import TodoList from 'shared/components/TodoList';
 
 // utils
-import arrayToObject from 'shared/utils/arrayToObject';
+import { push, update, remove } from 'shared/utils/array';
 
 // types
 import Ttodo from 'shared/types/todo';
@@ -17,33 +17,30 @@ const MOCK_TODOS: Ttodo[] = [
 
 
 const App = () => {
-    const [todos, setTodos] = useState(arrayToObject<Ttodo>(MOCK_TODOS, 'id'));
+    const [todos, setTodos] = useState<Ttodo[]>(MOCK_TODOS);
 
-    const onChangeTodo = (data: Ttodo) => {        
-        setTodos({
-            ...todos,
-            [data.id]: data
-        })
-    }
-    const addTodo = (data: Ttodo) => {
-        setTodos({
-            ...todos,
-            [data.id]: data
-        })
-    }
+    const addTodo = (data: Ttodo) => setTodos(push(todos, data));
+    const changeTodo = (data: Ttodo) => setTodos(update(todos, ({ id }) => id === data.id, data));
+    const deleteTodo = (data: Ttodo) => setTodos(remove(todos, ({ id }) => id === data.id));
+
+    useEffect(() => {
+        console.log(todos)
+    }, [todos])
 
     return (
         <Layout>
-            <Layout.Header>
+            <Layout.App>
                 <TodoForm onSubmit={addTodo}/>
-            </Layout.Header>
-            <Layout.Body>
                 <TodoList
                     loading={{}}
                     todos={todos} 
-                    onChange={onChangeTodo}
+                    onChange={changeTodo}
+                    onDelete={deleteTodo}
                 />
-            </Layout.Body>
+            </Layout.App>
+            <Layout.Widget>
+                widget
+            </Layout.Widget>
         </Layout>
     );
 }

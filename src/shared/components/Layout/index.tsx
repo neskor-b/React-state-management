@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 // UI
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, IconButton } from "@chakra-ui/react"
+import { SettingsIcon } from '@chakra-ui/icons'
 
 // components
 import ToggleColorMode from 'shared/components/ToggleColorMode';
@@ -11,44 +12,45 @@ interface TodoLayoutProps {
 }
 
 
-const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
+const App: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
-        <Box pb={3}>
+        <Box 
+            pb={3} 
+            flexGrow={1}
+            maxWidth="600px"
+            width="100%"
+        >
             {children}
         </Box>
     );
 }
 
-const Header: React.FC<{ children: ReactNode }> = ({ children }) => {
+const Widget: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
-        <Box pb={3} pt={3}>
-            {children}
-        </Box>
-    );
-}
-
-const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-    return (
-        <Box>
+        <Box 
+            pb={3} 
+            flexGrow={1}
+            width="100%"
+        >
             {children}
         </Box>
     );
 }
 
 const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
-    let body, header, footer;
+    const [isWidgetOpen, setIsWidgetOpen] = useState(false);
+    const toggleWidget = () => setIsWidgetOpen(prevValue => !prevValue);
+
+    let app, widget;
 
     React.Children.map(children, child => {
         if (React.isValidElement(child)) {
             switch (child.type) {
-                case Body:
-                    body = child;
+                case App:
+                    app = child;
                     break;
-                case Header:
-                    header = child;
-                    break;
-                case Footer:
-                    footer = child;
+                case Widget:
+                    widget = child;
                     break;
                 default:
                     break;
@@ -56,24 +58,37 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
         }
     });
     return (
-        <Box>
-            <Box 
-                m="auto" 
-                width="100%" 
-                maxW="540px" 
+        <Box 
+            height="100%" 
+            position="relative" 
+            pt={2}
+        >
+            <Flex 
                 height="100%"
+                justifyContent="center"
+                gap={3}
             >
-                {header}
-                {body}
-                {footer}
-            </Box>
-            <ToggleColorMode />
+                {app}
+                {isWidgetOpen && widget}
+            </Flex>
+            <Flex
+                position="absolute"
+                right={0}
+                bottom={0}
+                gap={2}
+            >
+                <IconButton 
+                    aria-label='toggle logger' 
+                    icon={<SettingsIcon /> } 
+                    onClick={toggleWidget}
+                />
+                <ToggleColorMode />
+            </Flex>
         </Box>
     );
 }
 
 export default Object.assign(Layout, {
-    Body,
-    Header,
-    Footer
+    App,
+    Widget
 });

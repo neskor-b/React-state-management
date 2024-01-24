@@ -6,18 +6,21 @@ type TStyles = {
         boxShadow: string,
     },
     border?: string,
-    borderColor?: string
+    borderColor?: string,
     boxShadow?: string,
-    backgroundColor?: string
+    backgroundColor?: string,
+    transform?: string,
 }
 
 type TGetCartStyles = (props: { isInvalid: boolean, mode: keyof typeof MODE, status: Ttodo['status'], colorMode: "light" | "dark"; }) => TStyles;
 
 const BOX_SHADOW = 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;'
 const BORDER = '1px solid';
+const TRANSFRORM = 'scale(1.02)';
+const TRANSITION = 'all 0.2s ease-in-out';
 const BORDER_COLORS = {
     error: 'red.300'
-}
+};
 
 export const getCartStyles: TGetCartStyles = ({ isInvalid, mode, status, colorMode }) => {
     const styles = {
@@ -25,6 +28,8 @@ export const getCartStyles: TGetCartStyles = ({ isInvalid, mode, status, colorMo
             boxShadow: BOX_SHADOW
         },
         border: undefined,
+        transform: undefined,
+        transition: TRANSITION,
         borderColor: 'gray.300',
         boxShadow: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;'
     } as TStyles
@@ -35,10 +40,18 @@ export const getCartStyles: TGetCartStyles = ({ isInvalid, mode, status, colorMo
         styles.borderColor = BORDER_COLORS.error
     }
     if(mode === MODE.edit) {
-        styles.boxShadow = BOX_SHADOW
+        styles.boxShadow = BOX_SHADOW;
+        styles.transform = TRANSFRORM;
     }
     if (status === 'completed') {
         styles.backgroundColor = colorMode === 'dark' ? 'blue.700' : 'blue.50';
     }
     return styles
 };
+
+export const validateTodo = (title: Ttodo['title']) => {
+    if(!title) {
+        return true
+    }
+    return false
+}

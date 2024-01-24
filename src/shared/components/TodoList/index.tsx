@@ -10,20 +10,26 @@ import TodoItem from 'shared/components/TodoItem';
 import Ttodo from 'shared/types/todo';
 
 type TodoListProps = {
-    todos: Record<string, Ttodo>;
+    todos: Ttodo[];
     loading: Record<string, boolean>
     onChange: (data: Ttodo) => void;
+    onDelete: (data: Ttodo) => void;
 }
 
-const TodoList: FC<TodoListProps> = ({ todos, loading, onChange }) => {
+const TodoList: FC<TodoListProps> = ({ todos, loading, onChange, onDelete }) => {
     return (
-        <Flex direction="column" gap={3}>
-            {Object.keys(todos).map((todoId: any) => 
+        <Flex 
+            direction="column" 
+            gap={3}
+            width="100%"
+        >
+            {todos.map(todo => 
                 <TodoItem
-                    isLoading={loading[todoId]}
-                    key={todoId}
-                    todo={todos[todoId]} 
+                    isLoading={loading[todo.id]}
+                    key={todo.id}
+                    todo={todo} 
                     onChange={onChange}
+                    onDelete={onDelete}
                 />
             )}
         </Flex>
