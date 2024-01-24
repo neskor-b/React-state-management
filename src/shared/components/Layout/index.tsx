@@ -1,7 +1,10 @@
 import React, { ReactNode } from 'react';
 
 // UI
-import { Box, Center } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+
+// components
+import ToggleColorMode from 'shared/components/ToggleColorMode';
 
 interface TodoLayoutProps {
     children: ReactNode;
@@ -53,13 +56,19 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
         }
     });
     return (
-        <Center minW="320px">
-            <Box width="100%" maxW="540px">
+        <Box>
+            <Box 
+                m="auto" 
+                width="100%" 
+                maxW="540px" 
+                height="100%"
+            >
                 {header}
                 {body}
                 {footer}
             </Box>
-        </Center>
+            <ToggleColorMode />
+        </Box>
     );
 }
 

@@ -4,10 +4,10 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react'
 
 // hooks
-import useCustomEvent, { EVENT_NAMES } from 'hooks/useCustomEvent';
+import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 
 // types
-import Ttodo from 'types/todo';
+import Ttodo from 'shared/types/todo';
 
 type TEditValues = Exclude<keyof Ttodo, 'id' | 'createdAt'>
 

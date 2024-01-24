@@ -1,22 +1,22 @@
 import React, { FC, useRef, useEffect } from 'react';
 
 // UI
-import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton } from '@chakra-ui/react'
+import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import Spinner from 'sharedComponents/Spinner';
+import Spinner from 'shared/components/Spinner';
 
 // hooks
-import useTodo from 'hooks/useTodo';
+import useTodo from 'shared/hooks/useTodo';
 
 // utils
-import { getCartStyles } from 'sharedComponents/TodoItem/utils';
+import { getCartStyles } from 'shared/components/TodoItem/utils';
 
 // data
-import { MODE, CHECKED, INPUT_MODE } from 'sharedComponents/TodoItem/constants'
+import { MODE, CHECKED, INPUT_MODE } from 'shared/components/TodoItem/constants'
 
 
 // types
-import Ttodo from 'types/todo';
+import Ttodo from 'shared/types/todo';
 
 type TodoItemProps = {
     todo: Ttodo,
@@ -33,6 +33,7 @@ export const ICONS = {
 
 const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange }) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const { colorMode } = useColorMode();
 
     const {  
         mode,
@@ -54,7 +55,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
 
     return (
         <Spinner isLoading={isLoading}>
-            <Card {...getCartStyles({ isInvalid, mode, status: todo.status })}>
+            <Card {...getCartStyles({ isInvalid, mode, status: todo.status, colorMode })}>
                 <CardBody>
                     <Flex 
                         gap={2} 
@@ -67,11 +68,11 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                             onChange={onChangeStatus}
                         />
                         {mode === MODE.view && 
-                        <Text 
-                            pl="16px" 
-                            flex={1}>
-                            {todo.title}
-                        </Text>}
+                            <Text 
+                                pl="16px" 
+                                flex={1}>
+                                {todo.title}
+                            </Text>}
                         {mode === MODE.edit && (
                             <Input
                                 ref={inputRef}
@@ -95,6 +96,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo: initialData, isLoading, onChange })
                             />
                         )}
                     </Flex>
+
                 </CardBody>
             </Card>
         </Spinner>

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Outlet } from "react-router-dom";
 
 // components
-import Navigation from "sharedComponents/Navigation";
+import Navigation from "shared/components/Navigation";
 
 // UI
 import { Box } from "@chakra-ui/react";

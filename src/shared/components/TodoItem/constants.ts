@@ -1,5 +1,5 @@
 // types
-import Ttodo from 'types/todo';
+import Ttodo from 'shared/types/todo';
 
 export const MODE = {
     view: 'view',

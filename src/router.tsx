@@ -13,7 +13,7 @@ import Recoil from "apps/Recoil";
 import Jotai from "apps/Jotai";
 import Rematch from "apps/Rematch";
 import Zustand from "apps/Zustand";
-import Placeholder from "sharedComponents/MainPlaceholder";
+import Placeholder from "shared/components/MainPlaceholder";
 import Signal from "apps/PreactSignal";
 
 const router = createBrowserRouter(createRoutesFromElements(

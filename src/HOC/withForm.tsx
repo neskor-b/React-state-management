@@ -11,7 +11,7 @@ import {
     StyleProps
 } from '@chakra-ui/react'
 
-import { FormContext } from 'sharedComponents/Form';
+import { FormContext } from 'shared/components/Form';
 
 type WithFormProps<P> = {
     helperText?: string;

@@ -4,10 +4,10 @@ import React, { FC } from 'react';
 import { Flex } from '@chakra-ui/react'
 
 // components
-import TodoItem from 'sharedComponents/TodoItem';
+import TodoItem from 'shared/components/TodoItem';
 
 // types
-import Ttodo from 'types/todo';
+import Ttodo from 'shared/types/todo';
 
 type TodoListProps = {
     todos: Record<string, Ttodo>;
@@ -17,7 +17,7 @@ type TodoListProps = {
 
 const TodoList: FC<TodoListProps> = ({ todos, loading, onChange }) => {
     return (
-        <Flex direction="column" gap={5}>
+        <Flex direction="column" gap={3}>
             {Object.keys(todos).map((todoId: any) => 
                 <TodoItem
                     isLoading={loading[todoId]}

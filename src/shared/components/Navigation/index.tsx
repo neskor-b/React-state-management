@@ -18,7 +18,7 @@ import { Container, TabLink, MenuItemLink } from "./styled";
 import { appsRoutes } from "routes";
 
 // hooks
-import useWindowSize, { SIZES } from "hooks/useWindowSize";
+import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
 
 const Navigation: FC = () => {
     const { width } = useWindowSize();

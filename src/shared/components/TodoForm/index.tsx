@@ -2,16 +2,16 @@ import React, { FC, useRef } from "react";
 import { v4 as uuid4 } from 'uuid'
 
 // components
-import FormField from "sharedComponents/FormField";
+import FormField from "shared/components/FormField";
 import { Button, Box, InputGroup, Input, InputRightElement } from "@chakra-ui/react";
-import Form from "sharedComponents/Form";
+import Form from "shared/components/Form";
 
 // Hhooks
-import useCustomEvent, { EVENT_NAMES } from 'hooks/useCustomEvent';
-import useClickOutside from 'hooks/useClickOutside';
+import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
+import useClickOutside from 'shared/hooks/useClickOutside';
 
 // types
-import Ttodo from "types/todo";
+import Ttodo from "shared/types/todo";
 
 type TodoFormProps = {
     onSubmit: (data: Ttodo) => void,
