@@ -2,7 +2,7 @@ import {
     Box,
     MenuItem
 } from "@chakra-ui/react";
-import styled from "HOC/withChakra";
+import styled from "shared/HOC/withChakra";
 
 export const Container = styled(Box, {
     display: "flex",
