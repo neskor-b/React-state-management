@@ -19,7 +19,7 @@ const MOCK_TODOS: Ttodo[] = [
 const App = () => {
     const [todos, setTodos] = useState<Ttodo[]>(MOCK_TODOS);
 
-    const addTodo = (data: Ttodo) => setTodos(push(todos, data));
+    const addTodo = (data: Ttodo) => setTodos(push(todos, data, 'front'));
     const changeTodo = (data: Ttodo) => setTodos(update(todos, ({ id }) => id === data.id, data));
     const deleteTodo = (data: Ttodo) => setTodos(remove(todos, ({ id }) => id === data.id));
 

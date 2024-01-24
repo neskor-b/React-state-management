@@ -72,10 +72,11 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                 {isWidgetOpen && widget}
             </Flex>
             <Flex
-                position="absolute"
-                right={0}
-                bottom={0}
+                position="fixed"
+                width="fit-content"
                 gap={2}
+                right={5}
+                bottom={5}
             >
                 <IconButton 
                     aria-label='toggle logger' 

@@ -7,7 +7,8 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    IconButton
+    IconButton,
+    useColorMode
 } from "@chakra-ui/react";
 import { HamburgerIcon } from '@chakra-ui/icons';
 
@@ -22,12 +23,13 @@ import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
 
 const Navigation: FC = () => {
     const { width } = useWindowSize();
+    const { colorMode } = useColorMode();
     const tabsArr = Object.values(appsRoutes);
 
     const showDesktop = (width || 0) > SIZES.sm;
 
     if (showDesktop) return (
-        <Container>
+        <Container colorMode={colorMode}>
             {tabsArr.map(link => 
                 <NavLink 
                     key={link.key} 

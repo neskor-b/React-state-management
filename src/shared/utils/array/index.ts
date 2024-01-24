@@ -1,5 +1,5 @@
 
-export const push = <T>(arr: any[], element: T) => ([...arr, element]);
+export const push = <T>(arr: any[], element: T, to: 'front' | 'back' = 'back') => (to === 'front' ? [element, ...arr] : [...arr, element]);
 
 export const remove = <T>(arr: T[], removeIndex: number | ((e: T) => boolean)) => {
     const index = typeof removeIndex === 'number' ? removeIndex : arr.findIndex(removeIndex);

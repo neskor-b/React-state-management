@@ -12,6 +12,7 @@ const App: FC = () => (
         p={1} 
         direction="column" 
         height="100%"
+        pt={10}
     >
         <Navigation />
         <Box p={2} flexGrow={1}>

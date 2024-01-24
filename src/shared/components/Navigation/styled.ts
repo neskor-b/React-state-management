@@ -4,12 +4,20 @@ import {
 } from "@chakra-ui/react";
 import styled from "shared/HOC/withChakra";
 
-export const Container = styled(Box, {
-    display: "flex",
-    justifyContent: "space-between",
-    borderBottom: "2px",
-    borderBottomColor: "gray.500"
-})
+export const Container = styled<{ colorMode: 'light' | 'dark' }>(Box,({ colorMode }) => (
+    {
+        display: "flex",
+        justifyContent: "space-between",
+        borderBottom: "2px",
+        borderBottomColor: "gray.500",
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 100,
+        backgroundColor: colorMode === 'dark' ? 'gray.800' : 'white'
+    }
+))
 
 export const TabLink = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
     { 
