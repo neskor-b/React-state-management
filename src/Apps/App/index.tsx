@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 
 // components
 import Navigation from "shared/components/Navigation";
+import Settings from "shared/components/Settings";
 
 // UI
 import { Box, Flex } from "@chakra-ui/react";
@@ -18,6 +19,7 @@ const App: FC = () => (
         <Box p={2} flexGrow={1}>
             <Outlet />
         </Box>
+        <Settings/>
     </Flex>
 )
 

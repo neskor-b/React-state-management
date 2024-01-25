@@ -1,11 +1,13 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
 // UI
-import { Box, Flex, IconButton } from "@chakra-ui/react"
-import { SettingsIcon } from '@chakra-ui/icons'
+import { Box, Flex } from "@chakra-ui/react"
 
 // components
-import ToggleColorMode from 'shared/components/ToggleColorMode';
+import  { TSettings } from 'shared/components/Settings';
+
+// hooks
+import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
 
 interface TodoLayoutProps {
     children: ReactNode;
@@ -38,8 +40,9 @@ const Widget: React.FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
-    const [isWidgetOpen, setIsWidgetOpen] = useState(false);
-    const toggleWidget = () => setIsWidgetOpen(prevValue => !prevValue);
+    const { pageValue: settings } = useLocalStorage<TSettings>({
+        key: CUSTOM_EVENTS.UPDATE_SETTINGS
+    });
 
     let app, widget;
 
@@ -69,21 +72,7 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                 gap={3}
             >
                 {app}
-                {isWidgetOpen && widget}
-            </Flex>
-            <Flex
-                position="fixed"
-                width="fit-content"
-                gap={2}
-                right={5}
-                bottom={5}
-            >
-                <IconButton 
-                    aria-label='toggle logger' 
-                    icon={<SettingsIcon /> } 
-                    onClick={toggleWidget}
-                />
-                <ToggleColorMode />
+                {settings?.isWidgetOpen && widget}
             </Flex>
         </Box>
     );
