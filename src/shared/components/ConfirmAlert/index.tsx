@@ -59,8 +59,8 @@ const ConfirmAlert: FC<ConfirmAlertProps> = ({ onConfirm, headerText, text, canc
                         <Button size="sm" onClick={onClose}> {cancelText || 'Cancel'}</Button>
                         <Button 
                             size="sm" 
-                            onClick={confirm} 
                             colorScheme='red'
+                            onClick={confirm}
                         >
                             {confirmText || 'Confirm'}
                         </Button>

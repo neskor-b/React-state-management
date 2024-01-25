@@ -1,4 +1,4 @@
-import styled from "shared/HOC/withChakra";
+import styled, { checkStyles } from "shared/HOC/withChakra";
 import { Card } from '@chakra-ui/react'
 
 // data
@@ -18,16 +18,14 @@ type TStyledCardProps = {
     colorMode: 'light' | 'dark'
 }
 
-export const StyledCard = styled<TStyledCardProps>(Card, ({ colorMode, mode, isInvalid, status }) => (
-    {
-        _hover: {
-            boxShadow: EDIT_BOX_SADOW
-        },
-        transition: 'all 0.2s ease-in-out',
-        border: isInvalid ? '1px solid' : '',
-        borderColor: isInvalid ? 'red.300' : 'gray.300',
-        boxShadow: mode === MODE.edit ? EDIT_BOX_SADOW : BOX_SHADOW,
-        transform: mode === MODE.edit ? 'scale(1.02)' : '',
-        backgroundColor: status === 'completed' ? colorMode === 'dark' ? 'blue.700' : 'blue.50' : ''
-    }
-))
+export const StyledCard = styled<TStyledCardProps>(Card, props => checkStyles({
+    _hover: {
+        boxShadow: EDIT_BOX_SADOW
+    },
+    transition: 'all 0.2s ease-in-out',
+    border: props.isInvalid ? '1px solid' : '',
+    borderColor: props.isInvalid ? 'red.300' : 'gray.300',
+    boxShadow: props.mode === MODE.edit ? EDIT_BOX_SADOW : BOX_SHADOW,
+    transform: props.mode === MODE.edit ? 'scale(1.02)' : '',
+    backgroundColor: status === 'completed' ? props.colorMode === 'dark' ? 'blue.700' : 'blue.50' : ''
+}))
