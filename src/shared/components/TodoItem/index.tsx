@@ -1,19 +1,22 @@
 import React, { FC, useRef, useEffect, useState, ChangeEvent } from 'react';
 
 // UI
-import { Card, CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
+import { CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
 import Spinner from 'shared/components/Spinner';
 import ConfirmAlert from 'shared/components/ConfirmAlert';
 
 // utils
-import { getCartStyles, validateTodo } from 'shared/components/TodoItem/utils';
+import { validateTodo } from 'shared/components/TodoItem/utils';
 
 // hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 
 // data
 import { MODE, CHECKED, INPUT_MODE } from 'shared/components/TodoItem/constants'
+
+// styled
+import { StyledCard } from './styled';
 
 
 // types
@@ -97,7 +100,12 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
 
     return (
         <Spinner isLoading={isLoading}>
-            <Card {...getCartStyles({ isInvalid, mode, status: todo.status, colorMode })}>
+            <StyledCard 
+                isInvalid={isInvalid} 
+                mode={mode} 
+                status={todo.status} 
+                colorMode={colorMode}
+            >
                 <CardBody>
                     <Flex 
                         gap={2} 
@@ -166,7 +174,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                     </Flex>
 
                 </CardBody>
-            </Card>
+            </StyledCard>
         </Spinner>
 
     );

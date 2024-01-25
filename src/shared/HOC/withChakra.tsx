@@ -2,14 +2,16 @@
 import { chakra, ChakraProps } from "@chakra-ui/react";
 import React, { ComponentType, ReactNode } from "react";
 
+type TstylesWithProps<P> = (props: P) => ChakraProps
+
 const withChakra = <P extends object>(
     Component: ComponentType<ChakraProps>,
-    styles: ((props: P) => ChakraProps) | ChakraProps
+    styles: TstylesWithProps<P> | ChakraProps
 ) => {
     const StyledComponent = chakra(Component, { baseStyle: {} });
 
     return (wrappedComponentProps: P & { children?: ReactNode }) => {
-        const dynamicStyles = typeof styles === "function" ? styles(wrappedComponentProps) : styles;
+        const dynamicStyles = (typeof styles === "function" ? styles(wrappedComponentProps) : styles) ;
         return <StyledComponent {...wrappedComponentProps} {...dynamicStyles} />;
     };
 };
