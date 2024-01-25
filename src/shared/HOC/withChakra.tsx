@@ -2,11 +2,11 @@
 import { chakra, ChakraProps } from "@chakra-ui/react";
 import React, { ComponentType, ReactNode } from "react";
 
-type TstylesWithProps<P> = (props: P) => ChakraProps
+type TStylesWithProps<P> = (props: P) => ChakraProps
 
 const withChakra = <P extends object>(
     Component: ComponentType<ChakraProps>,
-    styles: TstylesWithProps<P> | ChakraProps
+    styles: TStylesWithProps<P> | ChakraProps
 ) => {
     const StyledComponent = chakra(Component, { baseStyle: {} });
 

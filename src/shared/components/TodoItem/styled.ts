@@ -24,7 +24,7 @@ export const StyledCard = styled<TStyledCardProps>(Card, ({ colorMode, mode, isI
             boxShadow: EDIT_BOX_SADOW
         },
         transition: 'all 0.2s ease-in-out',
-        bordersssssssssssxx: isInvalid ? '1px solid' : '',
+        border: isInvalid ? '1px solid' : '',
         borderColor: isInvalid ? 'red.300' : 'gray.300',
         boxShadow: mode === MODE.edit ? EDIT_BOX_SADOW : BOX_SHADOW,
         transform: mode === MODE.edit ? 'scale(1.02)' : '',
