@@ -27,5 +27,5 @@ export const StyledCard = styled<TStyledCardProps>(Card, props => checkStyles({
     borderColor: props.isInvalid ? 'red.300' : 'gray.300',
     boxShadow: props.mode === MODE.edit ? EDIT_BOX_SADOW : BOX_SHADOW,
     transform: props.mode === MODE.edit ? 'scale(1.02)' : '',
-    backgroundColor: status === 'completed' ? props.colorMode === 'dark' ? 'blue.700' : 'blue.50' : ''
+    backgroundColor: props.status === 'completed' ? props.colorMode === 'dark' ? 'blue.700' : 'blue.50' : ''
 }))

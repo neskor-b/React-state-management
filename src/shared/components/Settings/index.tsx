@@ -1,4 +1,5 @@
 import React from "react";
+import { useMatch } from "react-router-dom";
 
 // components
 import ToggleColorMode from 'shared/components/ToggleColorMode';
@@ -20,6 +21,8 @@ const INITIAL_SETTINGS: TSettings = {
 
 
 const Settings = () => {
+    const isRoot = useMatch({ path: '/' });    
+
     const { pageValue: settings, setPageValue: setSettings } = useLocalStorage<TSettings>({
         key: CUSTOM_EVENTS.UPDATE_SETTINGS,
         defaultValue: INITIAL_SETTINGS
@@ -35,11 +38,13 @@ const Settings = () => {
             right={5}
             bottom={5}
         >
-            <IconButton 
-                aria-label='toggle logger' 
-                icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <SettingsIcon /> } 
-                onClick={toggleWidget}
-            />
+            {!isRoot && (
+                <IconButton 
+                    aria-label='toggle logger' 
+                    icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <SettingsIcon /> } 
+                    onClick={toggleWidget}
+                />
+            )}
             <ToggleColorMode />
         </Flex>
     )
