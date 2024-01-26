@@ -20,10 +20,11 @@ type WithFormProps<P> = {
     rules?: RegisterOptions,
     children?: (data: UseFormReturn & P & { value?: any }) => React.ReactNode,
     wrapperStyles?: StyleProps
+    hideErrorMessage?: boolean,
 }
 
 const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps<P> & P) => {
-    const { helperText, label, name, rules, wrapperStyles, children, ...rest } = props;
+    const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, children, ...rest } = props;
     const formData = useContext(FormContext);
     
     return ( 
@@ -45,7 +46,7 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
                         />
                     }
                     {children && children({...formData,...rest as P, ...field})}
-                    {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
+                    {error?.message && !hideErrorMessage && <FormErrorMessage>{error.message}</FormErrorMessage>}
                     {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
                 </FormControl>
             )}

@@ -1,19 +1,20 @@
-import React, { FC, useRef, useEffect, useState, ChangeEvent } from 'react';
+import React, { FC, useRef, useEffect, useState } from 'react';
 
 // UI
-import { CardBody, Checkbox, Flex, Input, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
+import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
+
+// components
 import Spinner from 'shared/components/Spinner';
 import ConfirmAlert from 'shared/components/ConfirmAlert';
-
-// utils
-import { validateTodo } from 'shared/components/TodoItem/utils';
+import Form from 'shared/components/Form';
+import FormField from 'shared/components/FormField';
 
 // hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 
 // data
-import { MODE, CHECKED, INPUT_MODE } from 'shared/components/TodoItem/constants'
+import { MODE, CHECKED } from 'shared/components/TodoItem/constants'
 
 // styled
 import { StyledCard } from './styled';
@@ -32,32 +33,31 @@ type TodoItemProps = {
 
 const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const formRef = useRef<any>(null);
+
+    const toast = useToast();
+
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
-    const [title, setTitle] = useState(todo.title);
-    const [isInvalid, setIsInvalid] = useState(false);
     const { colorMode } = useColorMode();
-    const toast = useToast()
-    
-    const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => setTitle(event.target.value);
 
-    const onSubmitTitle = () => {
-        if (isInvalid){
+    const onFormSubmit = (values: Ttodo) => {
+        setMode(MODE.view);
+        onChange(values)
+    }
+
+    const onFormError = (errors: Record<keyof Ttodo, { message: string }>) => {
+        Object.keys(errors).forEach(key => {
             toast({
-                description: "Title can't be empty!",
+                description: errors[key as keyof Ttodo]?.message || 'Unknown error',
                 status: 'warning',
-                duration: 3000,
-                isClosable: true
-            });
-        } else {
-            onChange({ ...todo, title });
-            setMode(MODE.view);
-        }
-
+                duration: 3000
+            })
+        })
     }
 
     const resetTodo = () => {
+        formRef?.current?.reset()
         setMode(MODE.view);
-        setTitle(todo.title);
     };
 
     const { dispatchCustomEvent } = useCustomEvent<string>({
@@ -74,11 +74,6 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
         dispatchCustomEvent(todo.id);
     };
 
-    const onChangeStatus = () => {
-        onChange({ ...todo, status: todo.status === 'active' ? 'completed' : 'active'});
-        resetTodo();
-    };
-
     const onDeleteTodo = () => {
         onDelete(todo);
         resetTodo();
@@ -91,90 +86,110 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
         }
     }, [mode]);
 
-    useEffect(() => {
-        setIsInvalid(validateTodo(title));
-    }, [title])
-
     const isViewMode = mode === MODE.view;
     const isEditMode = mode === MODE.edit;
 
     return (
         <Spinner isLoading={isLoading}>
-            <StyledCard 
-                isInvalid={isInvalid} 
-                mode={mode} 
-                status={todo.status} 
-                colorMode={colorMode}
+            <Form 
+                formRef={formRef} 
+                onSubmit={onFormSubmit} 
+                onError={onFormError}
+                formConfig={{ defaultValues: todo }}
             >
-                <CardBody>
-                    <Flex 
-                        gap={2} 
-                        align="center"
+                {({ formState }) => (
+                    <StyledCard 
+                        isInvalid={!formState.isValid && isEditMode} 
+                        mode={mode} 
+                        status={todo.status} 
+                        colorMode={colorMode}
                     >
-                        <Checkbox 
-                            isChecked={CHECKED[todo.status]}
-                            disabled={isLoading || isInvalid}
-                            size="lg"
-                            onChange={onChangeStatus}
-                        />
-                        {isViewMode && 
-                            <Text 
-                                pl="16px" 
-                                lineHeight="40.8px"
-                                flex={1}>
-                                {todo.title}
-                            </Text>}
-                        {mode === MODE.edit && (
-                            <Input
-                                ref={inputRef}
-                                variant={INPUT_MODE[mode]}
-                                value={title}
-                                onChange={onTitleChange}
-                            />
-                        )}
-                        {isViewMode && (
-                            <IconButton 
-                                aria-label='toggle edit' 
-                                icon={<EditIcon />} 
-                                size="sm"
-                                onClick={enableEditMode}
-                            />
-                        )}
-                        {isEditMode && (
-                            <IconButton 
-                                aria-label='submit title' 
-                                icon={<CheckIcon />} 
-                                size="sm"
-                                onClick={onSubmitTitle}
-                            />
-                        )}
-                        {isEditMode && (
-                            <IconButton 
-                                aria-label='reset todo' 
-                                icon={<CloseIcon />} 
-                                size="sm"
-                                onClick={resetTodo}
-                            />
-                        )}
-                        {isViewMode && (
-                            <ConfirmAlert 
-                                text="Are you sure you want to delete this todo?"
-                                headerText="Delete Todo" 
-                                cancelText="Cancel"
-                                confirmText="Delete"
-                                onConfirm={onDeleteTodo}
+                        <CardBody>
+                
+                            <Flex 
+                                gap={2} 
+                                align="center"
                             >
-                                <IconButton 
-                                    aria-label='delete todo' 
-                                    icon={<DeleteIcon />} 
-                                    size="sm"
-                                />
-                            </ConfirmAlert>
-                        )}
-                    </Flex>
+                                <FormField.Field
+                                    name="status"
+                                    wrapperStyles={{ width: 'fit-content', height: '20.4px' }}
+                                >
+                                    {({ getValues, setValue }) => (
+                                        <Checkbox 
+                                            isChecked={CHECKED[todo.status]}
+                                            disabled={isLoading}
+                                            size="lg"
+                                            onChange={e => {
+                                                setValue('status',e.target.checked ? 'completed' : 'active');
+                                                setValue('title', todo.title);
+                                                formRef?.current?.submitForm(getValues());
+                                            }}
+                                        />
+                                    )}
+                                </FormField.Field>
+                                {isViewMode && (
+                                    <Text 
+                                        pl="16px" 
+                                        lineHeight="40.8px"
+                                        flex={1}>
+                                        {todo.title}
+                                    </Text>
+                                )
+                
+                                }
+                                {mode === MODE.edit && (
+                                    <FormField.Input
+                                        name="title"
+                                        placeholder="Add Todo..."
+                                        hideErrorMessage
+                                        rules={{ required: "Title can't be empty!" }}
+                                    />
+                                )}
+                                {isViewMode && (
+                                    <IconButton 
+                                        aria-label='toggle edit' 
+                                        icon={<EditIcon />} 
+                                        size="sm"
+                                        onClick={enableEditMode}
+                                    />
+                                )}
+                                {isEditMode && (
+                                    <IconButton 
+                                        aria-label='submit title' 
+                                        icon={<CheckIcon />} 
+                                        size="sm"
+                                        type='submit'
+                                    />
+                                )}
+                                {isEditMode && (
+                                    <IconButton 
+                                        aria-label='reset todo' 
+                                        icon={<CloseIcon />} 
+                                        size="sm"
+                                        onClick={resetTodo}
+                                    />
+                                )}
+                                {isViewMode && (
+                                    <ConfirmAlert 
+                                        text="Are you sure you want to delete this todo?"
+                                        headerText="Delete Todo" 
+                                        cancelText="Cancel"
+                                        confirmText="Delete"
+                                        onConfirm={onDeleteTodo}
+                                    >
+                                        <IconButton 
+                                            aria-label='delete todo' 
+                                            icon={<DeleteIcon />} 
+                                            size="sm"
+                                        />
+                                    </ConfirmAlert>
+                                )}
+                            </Flex>
+                        </CardBody>
+                    </StyledCard>
+                )}
+            </Form>
 
-                </CardBody>
-            </StyledCard>
         </Spinner>
 
     );
