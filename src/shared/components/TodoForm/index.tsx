@@ -39,7 +39,6 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
             status: "active",
             createdAt: new Date().toISOString()
         }
-        console.log(newTodo);
         
         onSubmit(newTodo)
         formRef.current?.reset({ title: '' });

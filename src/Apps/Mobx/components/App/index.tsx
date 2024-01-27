@@ -1,42 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { observer } from "mobx-react-lite"
 
 // components
-import TodoForm from 'shared/components/TodoForm';
 import Layout from 'shared/components/Layout';
-import TodoList from 'shared/components/TodoList';
 
-// utils
-import { push, update, remove } from 'shared/utils/array';
+// components
+import CreateTodo from 'apps/Mobx/components/CreateTodo';
+import Todos from 'apps/Mobx/components/Todos';
 
-// types
-import Ttodo from 'shared/types/todo';
-
-const MOCK_TODOS: Ttodo[] = [
-    { id: '1', title: 'test', status: 'active', createdAt: new Date().toISOString() }
-];
 
 
 const App = () => {
-    const [todos, setTodos] = useState<Ttodo[]>(MOCK_TODOS);
-
-    const addTodo = (data: Ttodo) => setTodos(push(todos, data, 'front'));
-    const changeTodo = (data: Ttodo) => setTodos(update(todos, ({ id }) => id === data.id, data));
-    const deleteTodo = (data: Ttodo) => setTodos(remove(todos, ({ id }) => id === data.id));
-
-    useEffect(() => {
-        console.log(todos)
-    }, [todos])
-
     return (
         <Layout>
             <Layout.App>
-                <TodoForm onSubmit={addTodo}/>
-                <TodoList
-                    loading={{}}
-                    todos={todos} 
-                    onChange={changeTodo}
-                    onDelete={deleteTodo}
-                />
+                <CreateTodo />
+                <Todos />
             </Layout.App>
             <Layout.Widget>
                 widget
@@ -45,4 +24,4 @@ const App = () => {
     );
 }
 
-export default App;
+export default observer(App);
