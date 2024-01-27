@@ -12,30 +12,29 @@ class TodoStore {
         makeAutoObservable(this)
     }
 
+    private index = (id: string) => this.items.findIndex(todo => todo.id === id)
+    private enableLoading = (id: string) => this.loading[id] = true;
+    private disableLoading = (id: string) => this.loading[id] = false;
+
     addTodo = (data: Ttodo) => {
         this.items.push(data);
     }
 
     changeTodo = (data: Ttodo) => {
-        if (!data.id) return;
-        this.loading[data.id] = true;
-
-        const index = this.items.findIndex(todo => todo.id === data.id);
-        this.items[index] = data;
-
-        this.loading[data.id] = false;
-        
+        this.enableLoading(data.id);
+        this.items[this.index(data.id)] = data;
+        this.disableLoading(data.id);
     }
 
     deleteTodo = (data: Ttodo) => {
-        this.loading[data.id] = true;
-
-        const index = this.items.findIndex(todo => todo.id === data.id);
-        this.items.splice(index, 1);
-        
-        this.loading[data.id] = false;
-        
+        this.enableLoading(data.id);
+        this.items.splice(this.index(data.id), 1);
+        this.disableLoading(data.id);
     }
+
+
 }
+
+export type { TodoStore } ;
 
 export default TodoStore;
