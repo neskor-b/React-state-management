@@ -28,7 +28,7 @@ const Form = ({ onSubmit, onError, children, formConfig, formRef }: FormProps) =
     return (    
         <form onSubmit={submitForm}>
             <FormContext.Provider value={formData}>
-                {typeof children === 'function' ? children(formData) : children}
+                {typeof children === 'function' ? children({...formData, submitForm}) : children}
             </FormContext.Provider>
         </form>
     )

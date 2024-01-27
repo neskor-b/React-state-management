@@ -14,7 +14,6 @@ import Jotai from "apps/Jotai";
 import Rematch from "apps/Rematch";
 import Zustand from "apps/Zustand";
 import Placeholder from "shared/components/MainPlaceholder";
-import Signal from "apps/PreactSignal";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -26,7 +25,6 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path={appsRoutes.jotai.path} element={<Jotai />} />
         <Route path={appsRoutes.rematch.path} element={<Rematch />} />
         <Route path={appsRoutes.zustand.path} element={<Zustand />} />
-        <Route path={appsRoutes.preactSignal.path} element={<Signal />} />
     </Route>
 ));
 

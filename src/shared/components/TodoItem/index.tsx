@@ -97,7 +97,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                 onError={onFormError}
                 formConfig={{ defaultValues: todo }}
             >
-                {({ formState }) => (
+                {({ formState, submitForm }) => (
                     <StyledCard 
                         isInvalid={!formState.isValid && isEditMode} 
                         mode={mode} 
@@ -122,7 +122,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                             onChange={e => {
                                                 setValue('status',e.target.checked ? 'completed' : 'active');
                                                 setValue('title', todo.title);
-                                                formRef?.current?.submitForm(getValues());
+                                                submitForm(getValues());
                                             }}
                                         />
                                     )}
