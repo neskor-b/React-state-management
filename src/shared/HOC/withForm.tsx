@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
 import React, { useContext } from 'react';
-import { Controller, RegisterOptions, UseFormReturn } from 'react-hook-form';
+import { Controller, RegisterOptions, UseFormReturn, ControllerRenderProps } from 'react-hook-form';
 
 import {
     FormControl,
@@ -13,17 +13,17 @@ import {
 
 import { FormContext } from 'shared/components/Form';
 
-type WithFormProps<P> = {
+type WithFormProps = {
     helperText?: string;
     label?: string;
     name: string;
     rules?: RegisterOptions,
-    children?: (data: UseFormReturn & P & { value?: any }) => React.ReactNode,
+    children?: ({ formData, input }: { formData: UseFormReturn, input: ControllerRenderProps}) => React.ReactNode,
     wrapperStyles?: StyleProps
     hideErrorMessage?: boolean,
 }
 
-const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps<P> & P) => {
+const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps & P) => {
     const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, children, ...rest } = props;
     const formData = useContext(FormContext);
     
@@ -45,7 +45,7 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
                             {...field}
                         />
                     }
-                    {children && children({...formData,...rest as P, ...field})}
+                    {children && children({ formData, input: field })}
                     {error?.message && !hideErrorMessage && <FormErrorMessage>{error.message}</FormErrorMessage>}
                     {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
                 </FormControl>

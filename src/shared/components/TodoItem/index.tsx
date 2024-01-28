@@ -114,15 +114,15 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     name="status"
                                     wrapperStyles={{ width: 'fit-content', height: '20.4px' }}
                                 >
-                                    {({ getValues, setValue }) => (
+                                    {({ formData }) => (
                                         <Checkbox 
                                             isChecked={CHECKED[todo.status]}
                                             disabled={isLoading}
                                             size="lg"
                                             onChange={e => {
-                                                setValue('status',e.target.checked ? 'completed' : 'active');
-                                                setValue('title', todo.title);
-                                                submitForm(getValues());
+                                                formData.setValue('status',e.target.checked ? 'completed' : 'active');
+                                                formData.setValue('title', todo.title);
+                                                submitForm(formData.getValues());
                                             }}
                                         />
                                     )}

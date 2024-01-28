@@ -63,21 +63,21 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
                         name="title"
                         rules={{ required: "This field is required" }}
                     >
-                        {({ formState, ...rest }) => {
+                        {({ formData, input }) => {
                             return (
                                 <Input
                                     placeholder="Add Todo..."
                                     _focus={{
                                         border: "2px solid",
-                                        borderColor: formState.errors.title ? 'red.500' : 'blue.500',
+                                        borderColor: formData.formState.errors.title ? 'red.500' : 'blue.500',
                                         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
                                     }}
                                     _active={{
                                         border: "2px solid",
-                                        borderColor: formState.errors.title? 'red.500' : 'blue.500',
+                                        borderColor: formData.formState.errors.title? 'red.500' : 'blue.500',
                                         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
                                     }}
-                                    {...rest}
+                                    {...input}
                                 />
                             )
                         }}

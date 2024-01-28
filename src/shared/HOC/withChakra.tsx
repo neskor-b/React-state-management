@@ -13,9 +13,9 @@ const withChakra = <P extends object>(
 ) => {
     const StyledComponent = chakra(Component, { baseStyle: {} });
 
-    return (wrappedComponentProps: P & ChakraProps & { children?: ReactNode }) => {
+    return (wrappedComponentProps: P & ChakraProps & { children?: ReactNode }) => {        
         const dynamicStyles = (typeof styles === "function" ? styles(wrappedComponentProps) : styles) ;
-        return <StyledComponent {...wrappedComponentProps} {...dynamicStyles} />;
+        return <StyledComponent {...dynamicStyles}> {wrappedComponentProps.children} </StyledComponent>;
     };
 };
 
