@@ -72,7 +72,14 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                 gap={3}
             >
                 {app}
-                {settings?.isWidgetOpen && widget}
+                <Box
+                    overflow="hidden"
+                    opacity={settings?.isWidgetOpen ? 1 : 0}
+                    transition="all 0.5s ease-in-out"
+                    width={settings?.isWidgetOpen ? "100%" : "0px"}
+                >
+                    {widget}
+                </Box>
             </Flex>
         </Box>
     );
