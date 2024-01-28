@@ -2,7 +2,8 @@
 import { useEffect, useRef } from 'react';
 
 export const EVENT_NAMES = {
-    TODO_FOCUS: 'TODO_FOCUS'
+    TODO_FOCUS: 'TODO_FOCUS',
+    DISPLAY_TOATS: 'DISPLAY_TOATS'
 } as const
 
 interface CustomEventOptions<T> {

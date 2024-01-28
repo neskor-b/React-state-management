@@ -3,6 +3,9 @@ import { makeAutoObservable } from 'mobx';
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
 
+// utils
+import { showToast } from 'shared/components/Toast';
+
 // types
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
@@ -27,8 +30,16 @@ class TodoStore {
         this.enableLoading(data?.id);
         try {
             await apiUpdateTodo(data);
+            showToast({
+                description: 'Todo updated!',
+                status: 'success'
+            })
         } catch (e) {
             console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
         } finally {
             this.disableLoading(data.id);
         }
@@ -40,8 +51,16 @@ class TodoStore {
         try {
             await apiDeleteTodo(data);
             this.items.splice(this.index(data.id), 1);
+            showToast({
+                description: 'Todo deleted!',
+                status: 'info'
+            })
         } catch (e) {
             console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
         } finally {
             this.disableLoading(data.id);
         }
@@ -54,6 +73,10 @@ class TodoStore {
             this.items = data;
         } catch (e) {
             console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
         } finally {
             this.isFetching = false;
         }
@@ -64,6 +87,10 @@ class TodoStore {
         try {
             const { data: newTodo} = await apiCreateTodo(data);
             this.items.push(newTodo);
+            showToast({
+                description: 'Todo created!',
+                status: 'success'
+            })
         } catch (e) {
             console.error(e);
         } finally {

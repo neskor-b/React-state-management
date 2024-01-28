@@ -1,7 +1,7 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
 
 // UI
-import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode, useToast } from '@chakra-ui/react'
+import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode } from '@chakra-ui/react'
 import { EditIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
 
 // components
@@ -12,6 +12,9 @@ import FormField from 'shared/components/FormField';
 
 // hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
+
+// utils
+import { showToast } from 'shared/components/Toast';
 
 // data
 import { MODE, CHECKED } from 'shared/components/TodoItem/constants'
@@ -34,9 +37,6 @@ type TodoItemProps = {
 const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const formRef = useRef<any>(null);
-
-    const toast = useToast();
-
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
     const { colorMode } = useColorMode();
 
@@ -46,13 +46,11 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     }
 
     const onFormError = (errors: Record<keyof Ttodo, { message: string }>) => {
-        Object.keys(errors).forEach(key => {
-            toast({
-                description: errors[key as keyof Ttodo]?.message || 'Unknown error',
-                status: 'warning',
-                duration: 3000
-            })
-        })
+        Object.keys(errors).forEach(key => showToast({
+            description: errors[key as keyof Ttodo]?.message || 'Unknown error',
+            status: 'warning',
+            duration: 3000
+        }))
     }
 
     const resetTodo = () => {
