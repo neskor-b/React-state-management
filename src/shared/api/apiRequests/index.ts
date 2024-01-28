@@ -4,7 +4,7 @@ import makeApiCall from 'shared/api';
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from '../models/createTodo';
 
-export const apiGetTodos = async (query?: Record<string, string>) => makeApiCall.get<Ttodo[]>('/todos', { params: query });
+export const apiGetTodos = async (query?: Record<string, string>) => makeApiCall.get<Ttodo[]>('/todos', { params: {...query, page: 1, limit: 3} });
 
 export const apiCreateTodo = async (data: TCreateTodo) => makeApiCall.post<Ttodo>('/todos', data);
 

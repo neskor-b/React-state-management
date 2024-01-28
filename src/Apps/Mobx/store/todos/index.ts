@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 // api
-import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/todos';
+import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
 
 // types
 import Ttodo from 'shared/api/models/todo';
