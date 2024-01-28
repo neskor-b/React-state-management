@@ -5,7 +5,7 @@ import { Card } from '@chakra-ui/react'
 import { MODE } from 'shared/components/TodoItem/constants'
 
 // types
-import Ttodo from 'shared/types/todo';
+import Ttodo from 'shared/api/models/todo';
 
 const BOX_SHADOW = 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;'
 const EDIT_BOX_SADOW = 'rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;'

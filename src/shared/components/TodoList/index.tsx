@@ -7,7 +7,7 @@ import { Flex } from '@chakra-ui/react'
 import TodoItem from 'shared/components/TodoItem';
 
 // types
-import Ttodo from 'shared/types/todo';
+import Ttodo from 'shared/api/models/todo';
 
 type TodoListProps = {
     todos: Ttodo[];

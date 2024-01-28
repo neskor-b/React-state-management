@@ -21,7 +21,7 @@ import { StyledCard } from './styled';
 
 
 // types
-import Ttodo from 'shared/types/todo';
+import Ttodo from 'shared/api/models/todo';
 
 type TodoItemProps = {
     todo: Ttodo,

@@ -11,7 +11,7 @@ import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 import useClickOutside from 'shared/hooks/useClickOutside';
 
 // types
-import Ttodo from "shared/types/todo";
+import Ttodo from "shared/api/models/todo";
 
 type TodoFormProps = {
     onSubmit: (data: Ttodo) => void,

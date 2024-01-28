@@ -1,5 +1,5 @@
 // types
-import Ttodo from 'shared/types/todo';
+import Ttodo from 'shared/api/models/todo';
 
 export const MODE = {
     view: 'view',

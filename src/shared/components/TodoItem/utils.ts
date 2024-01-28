@@ -1,4 +1,4 @@
-import Ttodo from 'shared/types/todo'
+import Ttodo from 'shared/api/models/todo'
 
 export const validateTodo = (title: Ttodo['title']) => {
     if(!title) {

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 // types
-import Ttodo from 'shared/types/todo';
+import Ttodo from 'shared/api/models/todo';
 
 
 class TodoStore {
