@@ -9,9 +9,9 @@ function getEnvVar(variableName: string) {
 }
 
 const generateApiUrl = () => {
-    const apiKey = getEnvVar("API_KEY");
-    const proptocol = getEnvVar("PROTOCOL");
-    const url = getEnvVar("APP_API_URL");
+    const apiKey = getEnvVar("REACT_APP_API_KEY");
+    const proptocol = getEnvVar("REACT_APP_PROTOCOL");
+    const url = getEnvVar("REACT_APP_API_URL");
 
     if (apiKey && proptocol && url) {
         return `${proptocol}://${apiKey}${url}`;

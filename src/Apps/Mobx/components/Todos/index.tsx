@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { observer } from "mobx-react-lite"
 
 // hooks
@@ -6,18 +6,17 @@ import useStore from 'apps/Mobx/hooks/useStore';
 
 // components
 import TodoList from 'shared/components/TodoList';
-import makeApiCall from 'shared/api';
+
+
+const TodoListObserved = observer(TodoList)
 
 
 const Todos: FC = () => {
     const model = useStore('todos');
-    useEffect(() => {
-        makeApiCall.get('/todos')
-    }, [])
     return (
-        <TodoList
+        <TodoListObserved
             loading={model.loading}
-            todos={[...model.items]} 
+            todos={model.items} 
             onChange={model.changeTodo}
             onDelete={model.deleteTodo}
         />

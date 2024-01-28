@@ -8,7 +8,7 @@ import TodoForm from 'shared/components/TodoForm';
 const CreateTodo: FC = () => {
     const model = useStore('todos');
     return (
-        <TodoForm onSubmit={model.addTodo} />
+        <TodoForm isLoading={model.loading.todoForm} onSubmit={model.createTodo} />
     );
 }
 
