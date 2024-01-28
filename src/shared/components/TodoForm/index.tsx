@@ -50,7 +50,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit }) => {
         <Form 
             formRef={formRef} 
             onSubmit={onSubmitHandler} 
-            formConfig={{ defaultValues: { todo: '' } }}
+            formConfig={{ defaultValues: { title: '' } }}
         >
             <Box 
                 display="flex" 
