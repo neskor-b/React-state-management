@@ -90,6 +90,7 @@ class TodoStore {
         try {
             const { data: newTodo} = await apiCreateTodo(data);
             this.items.push(newTodo);
+            this.sortByStatus();
             showToast({
                 description: 'Todo created!',
                 status: 'success'

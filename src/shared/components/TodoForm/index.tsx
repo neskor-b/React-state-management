@@ -10,6 +10,9 @@ import Spinner from "shared/components/Spinner";
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 import useClickOutside from 'shared/hooks/useClickOutside';
 
+// utils
+import { showToast } from 'shared/components/Toast';
+
 // types
 import TCreateTodo from "shared/api/models/createTodo";
 
@@ -44,12 +47,21 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
         dispatchCustomEvent('');
     }
 
+    const onFormError = () => {
+        showToast({
+            description: 'You neet to enter todo name!',
+            status: 'warning',
+            duration: 3000
+        })
+    }
+
 
     return(
         <Spinner isLoading={isLoading}>
             <Form 
                 formRef={formRef} 
                 onSubmit={onSubmitHandler} 
+                onError={onFormError}
                 formConfig={{ defaultValues: { title: '' } }}
             >
                 <Box 
@@ -61,7 +73,8 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
                     <InputGroup size='md'>
                         <FormField.Field
                             name="title"
-                            rules={{ required: "This field is required" }}
+                            hideErrorMessage
+                            rules={{ required: true }}
                         >
                             {({ formData, input }) => {
                                 return (

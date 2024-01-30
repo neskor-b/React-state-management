@@ -142,7 +142,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 {mode === MODE.edit && (
                                     <FormField.Input
                                         name="title"
-                                        placeholder="Add Todo..."
+                                        placeholder="Title"
                                         hideErrorMessage
                                         rules={{ required: "Title can't be empty!" }}
                                     />
