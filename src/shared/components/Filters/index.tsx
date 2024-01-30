@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 
 // compoenents
-import { useColorMode, Box, IconButton, Tooltip } from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { 
+    useColorMode, 
+    Box, 
+    IconButton, 
+    Tooltip, 
+    Input, 
+    InputGroup, 
+    InputRightElement, 
+    Flex,
+    Select
+} from "@chakra-ui/react";
+import { ChevronDownIcon, ChevronUpIcon, CloseIcon } from '@chakra-ui/icons';
 
 // styled
 import { Hide } from './styled';
@@ -25,6 +35,8 @@ const Filters = () => {
                     <IconButton 
                         borderRadius="0"
                         height="100%"
+                        top={0}
+                        zIndex={100}
                         width={isHiden ? '100%' : '15px'}
                         position="absolute"
                         right={0}
@@ -35,6 +47,29 @@ const Filters = () => {
                         onClick={() => setIsHiden(!isHiden)} 
                     />
                 </Tooltip>
+                {!isHiden && (
+                    <Flex gap={1}>
+                        <InputGroup size="sm">
+                            <Input 
+                                placeholder="Search" 
+                                borderRadius={5}
+                            />
+                            <InputRightElement>
+                                <CloseIcon cursor="pointer" />
+                            </InputRightElement>
+                        </InputGroup>
+                        <Select 
+                            size="sm" 
+                            borderRadius={5}
+                            placeholder='All statuses'
+                        >
+                            <option value='option1'>Option 1</option>
+                            <option value='option2'>Option 2</option>
+                            <option value='option3'>Option 3</option>
+                        </Select>
+
+                    </Flex>
+                )}
 
             </Hide>
         </Box>
