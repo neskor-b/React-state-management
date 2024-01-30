@@ -1,8 +1,9 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
+import moment from 'moment';
 
 // UI
-import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode } from '@chakra-ui/react'
-import { EditIcon, CheckIcon, CloseIcon, DeleteIcon } from '@chakra-ui/icons'
+import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode, Tooltip } from '@chakra-ui/react'
+import { EditIcon, CheckIcon, CloseIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
 
 // components
 import Spinner from 'shared/components/Spinner';
@@ -120,6 +121,11 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                             onChange={e => {
                                                 formData.setValue('status',e.target.checked ? 'completed' : 'active');
                                                 formData.setValue('title', todo.title);
+                                                if(e.target.checked) {
+                                                    formData.setValue('completedAt', new Date().toISOString());
+                                                } else {
+                                                    formData.setValue('completedAt', '');
+                                                }
                                                 submitForm(formData.getValues());
                                             }}
                                         />
@@ -127,14 +133,12 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 </FormField.Field>
                                 {isViewMode && (
                                     <Text 
-                                        pl="16px" 
+                                        pl="16px"
                                         lineHeight="40.8px"
                                         flex={1}>
                                         {todo.title}
                                     </Text>
-                                )
-                
-                                }
+                                )}
                                 {mode === MODE.edit && (
                                     <FormField.Input
                                         name="title"
@@ -143,6 +147,24 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                         rules={{ required: "Title can't be empty!" }}
                                     />
                                 )}
+                                <Tooltip 
+                                    hasArrow 
+                                    placement="top"
+                                    label={
+                                        <>
+                                            <Text>
+                                                {`Created: ${moment(todo.createdAt).format('DD-MM-YYYY')} | ${moment(todo.createdAt).format('HH:mm')}`}
+                                            </Text>
+                                            {todo?.completedAt && (
+                                                <Text>
+                                                    {`Compleated: ${moment(todo?.completedAt).format('DD-MM-YYYY')} | ${moment(todo.completedAt).format('HH:mm')}`}
+                                                </Text>    
+                                            )}
+                                        </>
+                                    }
+                                >
+                                    <InfoIcon />
+                                </Tooltip>
                                 {isViewMode && (
                                     <IconButton 
                                         aria-label='toggle edit' 

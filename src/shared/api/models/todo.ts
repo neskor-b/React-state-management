@@ -4,6 +4,7 @@ type Ttodo = {
     title: string;
     status: TtodoStatus;
     createdAt: string;
+    completedAt?: string;
 }
 
 export default Ttodo;
