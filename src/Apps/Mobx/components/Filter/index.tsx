@@ -4,7 +4,7 @@ import Filters from 'shared/components/Filters';
 
 const Filter = () => {
     return (
-        <Filters />
+        <Filters filters={{ status: 'active', search: ''}} />
     );
 };
 

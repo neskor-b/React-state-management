@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 
 // compoenents
 import { 
@@ -14,12 +14,27 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon } from '@chakra-ui/icons';
 
+// types
+import TFilters from 'shared/api/models/filters';
+
 // styled
 import { Hide } from './styled';
 
-const Filters = () => {
+const statusOptions: { value: TFilters['status'], label: string }[] = [
+    { value: 'active', label: 'Active' },
+    { value: 'completed', label: 'Completed' }
+];
+
+const Filters: FC<{ filters: TFilters}> = ({ filters }) => {
     const [isHiden, setIsHiden] = useState(true);
+    const [TooltipLabel, setTooltipLabel] = useState('Show Filters');
     const { colorMode } = useColorMode();
+
+    const toggleHide = () => {
+        setIsHiden(!isHiden);
+        const timeout = setTimeout(() => setTooltipLabel(isHiden ? 'Hide and clear Filters' : 'Show Filters'), 500);
+        return () => clearTimeout(timeout);
+    };
     return (
         <Box mb="10px">
             <Hide
@@ -29,8 +44,7 @@ const Filters = () => {
                 <Tooltip 
                     hasArrow
                     placement='right'
-                    isDisabled={!isHiden}
-                    label={"Show Filters"}
+                    label={TooltipLabel}
                 >
                     <IconButton 
                         borderRadius="0"
@@ -44,7 +58,7 @@ const Filters = () => {
                         size="sm"
                         aria-label='toggle light mode'
                         icon={!isHiden ? <ChevronUpIcon /> : <ChevronDownIcon />} 
-                        onClick={() => setIsHiden(!isHiden)} 
+                        onClick={toggleHide} 
                     />
                 </Tooltip>
                 {!isHiden && (
@@ -53,6 +67,7 @@ const Filters = () => {
                             <Input 
                                 placeholder="Search" 
                                 borderRadius={5}
+                                value={filters.search}
                             />
                             <InputRightElement>
                                 <CloseIcon cursor="pointer" />
@@ -61,11 +76,14 @@ const Filters = () => {
                         <Select 
                             size="sm" 
                             borderRadius={5}
+                            value={filters.status}
                             placeholder='All statuses'
                         >
-                            <option value='option1'>Option 1</option>
-                            <option value='option2'>Option 2</option>
-                            <option value='option3'>Option 3</option>
+                            {statusOptions.map(option => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
                         </Select>
 
                     </Flex>

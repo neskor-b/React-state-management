@@ -24,6 +24,7 @@ class TodoStore {
     private index = (id: string) => this.items.findIndex(todo => todo.id === id)
     private enableLoading = (id: string) => this.loading[id] = true;
     private disableLoading = (id: string) => this.loading[id] = false;
+    private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
 
     changeTodo = async (data: Ttodo) => {
         this.items[this.index(data.id)] = data;
@@ -34,6 +35,7 @@ class TodoStore {
                 description: 'Todo updated!',
                 status: 'success'
             })
+            this.sortByStatus()
         } catch (e) {
             console.error(e);
             showToast({
@@ -70,7 +72,8 @@ class TodoStore {
         this.isFetching = true;
         try {
             const { data } = await apiGetTodos();
-            this.items = data;
+            this.items = data
+            this.sortByStatus()
         } catch (e) {
             console.error(e);
             showToast({

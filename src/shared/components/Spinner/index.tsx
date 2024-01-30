@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
 // components
-import { Spinner as ChakraSpinner } from '@chakra-ui/react'
+import { Spinner as ChakraSpinner, SpinnerProps } from '@chakra-ui/react'
 import { Center, Box, Container } from './styled';
 
-type SpinnerProps = {
+type Props = {
     isLoading: boolean,
     children: React.ReactNode,
+    size?: SpinnerProps['size'],
 }
 
-const Spinner: FC<SpinnerProps> = ({isLoading, children}) => (
+const Spinner: FC<Props> = ({ isLoading, children, size }) => (
     <Container>
         {isLoading && (
             <Center>
-                <ChakraSpinner color='blue.500' />
+                <ChakraSpinner size={size} color='blue.500' />
             </Center>
         )}
         <Box isLoading={isLoading}>
