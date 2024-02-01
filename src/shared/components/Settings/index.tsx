@@ -50,8 +50,13 @@ const Settings = () => {
                             onClick={() => navigate('/')}
                         />
                     </Tooltip>
-                    <Tooltip hasArrow label={settings?.isWidgetOpen ? 'Hide Widget' : 'Show Widget'}>
+                    <Tooltip 
+                        hasArrow 
+                        // label={settings?.isWidgetOpen ? 'Hide Widget' : 'Show Widget'}
+                        label="Not done yet"
+                    >
                         <IconButton 
+                            isDisabled
                             aria-label='toggle logger' 
                             icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <SettingsIcon /> } 
                             onClick={toggleWidget}
