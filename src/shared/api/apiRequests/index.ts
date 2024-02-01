@@ -4,7 +4,7 @@ import makeApiCall, { AxiosError } from 'shared/api';
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from '../models/createTodo';
 
-export const apiGetTodos = async (query?: Record<string, string>) => {
+export const apiGetTodos = async (query?: Record<string, string | number>) => {
     try {
         const response = await makeApiCall.get<Ttodo[]>('/todos', { params: query });
         return response.data;

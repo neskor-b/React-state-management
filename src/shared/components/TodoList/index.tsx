@@ -39,7 +39,7 @@ const TodoList: FC<TodoListProps> = ({ todos, loading, isFecthing, onChange, onD
             {todos.length === 0 && (
                 <Center 
                     width="100%" 
-                    height="20vh" 
+                    height="81px" 
                 >
                     Not found
                 </Center>

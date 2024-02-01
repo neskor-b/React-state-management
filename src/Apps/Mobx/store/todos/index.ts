@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable } from 'mobx';
+import { autorun, makeAutoObservable, reaction } from 'mobx';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
@@ -11,6 +11,7 @@ import { prepareQuery } from 'shared/utils/query';
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
 import TFilters from 'shared/api/models/filters';
+import TPagination from 'shared/api/models/pagination';
 
 
 class TodoStore {
@@ -21,12 +22,23 @@ class TodoStore {
         status: '',
         search: ''
     }
+    pagination: TPagination = {
+        limit: 5,
+        page: 1,
+        hasNext: false
+    }
 
     constructor() {
         makeAutoObservable(this)
         autorun(() => {
-            this.fetchTodos()
+            this.fetchTodos();
         })
+        reaction(
+            () => this.items.length,
+            itemsLength => {
+                this.pagination.hasNext = !!itemsLength;
+            }
+        );
     }
 
     private index = (id: string) => this.items.findIndex(todo => todo.id === id)
@@ -60,6 +72,8 @@ class TodoStore {
         this.filters = data
     }
 
+    updatePagination = <K extends keyof TPagination>(key: K) => (value: TPagination[K]) => this.pagination[key] = value;
+
     deleteTodo = async (data: Ttodo) => {
         this.enableLoading(data.id);
         try {
@@ -82,8 +96,9 @@ class TodoStore {
 
     fetchTodos = async () => {
         this.isFetching = true;
+        const query = prepareQuery({ filters: this.filters, pagination: this.pagination })
         try {
-            const data = await apiGetTodos(prepareQuery(this.filters));
+            const data = await apiGetTodos(query);
             this.items = data
             this.sortByStatus()
         } catch (e) {
