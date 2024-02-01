@@ -4,14 +4,14 @@ import useStore from 'apps/Mobx/hooks/useStore';
 import Paginate from 'shared/components/Pagination';
 
 const Pagination = () => {
-    const model = useStore('todos');    
+    const { state, actions } = useStore('todos');    
     return (
         <Paginate 
-            page={model.pagination.page}
-            limit={model.pagination.limit}
-            onLimitChange={model.updatePagination('limit')} 
-            onPageChange={model.updatePagination('page')} 
-            hasNext={model.pagination.hasNext}
+            page={state.pagination.page}
+            limit={state.pagination.limit}
+            hasNext={state.pagination.hasNext}
+            onLimitChange={actions.updatePagination} 
+            onPageChange={actions.updatePagination} 
         />
     );
 };

@@ -2,23 +2,26 @@ import React, { FC } from 'react';
 import { Flex, IconButton, Select } from '@chakra-ui/react';
 import { ArrowRightIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 
+// types
+import TPagination from 'shared/api/models/pagination';
+
 type Props = {
     hasNext: boolean,
     page: number,
     limit: number,
-    onLimitChange: (value: number) => void,
-    onPageChange: (value: number) => void,
+    onLimitChange: (key: keyof TPagination, value: number) => void,
+    onPageChange: (key: keyof TPagination, value: number) => void,
 }
 
 const Pagination: FC<Props> = ({ hasNext, page, limit, onLimitChange, onPageChange }) => {
     const handlePageChange = (step: 'next' | 'previous') => () => {
         const newValue = step === 'next' ? page + 1 : page - 1;
-        onPageChange(newValue);
+        onPageChange('page', newValue);
     };
 
     const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = Number(event.target.value);
-        onLimitChange(value);
+        onLimitChange('limit', value);
     }
     return (
         <Flex 

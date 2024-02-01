@@ -41,7 +41,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const toggleHide = () => {
         setIsHiden(!isHiden);
         const timeout = setTimeout(() => setTooltipLabel(isHiden ? 'Hide and clear Filters' : 'Show Filters'), 500);
-        if (!isHiden) {
+        if (!isHiden && filters.search || filters.status) {
             onChange({ ...filters, status: '', search: '' });
         }
         return () => clearTimeout(timeout);
@@ -58,7 +58,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const changeSearch = handleChange('search');
     const changeStatus = handleChange('status');
     
-    const deboundedInput = useDebouncedInput({
+    const debouncedInput = useDebouncedInput({
         value: filters.search,
         onChange: changeSearch,
         delay: 500
@@ -96,11 +96,11 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                             <Input 
                                 placeholder="Search" 
                                 borderRadius={5}
-                                {...deboundedInput.inputProps}
+                                {...debouncedInput.inputProps}
                             />
-                            {deboundedInput.inputProps.value && (
+                            {debouncedInput.inputProps.value && (
                                 <InputRightElement>
-                                    <CloseIcon onClick={deboundedInput.clear} cursor="pointer" />
+                                    <CloseIcon onClick={debouncedInput.clear} cursor="pointer" />
                                 </InputRightElement>
                             )}
 
