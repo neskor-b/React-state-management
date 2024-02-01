@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 // UI
-import { Flex, Box } from '@chakra-ui/react'
+import { Flex, Center } from '@chakra-ui/react'
 
 // components
 import TodoItem from 'shared/components/TodoItem';
@@ -37,11 +37,12 @@ const TodoList: FC<TodoListProps> = ({ todos, loading, isFecthing, onChange, onD
                 )}
             </Flex>
             {todos.length === 0 && (
-                <Box 
-                    width="300px" 
-                    height="300px" 
-                    opacity={0}
-                />
+                <Center 
+                    width="100%" 
+                    height="20vh" 
+                >
+                    Not found
+                </Center>
             )}
         </Spinner>
 

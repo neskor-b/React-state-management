@@ -1,8 +1,8 @@
 import TtodoStatus from "./todoStatus"
 
 type TFilters = {
-    status: TtodoStatus
-    search: string
+    status: TtodoStatus | ''
+    search: string 
 }
 
 export default TFilters;

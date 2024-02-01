@@ -18,7 +18,7 @@ const Todos: FC = () => {
             loading={model.loading}
             isFecthing={model.isFetching}
             todos={model.items} 
-            onChange={model.changeTodo}
+            onChange={model.updateTodo}
             onDelete={model.deleteTodo}
         />
     );

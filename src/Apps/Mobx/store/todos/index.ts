@@ -1,24 +1,32 @@
-import { makeAutoObservable } from 'mobx';
+import { autorun, makeAutoObservable } from 'mobx';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
 
 // utils
 import { showToast } from 'shared/components/Toast';
+import { prepareQuery } from 'shared/utils/query';
 
 // types
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
+import TFilters from 'shared/api/models/filters';
 
 
 class TodoStore {
     items: Ttodo[] = [];
     loading: Record<string, boolean> = {};
     isFetching: boolean = false;
+    filters: TFilters = {
+        status: '',
+        search: ''
+    }
 
     constructor() {
         makeAutoObservable(this)
-        this.fetchTodos();
+        autorun(() => {
+            this.fetchTodos()
+        })
     }
 
     private index = (id: string) => this.items.findIndex(todo => todo.id === id)
@@ -26,7 +34,7 @@ class TodoStore {
     private disableLoading = (id: string) => this.loading[id] = false;
     private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
 
-    changeTodo = async (data: Ttodo) => {
+    updateTodo = async (data: Ttodo) => {
         this.items[this.index(data.id)] = data;
         this.enableLoading(data?.id);
         try {
@@ -46,6 +54,10 @@ class TodoStore {
             this.disableLoading(data.id);
         }
 
+    }
+
+    setFilters = (data: TFilters) => {
+        this.filters = data
     }
 
     deleteTodo = async (data: Ttodo) => {
@@ -71,7 +83,7 @@ class TodoStore {
     fetchTodos = async () => {
         this.isFetching = true;
         try {
-            const { data } = await apiGetTodos();
+            const data = await apiGetTodos(prepareQuery(this.filters));
             this.items = data
             this.sortByStatus()
         } catch (e) {

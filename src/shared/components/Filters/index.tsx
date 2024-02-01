@@ -14,18 +14,26 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon } from '@chakra-ui/icons';
 
+// hooks
+import useDebouncedInput from 'shared/hooks/useDebouncedInput';
+
 // types
 import TFilters from 'shared/api/models/filters';
 
 // styled
 import { Hide } from './styled';
 
+type FiltersProps = {
+    filters: TFilters
+    onChange: (filters: TFilters) => void
+}
+
 const statusOptions: { value: TFilters['status'], label: string }[] = [
     { value: 'active', label: 'Active' },
     { value: 'completed', label: 'Completed' }
 ];
 
-const Filters: FC<{ filters: TFilters}> = ({ filters }) => {
+const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const [isHiden, setIsHiden] = useState(true);
     const [TooltipLabel, setTooltipLabel] = useState('Show Filters');
     const { colorMode } = useColorMode();
@@ -33,8 +41,29 @@ const Filters: FC<{ filters: TFilters}> = ({ filters }) => {
     const toggleHide = () => {
         setIsHiden(!isHiden);
         const timeout = setTimeout(() => setTooltipLabel(isHiden ? 'Hide and clear Filters' : 'Show Filters'), 500);
+        if (!isHiden) {
+            onChange({ ...filters, status: '', search: '' });
+        }
         return () => clearTimeout(timeout);
     };
+
+    const handleChange = (key: keyof TFilters) => (event: string | React.ChangeEvent<HTMLSelectElement>) => {
+        if (typeof event === 'string') {
+            onChange({ ...filters, [key]: event });
+            return;
+        }
+        onChange({ ...filters, [key]: event.target.value });
+    };
+
+    const changeSearch = handleChange('search');
+    const changeStatus = handleChange('status');
+    
+    const deboundedInput = useDebouncedInput({
+        value: filters.search,
+        onChange: changeSearch,
+        delay: 500
+    });
+
     return (
         <Box mb="10px">
             <Hide
@@ -67,16 +96,20 @@ const Filters: FC<{ filters: TFilters}> = ({ filters }) => {
                             <Input 
                                 placeholder="Search" 
                                 borderRadius={5}
-                                value={filters.search}
+                                {...deboundedInput.inputProps}
                             />
-                            <InputRightElement>
-                                <CloseIcon cursor="pointer" />
-                            </InputRightElement>
+                            {deboundedInput.inputProps.value && (
+                                <InputRightElement>
+                                    <CloseIcon onClick={deboundedInput.clear} cursor="pointer" />
+                                </InputRightElement>
+                            )}
+
                         </InputGroup>
                         <Select 
                             size="sm" 
                             borderRadius={5}
                             value={filters.status}
+                            onChange={changeStatus}
                             placeholder='All statuses'
                         >
                             {statusOptions.map(option => (
