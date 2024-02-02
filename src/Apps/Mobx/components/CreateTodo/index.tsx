@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { observer } from "mobx-react-lite"
-import useStore from 'apps/Mobx/hooks/useStore';
+import useStore from 'Apps/Mobx/hooks/useStore';
 
 import TodoForm from 'shared/components/TodoForm';
 

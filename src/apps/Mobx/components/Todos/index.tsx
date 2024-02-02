@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { observer } from "mobx-react-lite"
 
 // hooks
-import useStore from 'apps/Mobx/hooks/useStore';
+import useStore from 'Apps/Mobx/hooks/useStore';
 
 // components
 import TodoList from 'shared/components/TodoList';

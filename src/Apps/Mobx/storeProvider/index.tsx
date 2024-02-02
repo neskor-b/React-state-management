@@ -1,5 +1,5 @@
 import React from 'react';
-import store from 'apps/Mobx/store';
+import store from 'Apps/Mobx/store';
 
 export const StoreContext = React.createContext(store);
 
