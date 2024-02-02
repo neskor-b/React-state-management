@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import RootApp from 'rootApp';
+import RootApp from './rootApp';
 import {  ColorModeScript } from '@chakra-ui/react'
 import theme from './theme';
 import './style.css';
