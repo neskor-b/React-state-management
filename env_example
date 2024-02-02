@@ -1,3 +1,3 @@
-API_KEY=
-PROTOCOL=https
-APP_API_URL=.mockapi.io
+REACT_APP_API_KEY=
+REACT_APP_PROTOCOL=https
+REACT_APP_API_URL=.mockapi.io
