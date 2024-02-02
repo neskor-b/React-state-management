@@ -39,7 +39,7 @@ const Settings = () => {
 
     return (
         <Flex
-            position="fixed"
+            position={isDesktop ? 'fixed' : 'absolute'}
             width="fit-content"
             gap={2}
             right={isDesktop ? 5 : undefined}
