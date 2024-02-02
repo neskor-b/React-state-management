@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable } from 'mobx';
+import { makeObservable, observable, action, spy, reaction } from 'mobx';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
@@ -11,124 +11,138 @@ import { prepareQuery } from 'shared/utils/query';
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
 import TFilters from 'shared/api/models/filters';
-
-
-interface State {
-    items: Ttodo[];
-    loading: Record<string, boolean>;
-    isFetching: boolean;
-    filters: TFilters;
-}
+import TQuery from 'shared/api/models/query';
 
 
 class TodoStore {
-    state: State = {
-        items: [],
-        loading: {},
-        isFetching: false,
-        filters: {
-            status: '',
-            search: '',
-            orderby: 'createdAt',
-            order: 'desc'
-        }
+    items: Ttodo[] = []
+    loading: Record<string, boolean> = {}
+    isFetching: boolean = false
+    filters: TFilters = {
+        status: '',
+        search: '',
+        orderby: 'createdAt',
+        order: 'desc'
     }
 
 
     constructor() {
-        makeAutoObservable(this)
-        autorun(() => {
-            this.actions.fetchTodos();
+        // makeAutoObservable(this)
+        makeObservable(this, {
+            items: observable,
+            loading: observable,
+            isFetching: observable,
+            filters: observable,
+            fetchTodos: action,
+            createTodo: action,
+            updateTodo: action,
+            deleteTodo: action,
+            setFilters: action
         })
+
+        reaction(
+            () => this.filters,
+            filters => { 
+                this.fetchTodos(prepareQuery({ filters }))
+            }
+        )
+    
+        spy(event => {
+            if (event.type === "action") {
+                console.log(`${event.name} with args: ${JSON.stringify(event.arguments)}`)
+            }
+        })
+
+        this.fetchTodos(prepareQuery({ filters: this.filters }));
     }
 
-    private index = (id: string) => this.state.items.findIndex(todo => todo.id === id)
-    private enableLoading = (id: string) => this.state.loading[id] = true;
-    private disableLoading = (id: string) => this.state.loading[id] = false;
-    private sortByStatus = () => this.state.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
-    private setFetching = (value: true | false) => this.state.isFetching = value
-
-    actions = {
-        updateTodo: async (data: Ttodo) => {
-            this.state.items[this.index(data.id)] = data;
-            this.enableLoading(data?.id);
-            try {
-                await apiUpdateTodo(data);
-                showToast({
-                    description: 'Todo updated!',
-                    status: 'success'
-                })
-                this.sortByStatus()
-            } catch (e) {
-                console.error(e);
-                showToast({
-                    description: 'Something went wrong!',
-                    status: 'error'
-                })
-            } finally {
-                this.disableLoading(data.id);
-            }
-        },
-        setFilters: (data: TFilters) => {
-            this.state.filters = data
-        },
+    private index = (id: string) => this.items.findIndex(todo => todo.id === id)
+    private enableLoading = (id: string) => this.loading[id] = true;
+    private disableLoading = (id: string) => this.loading[id] = false;
+    private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
+    private setFetching = (value: true | false) => this.isFetching = value
 
 
-        deleteTodo: async (data: Ttodo) => {
-            this.enableLoading(data.id);
-            try {
-                await apiDeleteTodo(data);
-                this.state.items.splice(this.index(data.id), 1);
-                showToast({
-                    description: 'Todo deleted!',
-                    status: 'info'
-                })
-            } catch (e) {
-                console.error(e);
-                showToast({
-                    description: 'Something went wrong!',
-                    status: 'error'
-                })
-            } finally {
-                this.disableLoading(data.id);
-            }
-        },
 
-        fetchTodos: async () => {
-            this.setFetching(true)
-            const query = prepareQuery({ filters: this.state.filters })
-            try {
-                const data = await apiGetTodos(query);
-                this.state.items = data
-                this.sortByStatus()
-            } catch (e) {
-                console.error(e);
-                showToast({
-                    description: 'Something went wrong!',
-                    status: 'error'
-                })
-            } finally {
-                this.setFetching(false)
-            }
-        },
-
-        createTodo: async (data: TCreateTodo) => {
-            this.enableLoading('todoForm')
-            try {
-                const { data: newTodo} = await apiCreateTodo(data);
-                this.state.items.unshift(newTodo);
-                this.sortByStatus();
-                showToast({
-                    description: 'Todo created!',
-                    status: 'success'
-                })
-            } catch (e) {
-                console.error(e);
-            } finally {
-                this.disableLoading('todoForm');
-            }
+    updateTodo = async (data: Ttodo) => {
+        this.items[this.index(data.id)] = data;
+        this.enableLoading(data?.id);
+        try {
+            await apiUpdateTodo(data);
+            showToast({
+                description: 'Todo updated!',
+                status: 'success'
+            })
+            this.sortByStatus()
+        } catch (e) {
+            console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
+        } finally {
+            this.disableLoading(data.id);
         }
     }
+
+    setFilters = (data: TFilters) => {
+        this.filters = data
+    }
+
+    deleteTodo = async (data: Ttodo) => {
+        this.enableLoading(data.id);
+        try {
+            await apiDeleteTodo(data);
+            this.items.splice(this.index(data.id), 1);
+            showToast({
+                description: 'Todo deleted!',
+                status: 'info'
+            })
+        } catch (e) {
+            console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
+        } finally {
+            this.disableLoading(data.id);
+        }
+    }
+
+    fetchTodos = async (query?: TQuery) => {
+        this.setFetching(true)
+        try {
+            const data = await apiGetTodos(query);
+            this.items = data
+            this.sortByStatus()
+        } catch (e) {
+            console.error(e);
+            showToast({
+                description: 'Something went wrong!',
+                status: 'error'
+            })
+        } finally {
+            this.setFetching(false)
+        }
+    }
+
+    createTodo = async (data: TCreateTodo) => {
+        this.enableLoading('todoForm')
+        try {
+            const { data: newTodo} = await apiCreateTodo(data);
+            this.items.unshift(newTodo);
+            this.sortByStatus();
+            showToast({
+                description: 'Todo created!',
+                status: 'success'
+            })
+        } catch (e) {
+            console.error(e);
+        } finally {
+            this.disableLoading('todoForm');
+        }
+    }
+
 }
 
 export type { TodoStore } ;

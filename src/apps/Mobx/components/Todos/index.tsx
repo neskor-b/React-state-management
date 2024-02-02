@@ -12,14 +12,14 @@ const TodoListObserved = observer(TodoList)
 
 
 const Todos: FC = () => {
-    const { state, actions } = useStore('todos');
+    const model = useStore('todos');
     return (
         <TodoListObserved
-            loading={state.loading}
-            isFecthing={state.isFetching}
-            todos={state.items} 
-            onChange={actions.updateTodo}
-            onDelete={actions.deleteTodo}
+            loading={model.loading}
+            isFecthing={model.isFetching}
+            todos={model.items} 
+            onChange={model.updateTodo}
+            onDelete={model.deleteTodo}
         />
     );
 }

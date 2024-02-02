@@ -6,11 +6,11 @@ import TodoForm from 'shared/components/TodoForm';
 
 
 const CreateTodo: FC = () => {
-    const { state, actions } = useStore('todos');
+    const model = useStore('todos');
     return (
         <TodoForm 
-            isLoading={state.loading.todoForm} 
-            onSubmit={actions.createTodo} 
+            isLoading={model.loading.todoForm} 
+            onSubmit={model.createTodo} 
         />
     );
 }
