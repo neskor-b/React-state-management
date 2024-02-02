@@ -6,6 +6,7 @@ import ToggleColorMode from 'shared/components/ToggleColorMode';
 
 // hooks
 import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
+import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
 
 // UI
 import { Flex, IconButton, Icon, Tooltip } from "@chakra-ui/react"
@@ -22,8 +23,10 @@ const INITIAL_SETTINGS: TSettings = {
 
 
 const Settings = () => {
+    const { width } = useWindowSize();
     const isRoot = useMatch({ path: '/' });    
     const navigate = useNavigate();
+    
 
     const { pageValue: settings, setPageValue: setSettings } = useLocalStorage<TSettings>({
         key: CUSTOM_EVENTS.UPDATE_SETTINGS,
@@ -32,13 +35,17 @@ const Settings = () => {
 
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
 
+    const isDesktop = (width || 0) > SIZES.sm;
+
     return (
         <Flex
             position="fixed"
             width="fit-content"
             gap={2}
-            right={5}
-            bottom={5}
+            right={isDesktop ? 5 : undefined}
+            left={isDesktop ? undefined : 2}
+            bottom={isDesktop ? 5 : undefined}
+            top={isDesktop ? undefined : 10}
         >
             {!isRoot && (
                 <>

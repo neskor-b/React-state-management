@@ -58,7 +58,7 @@ const Navigation: FC = () => {
                     icon={<HamburgerIcon />}
                     variant='outline'
                 />
-                <MenuList>
+                <MenuList zIndex={1000}>
                     {tabsArr.map(link => (
                         <NavLink key={link.key} to={link.path}>
                             {({ isActive }) => (
