@@ -1,10 +1,9 @@
 import TFilters from "shared/api/models/filters"
-import TPagination from "shared/api/models/pagination"
 
 
-export const prepareQuery = ({ filters, pagination }: { filters: TFilters, pagination: TPagination }) => ({
+export const prepareQuery = ({ filters }: { filters: TFilters }) => ({
     ...(filters.status && { status: filters.status }),
     ...(filters.search && { title: filters.search }),
-    ...(pagination.limit && { limit: pagination.limit }),
-    ...(pagination.page && { page: pagination.page })
+    ...(filters.orderby && { orderby: filters.orderby }),
+    ...(filters.order && { order: filters.order })
 })

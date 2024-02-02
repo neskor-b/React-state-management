@@ -40,7 +40,8 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
         const newTodo: TCreateTodo = {
             title: title || '',
             status: "active",
-            createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString(),
+            completedAt: ''
         }
         onSubmit(newTodo)
         formRef.current?.reset({ title: '' });

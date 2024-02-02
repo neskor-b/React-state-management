@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable, reaction } from 'mobx';
+import { autorun, makeAutoObservable } from 'mobx';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
@@ -11,7 +11,6 @@ import { prepareQuery } from 'shared/utils/query';
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
 import TFilters from 'shared/api/models/filters';
-import TPagination from 'shared/api/models/pagination';
 
 
 interface State {
@@ -19,7 +18,6 @@ interface State {
     loading: Record<string, boolean>;
     isFetching: boolean;
     filters: TFilters;
-    pagination: TPagination;
 }
 
 
@@ -30,12 +28,9 @@ class TodoStore {
         isFetching: false,
         filters: {
             status: '',
-            search: ''
-        },
-        pagination: {
-            limit: 5,
-            page: 1,
-            hasNext: false
+            search: '',
+            orderby: 'createdAt',
+            order: 'desc'
         }
     }
 
@@ -45,18 +40,13 @@ class TodoStore {
         autorun(() => {
             this.actions.fetchTodos();
         })
-        reaction(
-            () => this.state.items.length,
-            itemsLength => {
-                this.state.pagination.hasNext = !!itemsLength;
-            }
-        );
     }
 
     private index = (id: string) => this.state.items.findIndex(todo => todo.id === id)
     private enableLoading = (id: string) => this.state.loading[id] = true;
     private disableLoading = (id: string) => this.state.loading[id] = false;
     private sortByStatus = () => this.state.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
+    private setFetching = (value: true | false) => this.state.isFetching = value
 
     actions = {
         updateTodo: async (data: Ttodo) => {
@@ -82,7 +72,7 @@ class TodoStore {
         setFilters: (data: TFilters) => {
             this.state.filters = data
         },
-        updatePagination: <K extends keyof TPagination>(key: K, value: TPagination[K]) => this.state.pagination[key] = value,
+
 
         deleteTodo: async (data: Ttodo) => {
             this.enableLoading(data.id);
@@ -105,8 +95,8 @@ class TodoStore {
         },
 
         fetchTodos: async () => {
-            this.state.isFetching = true;
-            const query = prepareQuery({ filters: this.state.filters, pagination: this.state.pagination })
+            this.setFetching(true)
+            const query = prepareQuery({ filters: this.state.filters })
             try {
                 const data = await apiGetTodos(query);
                 this.state.items = data
@@ -118,7 +108,7 @@ class TodoStore {
                     status: 'error'
                 })
             } finally {
-                this.state.isFetching = false;
+                this.setFetching(false)
             }
         },
 
@@ -126,7 +116,7 @@ class TodoStore {
             this.enableLoading('todoForm')
             try {
                 const { data: newTodo} = await apiCreateTodo(data);
-                this.state.items.push(newTodo);
+                this.state.items.unshift(newTodo);
                 this.sortByStatus();
                 showToast({
                     description: 'Todo created!',

@@ -8,7 +8,6 @@ import Layout from 'shared/components/Layout';
 import CreateTodo from 'apps/Mobx/components/CreateTodo';
 import Todos from 'apps/Mobx/components/Todos';
 import Filter from 'apps/Mobx/components/Filter';
-import Pagination from 'apps/Mobx/components/Pagination';
 
 
 
@@ -19,7 +18,6 @@ const App = () => {
                 <CreateTodo />
                 <Filter/>
                 <Todos />
-                <Pagination />
             </Layout.App>
             <Layout.Widget>
                 widget
