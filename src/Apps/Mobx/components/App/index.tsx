@@ -5,10 +5,10 @@ import { observer } from "mobx-react-lite"
 import Layout from 'shared/components/Layout';
 
 // components
-import CreateTodo from 'Apps/Mobx/components/CreateTodo';
-import Todos from 'Apps/Mobx/components/Todos';
-import Filter from 'Apps/Mobx/components/Filter';
-import Pagination from 'Apps/Mobx/components/Pagination';
+import CreateTodo from 'apps/Mobx/components/CreateTodo';
+import Todos from 'apps/Mobx/components/Todos';
+import Filter from 'apps/Mobx/components/Filter';
+import Pagination from 'apps/Mobx/components/Pagination';
 
 
 

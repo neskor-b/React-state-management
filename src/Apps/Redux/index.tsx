@@ -1,7 +1,7 @@
 import React from 'react';
 
 // components
-import App from 'Apps/Redux/App/index';
+import App from 'apps/Redux/App/index';
 
 const Redux = () => {
     return (

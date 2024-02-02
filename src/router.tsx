@@ -5,14 +5,14 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import { appsRoutes } from "routes";
 
 // pages
-import App  from "Apps/App";
-import Redux from "Apps/Redux";
-import Hookstate from "Apps/Hookstate";
-import Mobx from "Apps/Mobx";
-import Recoil from "Apps/Recoil";
-import Jotai from "Apps/Jotai";
-import Rematch from "Apps/Rematch";
-import Zustand from "Apps/Zustand";
+import App  from "apps/App";
+import Redux from "apps/Redux";
+import Hookstate from "apps/Hookstate";
+import Mobx from "apps/Mobx";
+import Recoil from "apps/Recoil";
+import Jotai from "apps/Jotai";
+import Rematch from "apps/Rematch";
+import Zustand from "apps/Zustand";
 import Placeholder from "shared/components/MainPlaceholder";
 
 const router = createBrowserRouter(createRoutesFromElements(

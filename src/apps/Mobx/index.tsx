@@ -1,10 +1,10 @@
 import React from 'react';
 
 // utils
-import StoreProvider from 'Apps/Mobx/storeProvider';
+import StoreProvider from 'apps/Mobx/storeProvider';
 
 // components
-import App from 'Apps/Mobx/components/App';
+import App from 'apps/Mobx/components/App';
 
 const Mobx = () => {
     return (
