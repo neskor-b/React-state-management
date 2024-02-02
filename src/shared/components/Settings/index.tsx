@@ -45,7 +45,7 @@ const Settings = () => {
             right={isDesktop ? 5 : undefined}
             left={isDesktop ? undefined : 2}
             bottom={isDesktop ? 5 : undefined}
-            top={isDesktop ? undefined : 10}
+            top={isDesktop ? undefined : 2}
         >
             {!isRoot && (
                 <>

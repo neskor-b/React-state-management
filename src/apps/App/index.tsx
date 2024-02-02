@@ -6,23 +6,29 @@ import Navigation from "shared/components/Navigation";
 import Settings from "shared/components/Settings";
 import Toast from "shared/components/Toast";
 
+// hooks
+import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
+
 // UI
 import { Box, Flex } from "@chakra-ui/react";
 
-const App: FC = () => (
-    <Flex 
-        p={1} 
-        direction="column" 
-        height="100%"
-        pt={10}
-    >
-        <Navigation />
-        <Box p={2} flexGrow={1}>
-            <Outlet />
-        </Box>
-        <Settings/>
-        <Toast />
-    </Flex>
-)
+const App: FC = () => {
+    const { width } = useWindowSize();
+    const isDesktop = (width || 0) > SIZES.sm;
+    return (
+        <Flex 
+            direction="column" 
+            height="100%"
+            pt={isDesktop ? 10 : 2}
+        >
+            <Navigation />
+            <Box p={2} flexGrow={1}>
+                <Outlet />
+            </Box>
+            <Settings/>
+            <Toast />
+        </Flex>
+    )
+}
 
 export default App;

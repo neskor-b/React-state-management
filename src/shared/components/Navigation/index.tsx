@@ -50,6 +50,8 @@ const Navigation: FC = () => {
             justifyContent="flex-end" 
             width="100%"
             display="flex"
+            pl={2}
+            pr={2}
         >
             <Menu>
                 <MenuButton
