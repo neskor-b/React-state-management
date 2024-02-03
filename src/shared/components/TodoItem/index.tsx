@@ -96,7 +96,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                 onError={onFormError}
                 formConfig={{ defaultValues: todo }}
             >
-                {({ formState, submitForm }) => (
+                {({ formState, submitForm, getValues }) => (
                     <StyledCard 
                         isInvalid={!formState.isValid && isEditMode} 
                         mode={mode} 
@@ -136,7 +136,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                         pl="16px"
                                         lineHeight="40.8px"
                                         flex={1}>
-                                        {todo.title}
+                                        {getValues().title}
                                     </Text>
                                 )}
                                 {mode === MODE.edit && (
