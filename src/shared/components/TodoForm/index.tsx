@@ -50,7 +50,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
 
     const onFormError = () => {
         showToast({
-            description: 'You neet to enter todo name!',
+            description: 'You need to enter todo name!',
             status: 'warning',
             duration: 3000
         })

@@ -55,7 +55,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     }
 
     const resetTodo = () => {
-        formRef?.current?.reset()
+        formRef?.current?.reset(todo)
         setMode(MODE.view);
     };
 
@@ -87,7 +87,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
 
     const isViewMode = mode === MODE.view;
     const isEditMode = mode === MODE.edit;
-
+    
     return (
         <Spinner isLoading={isLoading}>
             <Form 
@@ -113,9 +113,9 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     name="status"
                                     wrapperStyles={{ width: 'fit-content', height: '20.4px' }}
                                 >
-                                    {({ formData }) => (
+                                    {({ formData, input }) => (
                                         <Checkbox 
-                                            isChecked={CHECKED[todo.status]}
+                                            isChecked={CHECKED[input.value as keyof typeof CHECKED] || false}
                                             disabled={isLoading}
                                             size="lg"
                                             onChange={e => {
@@ -127,6 +127,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                                     formData.setValue('completedAt', '');
                                                 }
                                                 submitForm(formData.getValues());
+                                                dispatchCustomEvent(todo.id);
                                             }}
                                         />
                                     )}
