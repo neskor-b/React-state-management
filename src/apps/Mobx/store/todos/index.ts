@@ -56,7 +56,7 @@ class TodoStore {
         this.fetchTodos(prepareQuery({ filters: this.filters }));
     }
 
-    private finIndex = (data: Ttodo) => this.items.findIndex(todo => todo.id === data.id)
+    private findIndex = (data: Ttodo) => this.items.findIndex(todo => todo.id === data.id)
     private enableLoading = (id: string) => this.loading[id] = true;
     private disableLoading = (id: string) => this.loading[id] = false;
     private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
@@ -72,7 +72,7 @@ class TodoStore {
                 description: 'Todo updated!',
                 status: 'success'
             })
-            this.items[this.finIndex(data)] = data;
+            this.items[this.findIndex(data)] = data;
             this.sortByStatus()
         } catch (e) {
             console.error(e);
@@ -93,7 +93,7 @@ class TodoStore {
         this.enableLoading(data.id);
         try {
             await apiDeleteTodo(data);
-            this.items.splice(this.finIndex(data), 1);            
+            this.items.splice(this.findIndex(data), 1);            
             showToast({
                 description: 'Todo deleted!',
                 status: 'info'
