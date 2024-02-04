@@ -42,8 +42,9 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     const { colorMode } = useColorMode();
 
     const onFormSubmit = (values: Ttodo) => {
-        setMode(MODE.view);
         onChange(values)
+        setMode(MODE.view);
+        formRef?.current?.reset(values);
     }
 
     const onFormError = (errors: Record<keyof Ttodo, { message: string }>) => {
@@ -175,12 +176,20 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     />
                                 )}
                                 {isEditMode && (
-                                    <IconButton 
-                                        aria-label='submit title' 
-                                        icon={<CheckIcon />} 
-                                        size="sm"
-                                        type='submit'
-                                    />
+                                    <Tooltip
+                                        hasArrow 
+                                        placement="top"
+                                        isDisabled={formState.isDirty}
+                                        label="Edit title to save changes"
+                                    >
+                                        <IconButton 
+                                            aria-label='submit title' 
+                                            icon={<CheckIcon />} 
+                                            size="sm"
+                                            isDisabled={!formState.isDirty}
+                                            type='submit'
+                                        />
+                                    </Tooltip>
                                 )}
                                 {isEditMode && (
                                     <IconButton 
