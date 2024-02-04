@@ -69,7 +69,7 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
             <Flex 
                 height="100%"
                 justifyContent="center"
-                gap={settings.isWidgetOpen ? 3 : 0}
+                gap={settings?.isWidgetOpen ? 3 : 0}
             >
                 {app}
                 <Box
