@@ -44,7 +44,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
             completedAt: ''
         }
         onSubmit(newTodo)
-        formRef.current?.reset({ title: '' });
+        formRef.current?.reset();
         dispatchCustomEvent('');
     }
 
@@ -77,18 +77,18 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
                             hideErrorMessage
                             rules={{ required: true }}
                         >
-                            {({ formData, input }) => {
+                            {({ formData: { formState }, input }) => {
                                 return (
                                     <Input
                                         placeholder="Add Todo..."
                                         _focus={{
                                             border: "2px solid",
-                                            borderColor: formData.formState.errors.title ? 'red.500' : 'blue.500',
+                                            borderColor: formState.errors.title ? 'red.500' : 'blue.500',
                                             boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
                                         }}
                                         _active={{
                                             border: "2px solid",
-                                            borderColor: formData.formState.errors.title? 'red.500' : 'blue.500',
+                                            borderColor: formState.errors.title? 'red.500' : 'blue.500',
                                             boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
                                         }}
                                         {...input}

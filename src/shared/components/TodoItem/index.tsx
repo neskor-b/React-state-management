@@ -97,7 +97,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                 onError={onFormError}
                 formConfig={{ defaultValues: todo }}
             >
-                {({ formState, submitForm, getValues }) => (
+                {({ formState, submitForm }) => (
                     <StyledCard 
                         isInvalid={!formState.isValid && isEditMode} 
                         mode={mode} 
@@ -116,7 +116,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 >
                                     {({ formData, input }) => (
                                         <Checkbox 
-                                            isChecked={CHECKED[input.value as keyof typeof CHECKED] || false}
+                                            isChecked={CHECKED[input.value as keyof typeof CHECKED]}
                                             disabled={isLoading}
                                             size="lg"
                                             onChange={e => {
@@ -127,29 +127,20 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                                 } else {
                                                     formData.setValue('completedAt', '');
                                                 }
-                                                submitForm(formData.getValues());
+                                                submitForm();
                                                 dispatchCustomEvent(todo.id);
                                             }}
                                         />
                                     )}
                                 </FormField.Field>
-                                {isViewMode && (
-                                    <Text 
-                                        pl="16px"
-                                        lineHeight="40.8px"
-                                        flex={1}>
-                                        {getValues().title}
-                                    </Text>
-                                )}
-                                {mode === MODE.edit && (
-                                    <FormField.Input
-                                        name="title"
-                                        placeholder="Title"
-                                        hideErrorMessage
-                                        rules={{ required: "Title can't be empty!" }}
-                                    />
-                                )}
-                                <Tooltip 
+                                <FormField.Input
+                                    name="title"
+                                    placeholder="Title"
+                                    hideErrorMessage
+                                    isViewMode={isViewMode}
+                                    rules={{ required: "Title can't be empty!" }}
+                                />
+                                <Tooltip
                                     hasArrow 
                                     placement="top"
                                     label={

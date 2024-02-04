@@ -21,11 +21,28 @@ type WithFormProps = {
     children?: ({ formData, input }: { formData: UseFormReturn, input: ControllerRenderProps}) => React.ReactNode,
     wrapperStyles?: StyleProps
     hideErrorMessage?: boolean,
+    isViewMode?: boolean
 }
 
 const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps & P) => {
-    const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, children, ...rest } = props;
+    const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, isViewMode, children, ...rest } = props;
     const formData = useContext(FormContext);
+
+    const isViewModeProps = {
+        borderColor: 'transparent',
+        boxShadow: 'none',
+        _hover: {
+            boxShadow: 'none'
+        },
+        _focus: {
+            boxShadow: 'none'
+        },
+        isDisabled: true,
+        _disabled: {
+            opacity: 1
+        }
+    }
+    console.log(Component);
     
     return ( 
         <Controller
@@ -43,6 +60,7 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
                         <Component 
                             {...rest as P} 
                             {...field}
+                            {...(isViewMode && Component.displayName === 'Input' && isViewModeProps)}
                         />
                     }
                     {children && children({ formData, input: field })}
