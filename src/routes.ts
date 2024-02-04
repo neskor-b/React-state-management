@@ -11,8 +11,13 @@ type AppsRoutes = {
 export const appsRoutes: AppsRoutes = {
     redux: {
         path: "/redux",
-        name: 'Redux',
+        name: 'Redux (Toolkit)',
         key: 'redux'
+    },
+    rematch: {
+        path: "/rematch",
+        name: 'Rematch (Redux b.p.)',
+        key: 'rematch'
     },
     hookstate: {
         path: "/hookstate",
@@ -33,11 +38,6 @@ export const appsRoutes: AppsRoutes = {
         path: "/jotai",
         name: 'Jotai',
         key: 'jotai'
-    },
-    rematch: {
-        path: "/rematch",
-        name: 'Rematch',
-        key: 'rematch'
     },
     zustand: {
         path: "/zustand",
