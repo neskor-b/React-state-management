@@ -16,7 +16,7 @@ export const appsRoutes: AppsRoutes = {
     },
     rematch: {
         path: "/rematch",
-        name: 'Rematch (Redux b.p.)',
+        name: 'Rematch',
         key: 'rematch'
     },
     hookstate: {
