@@ -9,7 +9,6 @@ makeApiCall.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
         if (error?.config?.method === 'get' && error.response?.status === 404) {
-            console.log(error);
             return Promise.resolve('Not found');
         }        
         return Promise.reject(error);

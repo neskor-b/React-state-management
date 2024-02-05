@@ -115,7 +115,7 @@ class TodoStore {
         this.setFetching(true)
         try {
             const { data } = await apiGetTodos(query);
-            this.items = data
+            this.items = data || []
             this.sortByStatus()
         } catch (e) {
             console.error(e);
