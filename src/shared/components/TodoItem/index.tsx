@@ -44,7 +44,6 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     const onFormSubmit = (values: Ttodo) => {
         onChange(values)
         setMode(MODE.view);
-        formRef?.current?.reset(values);
     }
 
     const onFormError = (errors: Record<keyof Ttodo, { message: string }>) => {
@@ -85,6 +84,10 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
             inputRef.current.focus();            
         }
     }, [mode]);
+
+    useEffect(() => {
+        formRef.current.reset(todo)
+    }, [todo]);
 
     const isViewMode = mode === MODE.view;
     const isEditMode = mode === MODE.edit;

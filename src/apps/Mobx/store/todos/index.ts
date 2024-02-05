@@ -61,6 +61,7 @@ class TodoStore {
     private disableLoading = (id: string) => this.loading[id] = false;
     private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
     private setFetching = (value: true | false) => this.isFetching = value
+    private refreshTodo = (data: Ttodo) => this.items[this.findIndex(data)] = {...this.items[this.findIndex(data)]}
 
 
 
@@ -76,6 +77,7 @@ class TodoStore {
             this.sortByStatus()
         } catch (e) {
             console.error(e);
+            this.refreshTodo(data)
             showToast({
                 description: 'Something went wrong!',
                 status: 'error'
@@ -112,7 +114,7 @@ class TodoStore {
     fetchTodos = async (query?: TQuery) => {
         this.setFetching(true)
         try {
-            const data = await apiGetTodos(query);
+            const { data } = await apiGetTodos(query);
             this.items = data
             this.sortByStatus()
         } catch (e) {

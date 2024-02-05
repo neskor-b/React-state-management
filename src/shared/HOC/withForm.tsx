@@ -42,7 +42,6 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
             opacity: 1
         }
     }
-    console.log(Component);
     
     return ( 
         <Controller
