@@ -86,7 +86,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     }, [mode]);
 
     useEffect(() => {
-        formRef.current.reset(todo)
+        resetTodo()
     }, [todo]);
 
     const isViewMode = mode === MODE.view;
