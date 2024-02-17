@@ -15,7 +15,7 @@ const Todos: FC = () => {
     const model = useStore('todos');
 
     useEffect(() => {
-        model.fetchTodos();
+        model.fetchTodos(model.filters);
     }, [])
     return (
         <TodoListObserved

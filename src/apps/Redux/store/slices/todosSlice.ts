@@ -73,8 +73,7 @@ export const todosSlice = createSlice({
     reducers: {
         updateFilters: (state, action: PayloadAction<TFilters>) => {
             state.filters = action.payload
-        },
-        resetStore: () => initialState
+        }
     },
     extraReducers: builder => {
         builder
@@ -150,6 +149,6 @@ export const todosSlice = createSlice({
     }
 })
   
-export const { updateFilters, resetStore } = todosSlice.actions
+export const { updateFilters } = todosSlice.actions
   
 export default todosSlice.reducer;

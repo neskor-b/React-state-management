@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // components
 import CreateTodo from 'apps/Redux/components/CreateTodo';
@@ -6,20 +6,7 @@ import Todos from 'apps/Redux/components/Todos';
 import Layout from 'shared/components/Layout';
 import Filter from 'apps/Redux/components/Filter';
 
-// redux
-import { useAppDispatch } from 'apps/Redux/store';
-import { resetStore } from 'apps/Redux/store/slices/todosSlice';
-
 const App = () => {
-    const dispatch = useAppDispatch();
-    const reset = () => dispatch(resetStore())
-
-    useEffect(() => {
-        return () => {
-            reset();
-        }
-    }, [])
-
     return (
         <div>
             <Layout>

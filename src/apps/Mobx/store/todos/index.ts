@@ -144,17 +144,6 @@ class TodoStore {
             this.disableLoading('todoForm');
         }
     }
-
-    resetStore = () => {
-        this.items = []
-        this.filters = {
-            status: '',
-            search: '',
-            orderby: 'createdAt',
-            order: 'desc'
-        }
-    }
-
 }
 
 export type { TodoStore } ;
