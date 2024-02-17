@@ -34,8 +34,8 @@ const statusOptions: { value: TFilters['status'], label: string }[] = [
 ];
 
 const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
-    const [isHiden, setIsHiden] = useState(true);
-    const [TooltipLabel, setTooltipLabel] = useState('Show Filters');
+    const [isHiden, setIsHiden] = useState(false);
+    const [TooltipLabel, setTooltipLabel] = useState('Hide and clear Filters');
     const { colorMode } = useColorMode();
 
     const toggleHide = () => {
