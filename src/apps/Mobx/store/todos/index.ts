@@ -131,7 +131,7 @@ class TodoStore {
     createTodo = async (data: TCreateTodo) => {
         this.enableLoading('todoForm')
         try {
-            const { data: newTodo} = await apiCreateTodo(data);
+            const { data: newTodo } = await apiCreateTodo(data);
             this.items.unshift(newTodo);
             this.sortByStatus();
             showToast({
@@ -142,6 +142,16 @@ class TodoStore {
             console.error(e);
         } finally {
             this.disableLoading('todoForm');
+        }
+    }
+
+    resetStore = () => {
+        this.items = []
+        this.filters = {
+            status: '',
+            search: '',
+            orderby: 'createdAt',
+            order: 'desc'
         }
     }
 

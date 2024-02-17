@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { observer } from "mobx-react-lite"
 
 // hooks
@@ -13,6 +13,10 @@ const TodoListObserved = observer(TodoList)
 
 const Todos: FC = () => {
     const model = useStore('todos');
+
+    useEffect(() => {
+        model.fetchTodos();
+    }, [])
     return (
         <TodoListObserved
             loading={model.loading}
