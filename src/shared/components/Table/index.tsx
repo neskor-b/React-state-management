@@ -14,7 +14,7 @@ import {
 type Props = {
     dataSource: Record<string, any>[];
     columns: {key: string; title: string; dataIndex: string}[]
-    title: string,
+    title: React.ReactNode,
 }
 
 const Table: FC<Props> = ({ dataSource, columns, title }) => {

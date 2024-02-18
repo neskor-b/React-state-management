@@ -59,5 +59,24 @@
             "lightMode": "Light Mode",
             "darkMode": "Dark Mode"
         }
+    },
+    "widget": {
+        "mobX": {
+            "nameCulumn": "Name",
+            "descriptionCulumn": "Description",
+            "keyRoleColumn": "Key Role",
+            "observable": "Observable",
+            "computed": "Computed",
+            "action": "Action",
+            "reaction": "Reaction",
+            "observableDescription": "Tracks changes to data structures, arrays, maps, sets, or primitive values. MobX monitors these for modifications.",
+            "computedDescription": "Derived values that automatically update when the observables they depend on change. They are recalculated lazily.",
+            "actionDescription": "Functions that modify observables. Actions make state changes predictable and manageable.",
+            "reactionDescription": "Automatically runs side effects in response to observable changes, using functions like autorun and reaction.",
+            "oservableKeyrole": "Makes your data reactive.",
+            "computedKeyrole": "Automatically updates based on observable changes.",
+            "actionKeyrole": "Ensures predictable state updates.",
+            "reactionKeyrole": "Updates the UI or triggers effects in response to state changes."
+        }
     }
 }
