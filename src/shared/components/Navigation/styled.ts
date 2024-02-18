@@ -14,7 +14,7 @@ export const Container = styled<{ colorMode: 'light' | 'dark' }>(Box,({ colorMod
         top: 0,
         left: 0,
         width: "100%",
-        zIndex: 100,
+        zIndex: 1000,
         backgroundColor: colorMode === 'dark' ? 'gray.800' : 'white'
     }
 ))

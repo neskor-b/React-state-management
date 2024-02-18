@@ -8,6 +8,7 @@ import  { TSettings } from 'shared/components/Settings';
 
 // hooks
 import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
+import useWindowSize from "shared/hooks/useWindowSize";
 
 interface TodoLayoutProps {
     children: ReactNode;
@@ -40,11 +41,13 @@ const Widget: React.FC<{ children: ReactNode }> = ({ children }) => {
 }
 
 const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
+    const { isDesktop } = useWindowSize();
     const { pageValue: settings } = useLocalStorage<TSettings>({
         key: CUSTOM_EVENTS.UPDATE_SETTINGS
     });
 
     let app, widget;
+
 
     React.Children.map(children, child => {
         if (React.isValidElement(child)) {
@@ -69,15 +72,20 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
             <Flex 
                 height="100%"
                 justifyContent="center"
+                flexDirection={isDesktop ? "row" : "column-reverse"}
+                alignItems="center"
                 gap={settings?.isWidgetOpen ? 3 : 0}
                 transition="all 0.5s ease-in-out"
             >
                 {app}
                 <Box
+                    position="relative"
                     overflow="hidden"
                     opacity={settings?.isWidgetOpen ? 1 : 0}
                     transition="all 0.5s ease-in-out"
-                    width={settings?.isWidgetOpen ? "100%" : "0px"}
+                    width={isDesktop ? (settings?.isWidgetOpen ? "100%" : "0px") : '100%'}
+                    height={isDesktop ? "100%" : (settings?.isWidgetOpen ? "100%" : "0px")}
+                    zIndex={100}
                 >
                     {widget}
                 </Box>

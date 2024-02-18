@@ -7,14 +7,13 @@ import Settings from "shared/components/Settings";
 import Toast from "shared/components/Toast";
 
 // hooks
-import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
+import useWindowSize from "shared/hooks/useWindowSize";
 
 // UI
 import { Box, Flex } from "@chakra-ui/react";
 
 const App: FC = () => {
-    const { width } = useWindowSize();
-    const isDesktop = (width || 0) > SIZES.sm;
+    const { isDesktop } = useWindowSize();
     return (
         <Flex 
             direction="column" 

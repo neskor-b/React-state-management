@@ -79,7 +79,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                         borderRadius="0"
                         height="100%"
                         top={0}
-                        zIndex={100}
+                        zIndex={10}
                         width={isHiden ? '100%' : '15px'}
                         position="absolute"
                         right={0}

@@ -28,8 +28,14 @@ const useWindowSize = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-
-    return size || 0;
+    const isDesktop = (size.width || 0) > SIZES.lg;
+    const isMobile = (size.width || 0) < SIZES.sm;
+    return {
+        width: size.width,
+        height: size.height,
+        isDesktop,
+        isMobile
+    };
 };
 
 export default useWindowSize;

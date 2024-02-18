@@ -6,11 +6,11 @@ import ToggleColorMode from 'shared/components/ToggleColorMode';
 
 // hooks
 import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
-import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
+import useWindowSize from "shared/hooks/useWindowSize";
 
 // UI
 import { Flex, IconButton, Icon, Tooltip } from "@chakra-ui/react"
-import { InfoIcon, ChevronRightIcon } from '@chakra-ui/icons'
+import { InfoIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { AiFillHome } from "react-icons/ai";
 
 export type TSettings = {
@@ -23,7 +23,7 @@ const INITIAL_SETTINGS: TSettings = {
 
 
 const Settings = () => {
-    const { width } = useWindowSize();
+    const { isDesktop } = useWindowSize();
     const isRoot = useMatch({ path: '/' });    
     const navigate = useNavigate();
     
@@ -35,13 +35,12 @@ const Settings = () => {
 
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
 
-    const isDesktop = (width || 0) > SIZES.sm;
-
     return (
         <Flex
             position={isDesktop ? 'fixed' : 'absolute'}
             width="fit-content"
             gap={2}
+            zIndex={1000}
             right={isDesktop ? 5 : undefined}
             left={isDesktop ? undefined : 2}
             bottom={isDesktop ? 5 : undefined}
@@ -63,7 +62,7 @@ const Settings = () => {
                     >
                         <IconButton 
                             aria-label='toggle widget' 
-                            icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <InfoIcon /> } 
+                            icon={settings?.isWidgetOpen ? ( isDesktop ? <ChevronRightIcon /> : <ChevronUpIcon />) : <InfoIcon /> } 
                             onClick={toggleWidget}
                         />
                     </Tooltip>

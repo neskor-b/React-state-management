@@ -19,16 +19,14 @@ import { Container, TabLink, MenuItemLink } from "./styled";
 import { appsRoutes } from "routes";
 
 // hooks
-import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
+import useWindowSize from "shared/hooks/useWindowSize";
 
 const Navigation: FC = () => {
-    const { width } = useWindowSize();
+    const { isDesktop } = useWindowSize();
     const { colorMode } = useColorMode();
     const tabsArr = Object.values(appsRoutes);
 
-    const showDesktop = (width || 0) > SIZES.sm;
-
-    if (showDesktop) return (
+    if (isDesktop) return (
         <Container colorMode={colorMode}>
             {tabsArr.map(link => 
                 <NavLink 
