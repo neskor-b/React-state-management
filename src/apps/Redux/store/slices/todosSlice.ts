@@ -83,7 +83,9 @@ export const todosSlice = createSlice({
                 state.loading['createTodo'] = true;
             })
             .addCase(createTodo.fulfilled, (state, action) => {
-                state.items.unshift(action.payload);
+                if (state.filters.status !== 'completed') {
+                    state.items.unshift(action.payload);
+                }
                 state.loading['createTodo'] = false;
                 showToast({
                     description: t('toast.todoCreated'),

@@ -131,8 +131,10 @@ class TodoStore {
         this.enableLoading('todoForm')
         try {
             const { data: newTodo } = await apiCreateTodo(data);
-            this.items.unshift(newTodo);
-            this.sortByStatus();
+            if (this.filters.status !== 'completed') {
+                this.items.unshift(newTodo);
+                this.sortByStatus();
+            }
             showToast({
                 description: t('toast.todoCreated'),
                 status: 'success'
