@@ -81,5 +81,8 @@
     },
     "mainPlaceholder": {
         "title": "Select any state manager"
+    },
+    "todoList": {
+        "notFound": "Not found"
     }
 }

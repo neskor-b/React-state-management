@@ -81,5 +81,8 @@
     },
     "mainPlaceholder": {
         "title": "Виберіть будь який стейт менеджер"
+    },
+    "todoList": {
+        "notFound": "Не знайдено"
     }
 }
