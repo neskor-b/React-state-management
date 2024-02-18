@@ -1,5 +1,6 @@
 import React, { useState, FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { omit } from 'lodash';
 
 // compoenents
 import { 
@@ -29,9 +30,13 @@ type FiltersProps = {
     onChange: (filters: TFilters) => void
 }
 
+const countActiveFilters = (filters: TFilters) => {
+    return Object.keys(omit(filters, 'orderby', 'order')).filter(key => filters[key as keyof TFilters]).length
+}
+
 const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const { t } = useTranslation();
-    const [isHiden, setIsHiden] = useState(false);
+    const [isHiden, setIsHiden] = useState(countActiveFilters(filters) === 0);
     const { colorMode } = useColorMode();
 
     const toggleHide = () => {
@@ -68,7 +73,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
             >
                 <Tooltip 
                     hasArrow
-                    placement='right'
+                    placement="right"
                     label={!isHiden ? t('filters.tooltips.hideFilters') : t('filters.tooltips.showFilters')}
                 >
                     <IconButton 

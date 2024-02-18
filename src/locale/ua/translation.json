@@ -37,7 +37,7 @@
     },
     "filters": {
         "tooltips": {
-            "hideFilters": "Приховати та очистити фільтри",
+            "hideFilters": "Приховати фільтри",
             "showFilters": "Показати фільтри"
         },
         "search": {

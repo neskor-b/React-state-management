@@ -37,8 +37,8 @@
     },
     "filters": {
         "tooltips": {
-            "hideFilters": "Hide and clear Filters",
-            "showFilters": "Show Filters"
+            "hideFilters": "Hide filters",
+            "showFilters": "Show filters"
         },
         "search": {
             "placeholder": "Search"
