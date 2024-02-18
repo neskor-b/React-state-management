@@ -14,6 +14,7 @@ import FormField from 'shared/components/FormField';
 
 // hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
+import useWindowSize from "shared/hooks/useWindowSize";
 
 // utils
 import { showToast } from 'shared/components/Toast';
@@ -42,6 +43,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     const formRef = useRef<any>(null);
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
     const { colorMode } = useColorMode();
+    const { isMobile } = useWindowSize();
 
     const onFormSubmit = (values: Ttodo) => {
         onChange(values)
@@ -52,7 +54,8 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
         Object.keys(errors).forEach(key => showToast({
             description: errors[key as keyof Ttodo]?.message || 'Unknown error',
             status: 'warning',
-            duration: 3000
+            duration: 3000,
+            position: isMobile ? 'top' : 'bottom'
         }))
     }
 

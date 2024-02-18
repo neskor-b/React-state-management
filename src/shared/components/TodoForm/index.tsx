@@ -10,6 +10,7 @@ import Spinner from "shared/components/Spinner";
 // hooks
 import useCustomEvent, { EVENT_NAMES } from 'shared/hooks/useCustomEvent';
 import useClickOutside from 'shared/hooks/useClickOutside';
+import useWindowSize from "shared/hooks/useWindowSize";
 
 // utils
 import { showToast } from 'shared/components/Toast';
@@ -30,6 +31,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
     const { t } = useTranslation();
     const formRef = useRef<any>(null);
     const clickOutsideRef = useRef(null);
+    const { isMobile } = useWindowSize();
 
     useClickOutside(clickOutsideRef, () => formRef.current?.reset());
 
@@ -54,7 +56,9 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
         showToast({
             description:  t('todoForm.validation.required'),
             status: 'warning',
-            duration: 3000
+            duration: 3000,
+            position: isMobile ? 'top' : 'bottom',
+            isClosable: true
         })
     }
 
