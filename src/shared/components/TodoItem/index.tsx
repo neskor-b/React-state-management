@@ -143,7 +143,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 </FormField.Field>
                                 <FormField.Input
                                     name="title"
-                                    placeholder="Title"
+                                    placeholder={t('todoItem.title.placeholder')}
                                     hideErrorMessage
                                     isViewMode={isViewMode}
                                     rules={{ required: t('todoItem.validation.titleRequired') }}
