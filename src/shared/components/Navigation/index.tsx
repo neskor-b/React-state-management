@@ -51,7 +51,7 @@ const Navigation: FC = () => {
             pl={2}
             pr={2}
         >
-            <Menu>
+            <Menu autoSelect={false}>
                 <MenuButton
                     as={IconButton}
                     aria-label='Options'
