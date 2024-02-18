@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
+import { t } from 'i18next';
 
 // api
 import { apiCreateTodo, apiGetTodos, apiDeleteTodo, apiUpdateTodo } from 'shared/api/apiRequests';
@@ -85,7 +86,7 @@ export const todosSlice = createSlice({
                 state.items.unshift(action.payload);
                 state.loading['createTodo'] = false;
                 showToast({
-                    description: 'Todo created!',
+                    description: t('toast.todoCreated'),
                     status: 'success'
                 })
             })
@@ -113,7 +114,7 @@ export const todosSlice = createSlice({
                 state.items = state.items.filter(todo => todo.id !== action.payload.id);
                 state.loading[action.payload.id] = false;
                 showToast({
-                    description: 'Todo deleted!',
+                    description: t('toast.todoDeleted'),
                     status: 'info'
                 })
             })
@@ -129,7 +130,7 @@ export const todosSlice = createSlice({
                 state.items[findIndex(state.items, action.payload.id)] = action.payload;
                 state.loading[action.payload.id] = false;
                 showToast({
-                    description: 'Todo updated!',
+                    description: t('toast.todoUpdated'),
                     status: 'info'
                 })
             })

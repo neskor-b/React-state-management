@@ -73,7 +73,7 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                 height="100%"
                 justifyContent="center"
                 flexDirection={isDesktop ? "row" : "column-reverse"}
-                alignItems="center"
+                alignItems={isDesktop ? "flex-start" : "center"}
                 gap={settings?.isWidgetOpen ? 3 : 0}
                 transition="all 0.5s ease-in-out"
             >

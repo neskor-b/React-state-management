@@ -1,5 +1,6 @@
 import React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // components
 import ToggleColorMode from 'shared/components/ToggleColorMode';
@@ -9,7 +10,7 @@ import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
 import useWindowSize from "shared/hooks/useWindowSize";
 
 // UI
-import { Flex, IconButton, Icon, Tooltip } from "@chakra-ui/react"
+import { Flex, IconButton, Icon, Tooltip, Select } from "@chakra-ui/react"
 import { InfoIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { AiFillHome } from "react-icons/ai";
 
@@ -23,6 +24,7 @@ const INITIAL_SETTINGS: TSettings = {
 
 
 const Settings = () => {
+    const { t, i18n } = useTranslation();
     const { isDesktop } = useWindowSize();
     const isRoot = useMatch({ path: '/' });    
     const navigate = useNavigate();
@@ -34,7 +36,8 @@ const Settings = () => {
     });
 
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
-
+    console.log(i18n.language);
+    
     return (
         <Flex
             position={isDesktop ? 'fixed' : 'absolute'}
@@ -48,7 +51,7 @@ const Settings = () => {
         >
             {!isRoot && (
                 <>
-                    <Tooltip hasArrow label="Go to Home page">
+                    <Tooltip hasArrow label={t('settings.tooltips.goToHome')}>
                         <IconButton
                             icon={<Icon as={AiFillHome}/>} 
                             insetBlockEnd={0} 
@@ -58,7 +61,7 @@ const Settings = () => {
                     </Tooltip>
                     <Tooltip 
                         hasArrow 
-                        label={settings?.isWidgetOpen ? 'Hide info' : 'Show info'}
+                        label={settings?.isWidgetOpen ? t('settings.tooltips.hideInfo') : t('settings.tooltips.showInfo')}
                     >
                         <IconButton 
                             aria-label='toggle widget' 
@@ -66,11 +69,17 @@ const Settings = () => {
                             onClick={toggleWidget}
                         />
                     </Tooltip>
-
                 </>
-
             )}
             <ToggleColorMode />
+            <Select value={i18n.language} onChange={e => i18n.changeLanguage(e.target.value)}>
+                <option value="ua">
+                    Українська
+                </option>
+                <option value="en">
+                    English
+                </option>
+            </Select>
         </Flex>
     )
 }

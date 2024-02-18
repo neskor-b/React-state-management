@@ -1,0 +1,63 @@
+{
+    "toast": {
+        "todoCreated": "Завдання створено!",
+        "todoUpdated": "Завдання оновлено!",
+        "todoDeleted": "Завдання видалено!",
+        "somethingWentWrong": "Щось пішло не так!"
+    },
+    "todoForm": {
+        "validation": {
+            "required": "Вам потрібно ввести назву завдання!"
+        },
+        "title": {
+            "placeholder": "Додати завдання..."
+        },
+        "submit": "Додати"
+    },
+    "todoItem": {
+        "validation": {
+            "titleRequired": "Назва не може бути порожньою!"
+        },
+        "title": {
+            "placeholder": "Назва"
+        },
+        "info": {
+            "created": "Створено",
+            "completed": "Завершено"
+        },
+        "submit": {
+            "tooltip": "Редагуйте назву, щоб зберегти зміни"
+        },
+        "deleteConfirm": {
+            "text": "Ви впевнені, що хочете видалити це завдання?",
+            "headerText": "Видалити завдання",
+            "cancelText": "Скасувати",
+            "confirmText": "Видалити"
+        }
+    },
+    "filters": {
+        "tooltips": {
+            "hideFilters": "Приховати та очистити фільтри",
+            "showFilters": "Показати фільтри"
+        },
+        "search": {
+            "placeholder": "Пошук"
+        },
+        "status": {
+            "placeholder": "Усі статуси"
+        },
+        "options": {
+            "active": "Активні",
+            "completed": "Завершені"
+        }
+    },
+    "settings": {
+        "tooltips": {
+            "goToHome": "Перейти на головну сторінку",
+            "showInfo": "Показати інформацію",
+            "hideInfo": "Приховати інформацію",
+            "lightMode": "Світлий режим",
+            "darkMode": "Темний режим"
+        }
+    }
+}

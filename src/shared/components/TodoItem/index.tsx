@@ -1,5 +1,6 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 // UI
 import { CardBody, Checkbox, Flex, Text, IconButton, useColorMode, Tooltip } from '@chakra-ui/react'
@@ -36,6 +37,7 @@ type TodoItemProps = {
 
 
 const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) => {
+    const { t } = useTranslation();
     const inputRef = useRef<HTMLInputElement>(null);
     const formRef = useRef<any>(null);
     const [mode, setMode] = useState<keyof typeof MODE>(MODE.view);
@@ -141,7 +143,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     placeholder="Title"
                                     hideErrorMessage
                                     isViewMode={isViewMode}
-                                    rules={{ required: "Title can't be empty!" }}
+                                    rules={{ required: t('todoItem.validation.titleRequired') }}
                                 />
                                 <Tooltip
                                     hasArrow 
@@ -149,11 +151,11 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     label={
                                         <>
                                             <Text>
-                                                {`Created: ${moment(todo.createdAt).format('DD-MM-YYYY')} | ${moment(todo.createdAt).format('HH:mm')}`}
+                                                {`${t('todoItem.info.created')}: ${moment(todo.createdAt).format('DD-MM-YYYY')} | ${moment(todo.createdAt).format('HH:mm')}`}
                                             </Text>
                                             {todo?.completedAt && (
                                                 <Text>
-                                                    {`Compleated: ${moment(todo?.completedAt).format('DD-MM-YYYY')} | ${moment(todo.completedAt).format('HH:mm')}`}
+                                                    {`${t('todoItem.info.completed')}: ${moment(todo?.completedAt).format('DD-MM-YYYY')} | ${moment(todo.completedAt).format('HH:mm')}`}
                                                 </Text>    
                                             )}
                                         </>
@@ -174,7 +176,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                         hasArrow 
                                         placement="top"
                                         isDisabled={formState.isDirty}
-                                        label="Edit title to save changes"
+                                        label={t('todoItem.submit.tooltip')}
                                     >
                                         <IconButton 
                                             aria-label='submit title' 
@@ -195,10 +197,10 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                 )}
                                 {isViewMode && (
                                     <ConfirmAlert 
-                                        text="Are you sure you want to delete this todo?"
-                                        headerText="Delete Todo" 
-                                        cancelText="Cancel"
-                                        confirmText="Delete"
+                                        text={t('todoItem.deleteConfirm.text')}
+                                        headerText={t('todoItem.deleteConfirm.headerText')}
+                                        cancelText={t('todoItem.deleteConfirm.cancelText')}
+                                        confirmText={t('todoItem.deleteConfirm.confirmText')}
                                         onConfirm={onDeleteTodo}
                                     >
                                         <IconButton 

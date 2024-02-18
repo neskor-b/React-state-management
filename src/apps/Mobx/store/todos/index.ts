@@ -1,4 +1,5 @@
 import { makeObservable, observable, action, spy, reaction } from 'mobx';
+import t from 'i18n';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
@@ -68,7 +69,7 @@ class TodoStore {
         try {
             await apiUpdateTodo(data);
             showToast({
-                description: 'Todo updated!',
+                description: t('toast.todoUpdated'),
                 status: 'success'
             })
             this.items[this.findIndex(data)] = data;
@@ -77,7 +78,7 @@ class TodoStore {
             console.error(e);
             this.refreshTodo(data)
             showToast({
-                description: 'Something went wrong!',
+                description: t('toast.somethingWentWrong'),
                 status: 'error'
             })
         } finally {
@@ -95,13 +96,13 @@ class TodoStore {
             await apiDeleteTodo(data);
             this.items.splice(this.findIndex(data), 1);            
             showToast({
-                description: 'Todo deleted!',
+                description: t('toast.todoDeleted'),
                 status: 'info'
             })
         } catch (e) {
             console.error(e);
             showToast({
-                description: 'Something went wrong!',
+                description: t('toast.somethingWentWrong'),
                 status: 'error'
             })
         } finally {
@@ -118,7 +119,7 @@ class TodoStore {
         } catch (e) {
             console.error(e);
             showToast({
-                description: 'Something went wrong!',
+                description: t('toast.somethingWentWrong'),
                 status: 'error'
             })
         } finally {
@@ -133,7 +134,7 @@ class TodoStore {
             this.items.unshift(newTodo);
             this.sortByStatus();
             showToast({
-                description: 'Todo created!',
+                description: t('toast.todoCreated'),
                 status: 'success'
             })
         } catch (e) {

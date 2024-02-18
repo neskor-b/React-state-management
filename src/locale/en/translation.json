@@ -1,0 +1,63 @@
+{
+    "toast": {
+        "todoCreated": "Todo Created!",
+        "todoUpdated": "Todo Updated!",
+        "todoDeleted": "Todo Deleted!",
+        "somethingWentWrong": "Something went wrong!"
+    },
+    "todoForm": {
+        "validation": {
+            "required": "You need to enter todo name!"
+        },
+        "title": {
+            "placeholder": "Add Todo..."
+        },
+        "submit": "Add"
+    },
+    "todoItem": {
+        "validation": {
+            "titleRequired": "Title can't be empty!"
+        },
+        "title": {
+            "placeholder": "Title"
+        },
+        "info": {
+            "created": "Created",
+            "completed": "Completed"
+        },
+        "submit": {
+            "tooltip": "Edit title to save changes"
+        },
+        "deleteConfirm": {
+            "text": "Are you sure you want to delete this todo?",
+            "headerText": "Delete Todo",
+            "cancelText": "Cancel",
+            "confirmText": "Delete"
+        }
+    },
+    "filters": {
+        "tooltips": {
+            "hideFilters": "Hide and clear Filters",
+            "showFilters": "Show Filters"
+        },
+        "search": {
+            "placeholder": "Search"
+        },
+        "status": {
+            "placeholder": "All statuses"
+        },
+        "options": {
+            "active": "Active",
+            "completed": "Completed"
+        }
+    },
+    "settings": {
+        "tooltips": {
+            "goToHome": "Go to Home Page",
+            "showInfo": "Show Info",
+            "hideInfo": "Hide Info",
+            "lightMode": "Light Mode",
+            "darkMode": "Dark Mode"
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import React, { FC, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 
 // components
 import FormField from "shared/components/FormField";
@@ -26,6 +27,7 @@ type TFormValues = {
 }
 
 const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
+    const { t } = useTranslation();
     const formRef = useRef<any>(null);
     const clickOutsideRef = useRef(null);
 
@@ -50,7 +52,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
 
     const onFormError = () => {
         showToast({
-            description: 'You need to enter todo name!',
+            description:  t('todoForm.validation.required'),
             status: 'warning',
             duration: 3000
         })
@@ -80,7 +82,7 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
                             {({ formData: { formState }, input }) => {
                                 return (
                                     <Input
-                                        placeholder="Add Todo..."
+                                        placeholder={t('todoForm.title.placeholder')}
                                         _focus={{
                                             border: "2px solid",
                                             borderColor: formState.errors.title ? 'red.500' : 'blue.500',
@@ -97,13 +99,14 @@ const TodoForm: FC<TodoFormProps> = ({ onSubmit, isLoading }) => {
                             }}
                         </FormField.Field>
 
-                        <InputRightElement width='4.5rem'>
+                        <InputRightElement pr={2} width='fit-content'>
                             <Button
+                                width="fit-content"
                                 h='1.75rem'
                                 size='sm'
                                 type="submit"
                             >
-                                Add
+                                {t('todoForm.submit')}
                             </Button>
                         </InputRightElement>
                     </InputGroup>

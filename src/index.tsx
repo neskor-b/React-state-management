@@ -5,6 +5,8 @@ import {  ColorModeScript } from '@chakra-ui/react'
 import theme from './theme';
 import './style.css';
 
+import './i18n'
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

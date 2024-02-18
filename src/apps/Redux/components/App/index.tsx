@@ -8,18 +8,16 @@ import Filter from 'apps/Redux/components/Filter';
 
 const App = () => {
     return (
-        <div>
-            <Layout>
-                <Layout.App>
-                    <CreateTodo />
-                    <Filter />
-                    <Todos />
-                </Layout.App>
-                <Layout.Widget>
-                    widget
-                </Layout.Widget>
-            </Layout>
-        </div>
+        <Layout>
+            <Layout.App>
+                <CreateTodo />
+                <Filter />
+                <Todos />
+            </Layout.App>
+            <Layout.Widget>
+                widget
+            </Layout.Widget>
+        </Layout>
     );
 }
 

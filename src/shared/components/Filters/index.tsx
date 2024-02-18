@@ -1,4 +1,5 @@
 import React, { useState, FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // compoenents
 import { 
@@ -28,19 +29,15 @@ type FiltersProps = {
     onChange: (filters: TFilters) => void
 }
 
-const statusOptions: { value: TFilters['status'], label: string }[] = [
-    { value: 'active', label: 'Active' },
-    { value: 'completed', label: 'Completed' }
-];
-
 const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
+    const { t } = useTranslation();
     const [isHiden, setIsHiden] = useState(false);
-    const [TooltipLabel, setTooltipLabel] = useState('Hide and clear Filters');
+    const [TooltipLabel, setTooltipLabel] = useState(t('filters.tooltips.hideFilters'));
     const { colorMode } = useColorMode();
 
     const toggleHide = () => {
         setIsHiden(!isHiden);
-        const timeout = setTimeout(() => setTooltipLabel(isHiden ? 'Hide and clear Filters' : 'Show Filters'), 500);
+        const timeout = setTimeout(() => setTooltipLabel(isHiden ? t('filters.tooltips.hideFilters') : t('filters.tooltips.showFilters')), 500);
         if (!isHiden && filters.search || filters.status) {
             onChange({ ...filters, status: '', search: '' });
         }
@@ -63,6 +60,11 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
         onChange: changeSearch,
         delay: 500
     });
+
+    const statusOptions: { value: TFilters['status'], label: string }[] = [
+        { value: 'active', label: t('filters.options.active') },
+        { value: 'completed', label: t('filters.options.completed') }
+    ];
 
     return (
         <Box mb="10px">
@@ -94,7 +96,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                     <Flex gap={1}>
                         <InputGroup size="sm">
                             <Input 
-                                placeholder="Search" 
+                                placeholder={t('filters.search.placeholder')}
                                 borderRadius={5}
                                 {...debouncedInput.inputProps}
                             />
@@ -110,7 +112,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                             borderRadius={5}
                             value={filters.status}
                             onChange={changeStatus}
-                            placeholder='All statuses'
+                            placeholder={t('filters.status.placeholder')}
                         >
                             {statusOptions.map(option => (
                                 <option key={option.value} value={option.value}>
