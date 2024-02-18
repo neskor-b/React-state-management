@@ -4,6 +4,9 @@ import { observer } from "mobx-react-lite"
 // hooks
 import useStore from 'apps/Mobx/hooks/useStore';
 
+// utils
+import { prepareQuery } from 'shared/utils/query';
+
 // components
 import TodoList from 'shared/components/TodoList';
 
@@ -15,7 +18,7 @@ const Todos: FC = () => {
     const model = useStore('todos');
 
     useEffect(() => {
-        model.fetchTodos(model.filters);
+        model.fetchTodos(prepareQuery({ filters: model.filters }));
     }, [])
 
     return (

@@ -7,6 +7,9 @@ import { useAppSelector, useAppDispatch } from 'apps/Redux/store';
 // components
 import TodoList from 'shared/components/TodoList';
 
+// utils
+import { prepareQuery } from 'shared/utils/query';
+
 // types
 import Ttodo from 'shared/api/models/todo';
 import TQuery from 'shared/api/models/query';
@@ -22,7 +25,7 @@ const Todos: FC = () => {
     }
 
     useEffect(() => {
-        model.fetchTodos(model.filters);
+        model.fetchTodos(prepareQuery({ filters: model.filters }));
     }, [model.filters]);
 
     return (
