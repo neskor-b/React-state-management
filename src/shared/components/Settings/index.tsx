@@ -10,7 +10,7 @@ import useWindowSize, { SIZES } from "shared/hooks/useWindowSize";
 
 // UI
 import { Flex, IconButton, Icon, Tooltip } from "@chakra-ui/react"
-import { SettingsIcon, ChevronRightIcon } from '@chakra-ui/icons'
+import { InfoIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { AiFillHome } from "react-icons/ai";
 
 export type TSettings = {
@@ -59,13 +59,11 @@ const Settings = () => {
                     </Tooltip>
                     <Tooltip 
                         hasArrow 
-                        // label={settings?.isWidgetOpen ? 'Hide Widget' : 'Show Widget'}
-                        label="Not done yet"
+                        label={settings?.isWidgetOpen ? 'Hide info' : 'Show info'}
                     >
                         <IconButton 
-                            isDisabled
-                            aria-label='toggle logger' 
-                            icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <SettingsIcon /> } 
+                            aria-label='toggle widget' 
+                            icon={settings?.isWidgetOpen ? <ChevronRightIcon /> : <InfoIcon /> } 
                             onClick={toggleWidget}
                         />
                     </Tooltip>

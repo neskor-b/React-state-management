@@ -1,10 +1,12 @@
 import React from 'react';
 import { observer } from "mobx-react-lite"
+
 // components
 import Layout from 'shared/components/Layout';
 import CreateTodo from 'apps/Mobx/components/CreateTodo';
 import Todos from 'apps/Mobx/components/Todos';
 import Filter from 'apps/Mobx/components/Filter';
+import Widget from 'apps/Mobx/components/Widget';
 
 
 
@@ -17,7 +19,7 @@ const App = () => {
                 <Todos />
             </Layout.App>
             <Layout.Widget>
-                widget
+                <Widget />
             </Layout.Widget>
         </Layout>
     );

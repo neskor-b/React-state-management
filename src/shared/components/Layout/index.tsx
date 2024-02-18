@@ -70,6 +70,7 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                 height="100%"
                 justifyContent="center"
                 gap={settings?.isWidgetOpen ? 3 : 0}
+                transition="all 0.5s ease-in-out"
             >
                 {app}
                 <Box
