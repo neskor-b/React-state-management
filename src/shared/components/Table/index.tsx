@@ -21,7 +21,7 @@ const Table: FC<Props> = ({ dataSource, columns, title }) => {
     return (
         <Card variant="outline">
             <TableContainer>
-                <ChakraTable whiteSpace="normal">
+                <ChakraTable whiteSpace="normal" minWidth="750px">
                     <TableCaption fontWeight="bold" placement="top">{title}</TableCaption>
                     <Thead>
                         <Tr>
