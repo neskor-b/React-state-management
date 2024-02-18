@@ -32,16 +32,10 @@ type FiltersProps = {
 const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const { t } = useTranslation();
     const [isHiden, setIsHiden] = useState(false);
-    const [TooltipLabel, setTooltipLabel] = useState(t('filters.tooltips.hideFilters'));
     const { colorMode } = useColorMode();
 
     const toggleHide = () => {
         setIsHiden(!isHiden);
-        const timeout = setTimeout(() => setTooltipLabel(isHiden ? t('filters.tooltips.hideFilters') : t('filters.tooltips.showFilters')), 500);
-        if (!isHiden && filters.search || filters.status) {
-            onChange({ ...filters, status: '', search: '' });
-        }
-        return () => clearTimeout(timeout);
     };
 
     const handleChange = (key: keyof TFilters) => (event: string | React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,7 +69,7 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
                 <Tooltip 
                     hasArrow
                     placement='right'
-                    label={TooltipLabel}
+                    label={!isHiden ? t('filters.tooltips.hideFilters') : t('filters.tooltips.showFilters')}
                 >
                     <IconButton 
                         borderRadius="0"
