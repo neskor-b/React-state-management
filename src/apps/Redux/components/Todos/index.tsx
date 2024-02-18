@@ -23,7 +23,8 @@ const Todos: FC = () => {
 
     useEffect(() => {
         model.fetchTodos(model.filters);
-    }, [model.filters])
+    }, [model.filters]);
+
     return (
         <TodoList
             loading={model.loading}

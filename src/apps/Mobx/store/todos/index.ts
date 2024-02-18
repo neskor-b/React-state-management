@@ -52,8 +52,6 @@ class TodoStore {
                 console.log(`${event.name} with args: ${JSON.stringify(event.arguments)}`)
             }
         })
-
-        this.fetchTodos(prepareQuery({ filters: this.filters }));
     }
 
     private findIndex = (data: Ttodo) => this.items.findIndex(todo => todo.id === data.id)

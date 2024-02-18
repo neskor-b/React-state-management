@@ -17,6 +17,7 @@ const Todos: FC = () => {
     useEffect(() => {
         model.fetchTodos(model.filters);
     }, [])
+
     return (
         <TodoListObserved
             loading={model.loading}
