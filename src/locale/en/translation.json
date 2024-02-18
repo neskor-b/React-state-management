@@ -78,5 +78,8 @@
             "actionKeyrole": "Ensures predictable state updates.",
             "reactionKeyrole": "Updates the UI or triggers effects in response to state changes."
         }
+    },
+    "mainPlaceholder": {
+        "title": "Select any state manager"
     }
 }
