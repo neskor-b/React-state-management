@@ -10,9 +10,10 @@ export const Container = styled<{ colorMode: 'light' | 'dark' }>(Box,({ colorMod
         justifyContent: "space-between",
         borderBottom: "2px",
         borderBottomColor: "gray.500",
-        position: 'absolute',
+        position: 'fixed',
         top: 0,
-        left: 0,
+        left: '50% - 50vw',
+        maxWidth: "2500px",
         width: "100%",
         zIndex: 1000,
         backgroundColor: colorMode === 'dark' ? 'gray.800' : 'white'
