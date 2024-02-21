@@ -40,14 +40,14 @@ const Settings = () => {
     
     return (
         <Flex
-            position={isDesktop ? 'fixed' : 'absolute'}
+            position="absolute"
             width="fit-content"
             gap={2}
-            zIndex={1000}
+            zIndex={100}
             right={isDesktop ? 5 : undefined}
             left={isDesktop ? undefined : 2}
             bottom={isDesktop ? 5 : undefined}
-            top={isDesktop ? undefined : 2}
+            top={isDesktop ? '55px' : 2}
         >
             {!isRoot && (
                 <>

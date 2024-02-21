@@ -31,7 +31,8 @@ const App: React.FC<{ children: ReactNode }> = ({ children }) => {
 const Widget: React.FC<{ children: ReactNode }> = ({ children }) => {
     return (
         <Box 
-            pb={3} 
+            pb={3}
+            pt="52px"
             flexGrow={1}
             width="100%"
         >

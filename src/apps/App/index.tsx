@@ -18,6 +18,9 @@ const App: FC = () => {
         <Flex 
             direction="column" 
             height="100%"
+            m="auto"
+            position="relative"
+            maxWidth="2500px"
             pt={isDesktop ? 10 : 2}
         >
             <Navigation />
