@@ -28,7 +28,7 @@ export const TabLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }
         _hover: {
             color: "blue.500"
         },
-        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.800" : "gray.500",
+        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.700" : "gray.500",
         position: "relative",
         whiteSpace: "nowrap",
         _before: {
@@ -51,6 +51,6 @@ export const TabLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }
 
 export const MenuItemLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }>(MenuItem, ({ isActive, colorMode }) => (
     {
-        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.800" : "gray.500"
+        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.700" : "gray.500"
     }
 ))
