@@ -8,9 +8,9 @@ export const SIZES = {
 }
 
 const useWindowSize = () => {
-    const [size, setSize] = useState<{ width: number | null, height: number | null }>({
-        width: null,
-        height: null
+    const [size, setSize] = useState<{ width: number, height: number }>({
+        width: window.innerWidth,
+        height: window.innerWidth
     });
 
     useLayoutEffect(() => {
@@ -28,8 +28,9 @@ const useWindowSize = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    const isDesktop = (size.width || 0) > SIZES.lg;
-    const isMobile = (size.width || 0) < SIZES.sm;
+
+    const isDesktop = size.width > SIZES.lg;
+    const isMobile = size.width < SIZES.sm;
     return {
         width: size.width,
         height: size.height,
