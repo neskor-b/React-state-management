@@ -86,7 +86,6 @@ const Layout: React.FC<TodoLayoutProps> = ({ children }) => {
                     transition="all 0.5s ease-in-out"
                     width={isDesktop ? (settings?.isWidgetOpen ? "100%" : "0px") : '100%'}
                     height={isDesktop ? "100%" : (settings?.isWidgetOpen ? "100%" : "0px")}
-                    zIndex={100}
                 >
                     {widget}
                 </Box>
