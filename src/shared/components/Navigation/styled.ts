@@ -43,7 +43,7 @@ export const TabLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }
             backgroundColor: isActive ? "blue.500" : "transparent",
             textAlign: "center",
             _hover: {
-                color: isActive ? "blue.500" : "blue.500"
+                color: "blue.500"
             }
         }
     }
