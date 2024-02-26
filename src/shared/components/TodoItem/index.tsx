@@ -142,6 +142,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
                                     )}
                                 </FormField.Field>
                                 <FormField.Input
+                                    fieldRef={inputRef}
                                     name="title"
                                     placeholder={t('todoItem.title.placeholder')}
                                     hideErrorMessage

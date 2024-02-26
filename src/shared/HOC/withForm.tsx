@@ -24,8 +24,8 @@ type WithFormProps = {
     isViewMode?: boolean
 }
 
-const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps & P) => {
-    const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, isViewMode, children, ...rest } = props;
+const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (props: WithFormProps & P & { fieldRef?: React.Ref<any> }) => {
+    const { helperText, label, name, rules, wrapperStyles, hideErrorMessage, isViewMode, children, fieldRef, ...rest } = props;
     const formData = useContext(FormContext);
 
     const isViewModeProps = {
@@ -56,9 +56,10 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
                 >
                     {label && <FormLabel>{label}</FormLabel>}
                     {Component && !children &&
-                        <Component 
-                            {...rest as P} 
+                        <Component
                             {...field}
+                            {...rest as P} 
+                            ref={fieldRef}
                             {...(isViewMode && Component.displayName === 'Input' && isViewModeProps)}
                         />
                     }

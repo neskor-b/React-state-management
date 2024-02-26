@@ -36,7 +36,6 @@ const Settings = () => {
     });
 
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
-    console.log(i18n.language);
     
     return (
         <Flex
