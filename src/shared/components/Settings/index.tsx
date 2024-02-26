@@ -10,7 +10,8 @@ import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
 import useWindowSize from "shared/hooks/useWindowSize";
 
 // UI
-import { Flex, IconButton, Icon, Tooltip, Select } from "@chakra-ui/react"
+import { IconButton, Icon, Tooltip, Select } from "@chakra-ui/react"
+import { Container } from "./styled";
 import { InfoIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { AiFillHome } from "react-icons/ai";
 
@@ -38,16 +39,7 @@ const Settings = () => {
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
     
     return (
-        <Flex
-            position="absolute"
-            width="fit-content"
-            gap={2}
-            zIndex={100}
-            right={isDesktop ? 5 : undefined}
-            left={isDesktop ? undefined : 2}
-            bottom={isDesktop ? 5 : undefined}
-            top={isDesktop ? '55px' : 2}
-        >
+        <Container isDesktop={isDesktop}>
             {!isRoot && (
                 <>
                     <Tooltip hasArrow label={t('settings.tooltips.goToHome')}>
@@ -79,7 +71,7 @@ const Settings = () => {
                     English
                 </option>
             </Select>
-        </Flex>
+        </Container>
     )
 }
 
