@@ -59,8 +59,8 @@ const WithForm = <P extends object>(Component?: React.ComponentType<P>) => (prop
                         <Component
                             {...field}
                             {...rest as P} 
-                            ref={fieldRef}
                             {...(isViewMode && Component.displayName === 'Input' && isViewModeProps)}
+                            ref={fieldRef}
                         />
                     }
                     {children && children({ formData, input: field })}
