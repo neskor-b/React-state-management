@@ -20,15 +20,15 @@ export const Container = styled<{ colorMode: 'light' | 'dark' }>(Box,({ colorMod
     }
 ))
 
-export const TabLink = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
+export const TabLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }>(Box, ({ isActive, colorMode }) => (
     { 
         fontSize: "lg",
         p: 1,
         textAlign: "center",
         _hover: {
-            color: isActive ? "blue.500" : "blue.500"
+            color: "blue.500"
         },
-        color: isActive ? "blue.500" : "gray.500",
+        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.800" : "gray.500",
         position: "relative",
         whiteSpace: "nowrap",
         _before: {
@@ -49,8 +49,8 @@ export const TabLink = styled<{ isActive: boolean }>(Box, ({ isActive }) => (
     }
 ))
 
-export const MenuItemLink = styled<{ isActive: boolean }>(MenuItem, ({ isActive }) => (
+export const MenuItemLink = styled<{ isActive: boolean, colorMode: 'light' | 'dark' }>(MenuItem, ({ isActive, colorMode }) => (
     {
-        color: isActive ? "blue.500" : "gray.500"
+        color: isActive ? "blue.500" : colorMode === 'dark' ? "whiteAlpha.800" : "gray.500"
     }
 ))

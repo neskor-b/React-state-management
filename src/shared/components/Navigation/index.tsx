@@ -35,7 +35,7 @@ const Navigation: FC = () => {
                     style={{ width: "100%" }}
                 >
                     {({ isActive }) => (
-                        <TabLink isActive={isActive}>
+                        <TabLink isActive={isActive} colorMode={colorMode}>
                             {link.name}
                         </TabLink>
                     )}
@@ -62,7 +62,7 @@ const Navigation: FC = () => {
                     {tabsArr.map(link => (
                         <NavLink key={link.key} to={link.path}>
                             {({ isActive }) => (
-                                <MenuItemLink isActive={isActive}>
+                                <MenuItemLink isActive={isActive} colorMode={colorMode}>
                                     {link.name}
                                 </MenuItemLink>
                             )}
