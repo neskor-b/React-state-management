@@ -38,7 +38,7 @@ const TodoList: FC<TodoListProps> = ({ todos, loading, isFecthing, onChange, onD
                     />
                 )}
             </Flex>
-            {todos.length === 0 && (
+            {todos.length === 0 && !isFecthing && (
                 <Center 
                     width="100%" 
                     height="81px" 

@@ -10,5 +10,6 @@ export const Box = styled<{ isLoading: boolean }>(ChackraBox, ({ isLoading }) =>
 }));
 
 export const Container = styled(ChackraBox, {
-    position: 'relative'
+    position: 'relative',
+    minHeight: '20px'
 });
