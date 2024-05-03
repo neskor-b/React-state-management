@@ -57,7 +57,8 @@ const Filters: FC<FiltersProps> = ({ filters, onChange }) => {
     const debouncedInput = useDebouncedInput({
         value: filters.search,
         onChange: changeSearch,
-        delay: 500
+        delay: 500,
+        deps: [filters.status]
     });
 
     const statusOptions: { value: TFilters['status'], label: string }[] = [
