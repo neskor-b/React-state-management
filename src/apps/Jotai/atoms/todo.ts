@@ -21,6 +21,8 @@ const defaultLoadingState: LoadingState = {
 export const isFetchingAtom = atom<boolean>(false);
 export const loadingAtom = atom<LoadingState>(defaultLoadingState);
 
+const sortTodos = (data: Ttodo[]) => data.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1)
+
 export const setIsFetchingAtom = atom(
     null,
     (_, set, isFetching: boolean) => {
@@ -55,7 +57,8 @@ export const todosAtom = atom(
         try {
             const preparedQuery = prepareQuery({ filters });
             const response = await apiGetTodos(preparedQuery);
-            set(todosStateAtom, response.data || []);
+            const sortedTodos = sortTodos(response.data || []);
+            set(todosStateAtom, sortedTodos);
         } catch (e) {
             console.error('Fetch error', e);
         } finally {
