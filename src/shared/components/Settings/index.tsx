@@ -45,7 +45,7 @@ const Settings = () => {
                 <>
                     <Tooltip hasArrow label={t('settings.tooltips.goToHome')}>
                         <IconButton
-                            icon={<Icon as={AiFillHome}/>} 
+                            icon={<Icon as={AiFillHome as any}/>} 
                             insetBlockEnd={0} 
                             aria-label='go to home page' 
                             onClick={() => navigate('/')}

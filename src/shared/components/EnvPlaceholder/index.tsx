@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, Heading, Link, Text, VStack, Flex } from '@chakra-ui/react';
-import { LuExternalLink } from "react-icons/lu"
+import { Box, Heading, Link, Text, VStack, Flex, useColorMode } from '@chakra-ui/react';
+import { LinkIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'react-i18next';
 
 const EnvPlaceholder = () => {
     const { t } = useTranslation();
-
+    const { colorMode } = useColorMode();
     return (
         <VStack
             spacing={4}
@@ -14,7 +14,7 @@ const EnvPlaceholder = () => {
             <Heading size="md" color="red.500">{t('envPlaceholder.title')}</Heading>
             <Text>{t('envPlaceholder.description')}</Text>   
             <Box
-                bg="gray.100"
+                bg={colorMode === 'light' ? 'gray.100' : 'gray.700'}
                 p={4}
                 borderRadius="md">
                 <Text fontFamily="monospace" whiteSpace="pre">
@@ -39,7 +39,7 @@ const EnvPlaceholder = () => {
                 >
                     <Flex alignItems="center" gap={1}>
                         {t('envPlaceholder.createApi')}
-                        <LuExternalLink />
+                        <LinkIcon />
                     </Flex>
                 </Link>
             </VStack>
