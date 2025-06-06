@@ -1,10 +1,5 @@
 function getEnvVar(variableName: string) {
     const envVar = process.env[variableName];
-    
-    if (envVar === undefined) {
-        throw new Error(`Env variable ${variableName} is required`)
-    }
-    
     return envVar;
 }
 

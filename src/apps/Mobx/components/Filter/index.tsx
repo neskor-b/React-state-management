@@ -4,9 +4,9 @@ import useStore from 'apps/Mobx/hooks/useStore';
 import Filters from 'shared/components/Filters';
 
 const Filter = () => {
-    const model = useStore('todos');
+    const { filters, setFilters } = useStore('todos');
     return (
-        <Filters onChange={model.setFilters} filters={{ ...model.filters }} />
+        <Filters onChange={setFilters} filters={filters} />
     );
 };
 

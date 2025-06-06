@@ -10,12 +10,12 @@ import TFilters from 'shared/api/models/filters';
 
 const Filter = () => {
     const dispatch = useAppDispatch();
-    const model = {
+    const { filters, onChange } = {
         ...useAppSelector(state => state.todos),
-        updateFilters: (data: TFilters) => dispatch(updateFilters(data))
+        onChange: (data: TFilters) => dispatch(updateFilters(data))
     }
     return (
-        <Filters onChange={model.updateFilters} filters={model.filters} />
+        <Filters onChange={onChange} filters={filters} />
     );
 };
 

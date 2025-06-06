@@ -17,24 +17,24 @@ import TQuery from 'shared/api/models/query';
 
 const Todos: FC = () => {
     const dispatch = useAppDispatch();
-    const model = {
+    const { loading, isFetching, items, filters, onUpdate, onDelete, onFetch } = {
         ...useAppSelector(state => state.todos),
-        updateTodo: (data: Ttodo) => dispatch(updateTodo(data)),
-        deleteTodo: (data: Ttodo) => dispatch(deleteTodo(data)),
-        fetchTodos: (query?: TQuery) => dispatch(fetchTodos(query))
+        onUpdate: (data: Ttodo) => dispatch(updateTodo(data)),
+        onDelete: (data: Ttodo) => dispatch(deleteTodo(data)),
+        onFetch: (query?: TQuery) => dispatch(fetchTodos(query))
     }
 
     useEffect(() => {
-        model.fetchTodos(prepareQuery({ filters: model.filters }));
-    }, [model.filters]);
+        onFetch(prepareQuery({ filters }));
+    }, [filters]);
 
     return (
         <TodoList
-            loading={model.loading}
-            isFecthing={model.isFetching}
-            todos={model.items} 
-            onChange={model.updateTodo}
-            onDelete={model.deleteTodo}
+            loading={loading}
+            isFecthing={isFetching}
+            todos={items} 
+            onChange={onUpdate}
+            onDelete={onDelete}
         />
     );
 }

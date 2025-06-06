@@ -130,6 +130,20 @@
         "title": "Виберіть будь який стейт менеджер"
     },
     "todoList": {
-        "notFound": "Не знайдено"
+        "notFound": "Не знайдено"
+    },
+    "envPlaceholder": {
+        "title": "Відсутні змінні середовища",
+        "description": "Будь ласка, створіть файл .env в кореневій директорії проекту з наступними змінними:",
+        "variables": {
+            "apiKey": "REACT_APP_API_KEY=65b65d8ada3a3c16ab009a50",
+            "protocol": "REACT_APP_PROTOCOL=https",
+            "apiUrl": "REACT_APP_API_URL=.mockapi.io"
+        },
+        "where": "Де:",
+        "apiKeyDesc": "ключ вашого API сервера",
+        "apiUrlDesc": "URL для API запитів",
+        "protocolDesc": "протокол для API запитів (http/https)",
+        "createApi": "Створення API"
     }
 }

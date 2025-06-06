@@ -5,15 +5,24 @@ import { Outlet } from "react-router-dom";
 import Navigation from "shared/components/Navigation";
 import Settings from "shared/components/Settings";
 import Toast from "shared/components/Toast";
+import EnvPlaceholder from "shared/components/EnvPlaceholder";
 
 // hooks
 import useWindowSize from "shared/hooks/useWindowSize";
+import { useEnvCheck } from "shared/hooks/useEnvCheck";
 
 // UI
 import { Box, Flex } from "@chakra-ui/react";
 
 const App: FC = () => {
     const { isDesktop } = useWindowSize();
+    const hasMissingEnvVars = useEnvCheck();
+
+
+    if (hasMissingEnvVars) {
+        return <EnvPlaceholder />;
+    }
+
     return (
         <Flex 
             direction="column" 

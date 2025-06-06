@@ -15,19 +15,19 @@ const TodoListObserved = observer(TodoList)
 
 
 const Todos: FC = () => {
-    const model = useStore('todos');
+    const { loading, isFetching, items, filters, updateTodo, deleteTodo, fetchTodos } = useStore('todos');
 
     useEffect(() => {
-        model.fetchTodos(prepareQuery({ filters: model.filters }));
+        fetchTodos(prepareQuery({ filters }));
     }, [])
 
     return (
         <TodoListObserved
-            loading={model.loading}
-            isFecthing={model.isFetching}
-            todos={model.items} 
-            onChange={model.updateTodo}
-            onDelete={model.deleteTodo}
+            loading={loading}
+            isFecthing={isFetching}
+            todos={items} 
+            onChange={updateTodo}
+            onDelete={deleteTodo}
         />
     );
 }

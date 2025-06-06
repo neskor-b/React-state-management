@@ -131,5 +131,19 @@
     },
     "todoList": {
         "notFound": "Not found"
+    },
+    "envPlaceholder": {
+        "title": "Missing Environment Variables",
+        "description": "Please create a .env file in the project root directory with the following variables:",
+        "variables": {
+            "apiKey": "REACT_APP_API_KEY=your-api-key",
+            "protocol": "REACT_APP_PROTOCOL=https",
+            "apiUrl": "REACT_APP_API_URL=.mockapi.io"
+        },
+        "where": "Where:",
+        "apiKeyDesc": "your API server key",
+        "apiUrlDesc": "URL for API requests",
+        "protocolDesc": "protocol for API requests (http/https)",
+        "createApi": "You can create API on mockapi.io"
     }
 }
