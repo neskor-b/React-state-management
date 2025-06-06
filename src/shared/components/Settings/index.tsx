@@ -10,7 +10,7 @@ import useLocalStorage, { CUSTOM_EVENTS } from "shared/hooks/useLocalStorage";
 import useWindowSize from "shared/hooks/useWindowSize";
 
 // UI
-import { IconButton, Icon, Tooltip, Select } from "@chakra-ui/react"
+import { IconButton, Icon, Tooltip, Select, useColorMode } from "@chakra-ui/react"
 import { Container } from "./styled";
 import { InfoIcon, ChevronRightIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { AiFillHome } from "react-icons/ai";
@@ -27,6 +27,7 @@ const INITIAL_SETTINGS: TSettings = {
 const Settings = () => {
     const { t, i18n } = useTranslation();
     const { isDesktop } = useWindowSize();
+    const { colorMode } = useColorMode();
     const isRoot = useMatch({ path: '/' });    
     const navigate = useNavigate();
     
@@ -39,7 +40,7 @@ const Settings = () => {
     const toggleWidget = () => setSettings({ ...settings, isWidgetOpen: !settings.isWidgetOpen });
     
     return (
-        <Container isDesktop={isDesktop}>
+        <Container isDesktop={isDesktop} colorMode={colorMode}>
             {!isRoot && (
                 <>
                     <Tooltip hasArrow label={t('settings.tooltips.goToHome')}>

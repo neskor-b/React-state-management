@@ -21,7 +21,7 @@ const Widget: FC = () => {
                     key: '1',
                     name: t('widget.mobX.observable'),
                     description: t('widget.mobX.observableDescription'),
-                    keyRole: t('widget.mobX.oservableKeyrole')
+                    keyRole: t('widget.mobX.observableKeyrole')
                 },
                 {
                     key: '2',
@@ -44,12 +44,12 @@ const Widget: FC = () => {
             ]} 
             columns={[
                 {
-                    title: t('widget.mobX.nameCulumn'),
+                    title: t('widget.mobX.nameColumn'),
                     dataIndex: 'name',
                     key: 'name'
                 },
                 {
-                    title: t('widget.mobX.descriptionCulumn'),
+                    title: t('widget.mobX.descriptionColumn'),
                     dataIndex: 'description',
                     key: 'description'
                 },

@@ -34,7 +34,10 @@ const Widget: React.FC<{ children: ReactNode }> = ({ children }) => {
             pb={3}
             pt="52px"
             flexGrow={1}
+            border="1px solid gray.300"
             width="100%"
+            maxHeight="calc(100vh - 100px)"
+            overflow="auto"
         >
             {children}
         </Box>
