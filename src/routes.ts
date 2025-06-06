@@ -11,7 +11,7 @@ type AppsRoutes = {
 export const appsRoutes: AppsRoutes = {
     redux: {
         path: "/redux",
-        name: 'Redux (Toolkit)',
+        name: 'Redux',
         key: 'redux'
     },
     rematch: {
