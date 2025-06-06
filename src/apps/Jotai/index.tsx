@@ -1,10 +1,9 @@
 import React from 'react';
+import App from 'apps/Jotai/components/App';
 
 const Jotai = () => {
     return (
-        <div>
-            Jotai
-        </div>
+        <App />
     );
 }
 
