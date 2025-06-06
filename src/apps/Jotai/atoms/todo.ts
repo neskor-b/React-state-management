@@ -5,9 +5,10 @@ import { t } from 'i18next';
 // types
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
+
 // utils
 import { showToast } from 'shared/components/Toast';
-
+import { createArrayAtomCrud } from './helpers';
 import { prepareQuery } from 'shared/utils/query';
 
 // api
@@ -18,10 +19,12 @@ export type LoadingState = Record<string, boolean>
 const defaultLoadingState: LoadingState = {
 };
 
+export const todosStateAtom = atom<Ttodo[]>([]);
+
+const todosCrud = createArrayAtomCrud(todosStateAtom);
+
 export const isFetchingAtom = atom<boolean>(false);
 export const loadingAtom = atom<LoadingState>(defaultLoadingState);
-
-const sortTodos = (data: Ttodo[]) => data.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1)
 
 export const setIsFetchingAtom = atom(
     null,
@@ -44,7 +47,6 @@ export const setLoadingAtom = atom(
 export const isLoadingAtom = (id: string) =>
     atom(get => !!get(loadingAtom)[id]);
 
-export const todosStateAtom = atom<Ttodo[]>([]);
 
 export const todosAtom = atom(
     get => get(todosStateAtom),
@@ -57,8 +59,7 @@ export const todosAtom = atom(
         try {
             const preparedQuery = prepareQuery({ filters });
             const response = await apiGetTodos(preparedQuery);
-            const sortedTodos = sortTodos(response.data || []);
-            set(todosStateAtom, sortedTodos);
+            set(todosCrud.set, response.data || []);
         } catch (e) {
             console.error('Fetch error', e);
         } finally {
@@ -68,11 +69,11 @@ export const todosAtom = atom(
     }
 );
 
-export const createTodoAtom = atom(null, async (_, set, todo: TCreateTodo) => {
+export const createTodoAtom = atom(null, async (get, set, todo: TCreateTodo) => {
     set(setLoadingAtom, { createTodo: true });
     try {
-        await apiCreateTodo(todo);
-        set(todosAtom);
+        const response = await apiCreateTodo(todo);
+        set(todosCrud.add, response.data);
         showToast({
             description: t('toast.todoCreated'),
             status: 'success'
@@ -82,11 +83,11 @@ export const createTodoAtom = atom(null, async (_, set, todo: TCreateTodo) => {
     }
 });
 
-export const updateTodoAtom = atom(null, async (_, set, todo: Ttodo) => {
+export const updateTodoAtom = atom(null, async (get, set, todo: Ttodo) => {
     set(setLoadingAtom, { [todo.id]: true });
     try {
         await apiUpdateTodo(todo);
-        set(todosAtom);
+        set(todosCrud.update, todo);
         showToast({
             description: t('toast.todoUpdated'),
             status: 'info'
@@ -96,11 +97,11 @@ export const updateTodoAtom = atom(null, async (_, set, todo: Ttodo) => {
     }
 });
 
-export const deleteTodoAtom = atom(null, async (_, set, todo: Ttodo) => {
+export const deleteTodoAtom = atom(null, async (get, set, todo: Ttodo) => {
     set(setLoadingAtom, { [todo.id]: true });
     try {
         await apiDeleteTodo(todo);
-        set(todosAtom);
+        set(todosCrud.remove, todo.id);
         showToast({
             description: t('toast.todoDeleted'),
             status: 'info'
@@ -109,3 +110,4 @@ export const deleteTodoAtom = atom(null, async (_, set, todo: Ttodo) => {
         set(setLoadingAtom, { [todo.id]: false });
     }
 });
+  
