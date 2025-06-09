@@ -5,6 +5,7 @@ import CreateTodo from 'apps/Zustand/components/CreateTodo';
 import Todos from 'apps/Zustand/components/Todos';
 import Layout from 'shared/components/Layout';
 import Filter from 'apps/Zustand/components/Filter';
+import Widget from 'apps/Zustand/components/Widget';
 
 const App = () => {
     return (
@@ -15,7 +16,7 @@ const App = () => {
                 <Todos />
             </Layout.App>
             <Layout.Widget>
-                widget
+                <Widget />
             </Layout.Widget>
         </Layout>
     );
