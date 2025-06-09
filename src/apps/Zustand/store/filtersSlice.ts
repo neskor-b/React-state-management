@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand'
+import { Store } from '.'
 
 import TFilters from 'shared/api/models/filters';
 
@@ -8,20 +9,20 @@ export interface IFiltersSlice {
 }
 
 export const createFiltersSlice: StateCreator<
-  IFiltersSlice,
+Store,
   [['zustand/immer', never]],
   [],
   IFiltersSlice
 > = set => ({
     filters: {
-        status: 'active',
+        status: '',
         search: '',
         orderby: 'createdAt',
         order: 'desc'
     },
     setFilters: filters => {
-        set(state => {
-            Object.assign(state.filters, filters)
+        set(({ filterState }) => {
+            Object.assign(filterState.filters, filters)
         })
     }
 })

@@ -24,7 +24,7 @@ import useWindowSize from "shared/hooks/useWindowSize";
 const Navigation: FC = () => {
     const { isDesktop } = useWindowSize();
     const { colorMode } = useColorMode();
-    const tabsArr = Object.values(appsRoutes);
+    const tabsArr = Object.values(appsRoutes).sort((a, b) => b.isDone ? 1 : a.isDone ? -1 : 0);
 
     if (isDesktop) return (
         <Container colorMode={colorMode}>

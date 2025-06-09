@@ -13,6 +13,8 @@ import TCreateTodo from "shared/api/models/createTodo";
 import TFilters from 'shared/api/models/filters';
 import TQuery from 'shared/api/models/query';
 
+// helpers
+import { sortTodos, findIndex } from 'shared/helpers';
 
 export const createTodo = createAsyncThunk(
     'todos/createTodo',
@@ -45,9 +47,6 @@ export const updateTodo = createAsyncThunk(
         return response.data
     }
 );
-
-const findIndex = (data: Ttodo[], id: string) => data.findIndex(todo => todo.id === id);
-const sortTodos = (data: Ttodo[]) => data.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1)
 
 export interface CounterState {
     items: Ttodo[],

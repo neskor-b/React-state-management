@@ -14,6 +14,9 @@ import TCreateTodo from "shared/api/models/createTodo";
 import TFilters from 'shared/api/models/filters';
 import TQuery from 'shared/api/models/query';
 
+// helpers
+import { sortTodos, findIndex } from 'shared/helpers';
+
 
 class TodoStore {
     items: Ttodo[] = []
@@ -55,12 +58,10 @@ class TodoStore {
         })
     }
 
-    private findIndex = (data: Ttodo) => this.items.findIndex(todo => todo.id === data.id)
     private enableLoading = (id: string) => this.loading[id] = true;
     private disableLoading = (id: string) => this.loading[id] = false;
-    private sortByStatus = () => this.items.sort((a, b) => a.status === b.status ? 0 : a.status === 'active' ? -1 : 1);
     private setFetching = (value: true | false) => this.isFetching = value
-    private refreshTodo = (data: Ttodo) => this.items[this.findIndex(data)] = {...this.items[this.findIndex(data)]}
+    private refreshTodo = (data: Ttodo) => this.items[findIndex(this.items, data.id)] = {...this.items[findIndex(this.items, data.id)]}
 
 
 
@@ -72,8 +73,8 @@ class TodoStore {
                 description: t('toast.todoUpdated'),
                 status: 'success'
             })
-            this.items[this.findIndex(data)] = data;
-            this.sortByStatus()
+            this.items[findIndex(this.items, data.id)] = data;
+            this.items = sortTodos(this.items)
         } catch (e) {
             console.error(e);
             this.refreshTodo(data)
@@ -94,7 +95,7 @@ class TodoStore {
         this.enableLoading(data.id);
         try {
             await apiDeleteTodo(data);
-            this.items.splice(this.findIndex(data), 1);            
+            this.items.splice(findIndex(this.items, data.id), 1);            
             showToast({
                 description: t('toast.todoDeleted'),
                 status: 'info'
@@ -114,8 +115,7 @@ class TodoStore {
         this.setFetching(true)
         try {
             const { data } = await apiGetTodos(query);
-            this.items = data || []
-            this.sortByStatus()
+            this.items = sortTodos(data)
         } catch (e) {
             console.error(e);
             showToast({
@@ -133,7 +133,7 @@ class TodoStore {
             const { data: newTodo } = await apiCreateTodo(data);
             if (this.filters.status !== 'completed') {
                 this.items.unshift(newTodo);
-                this.sortByStatus();
+                this.items = sortTodos(this.items)
             }
             showToast({
                 description: t('toast.todoCreated'),

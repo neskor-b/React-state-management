@@ -1,11 +1,3 @@
-import React from 'react';
+import App from './components/App';
 
-const Zustand = () => {
-    return (
-        <div>
-            Zustand
-        </div>
-    );
-}
-
-export default Zustand;
+export default App;

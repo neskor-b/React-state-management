@@ -2,6 +2,7 @@ export type TRouteItem = {
     path: string;
     name: string;
     key: string;
+    isDone?: boolean;
 };
 
 type AppsRoutes = {
@@ -12,7 +13,8 @@ export const appsRoutes: AppsRoutes = {
     redux: {
         path: "/redux",
         name: 'Redux',
-        key: 'redux'
+        key: 'redux',
+        isDone: true
     },
     rematch: {
         path: "/rematch",
@@ -27,7 +29,8 @@ export const appsRoutes: AppsRoutes = {
     mobx: {
         path: "/mobx",
         name: 'Mobx',
-        key: 'mobx'
+        key: 'mobx',
+        isDone: true
     },
     recoil: {
         path: "/recoil",
@@ -37,11 +40,13 @@ export const appsRoutes: AppsRoutes = {
     jotai: {
         path: "/jotai",
         name: 'Jotai',
-        key: 'jotai'
+        key: 'jotai',
+        isDone: true
     },
     zustand: {
         path: "/zustand",
         name: 'Zustand',
-        key: 'zustand'
+        key: 'zustand',
+        isDone: true
     }
 };

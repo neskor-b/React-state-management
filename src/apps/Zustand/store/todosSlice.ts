@@ -1,61 +1,51 @@
 import { StateCreator } from 'zustand'
-import { shallow } from 'zustand/shallow'
 import { t } from 'i18next';
 
 // types
 import Ttodo from 'shared/api/models/todo';
 import TCreateTodo from "shared/api/models/createTodo";
+import TFilters from "shared/api/models/filters"
 
 // utils
 import { showToast } from 'shared/components/Toast';
 import { prepareQuery } from 'shared/utils/query';
+import { sortTodos } from 'shared/helpers';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
 
-import { useBoundStore } from './index'
+import { Store } from './index'
 
 
 export interface ITodosSlice {
   todos: Ttodo[]
   loading: Record<string, boolean>;
   isFetching: boolean
-  fetchTodos: () => Promise<void>
+  fetchTodos: (filters: TFilters) => Promise<void>
   createTodo: (todo: TCreateTodo) => Promise<void>
   updateTodo: (todo: Ttodo) => Promise<void>
   deleteTodo: (id: Ttodo) => Promise<void>
 }
 
 export const createTodosSlice: StateCreator<
-  ITodosSlice,
-  [['zustand/immer', never]],
+  Store,
+  [['zustand/immer', never], ['zustand/subscribeWithSelector', never]],
   [],
   ITodosSlice
-> = (set, get) => {
-    // useBoundStore.subscribe(
-    //     state => state.filters,
-    //     () => {
-    //         get().fetchTodos()
-    //     },
-    //     {
-    //         equalityFn: shallow,
-    //         fireImmediately: true
-    //     }
-    // )
+> = set => {
 
     return {
         todos: [],
         loading: {},
         isFetching: false,
-        fetchTodos: async () => {
-            set(state => {
-                state.isFetching = true
+        fetchTodos: async (filters: TFilters) => {
+            set(({ todosState }) => {
+                todosState.isFetching = true
             })
-            const filters = useBoundStore.getState().filters
             try {
                 const response = await apiGetTodos(prepareQuery({filters}))
-                set(state => {
-                    state.todos = response.data || []
+                set(({ todosState }) => {
+                    todosState.todos = sortTodos(response.data)
                 })
             } catch (error) {
                 showToast({
@@ -63,19 +53,19 @@ export const createTodosSlice: StateCreator<
                     status: 'error'
                 })
             } finally {
-                set(state => {
-                    state.isFetching = false
+                set(({ todosState }) => {
+                    todosState.isFetching = false
                 })
             }
         },
         createTodo: async todo => {
-            set(state => {
-                state.loading.createTodo = true
+            set(({ todosState }) => {
+                todosState.loading.createTodo = true
             })
             try {
                 const response = await apiCreateTodo(todo)
-                set(state => {
-                    state.todos.push(response.data)
+                set(({ todosState }) => {
+                    todosState.todos = sortTodos([response.data, ...todosState.todos])
                 })
                 showToast({
                     description: t('toast.todoCreated'),
@@ -87,22 +77,23 @@ export const createTodosSlice: StateCreator<
                     status: 'error'
                 })
             } finally {
-                set(state => {
-                    state.loading.createTodo = false
+                set(({ todosState }) => {
+                    todosState.loading.createTodo = false
                 })
             }
         },
         updateTodo: async todo => {
-            set(state => {
-                state.loading[todo.id] = true
+            set(({ todosState }) => {
+                todosState.loading[todo.id] = true
             })
             try {
                 const response = await apiUpdateTodo(todo)
-                set(state => {
-                    const index = state.todos.findIndex(_t => _t.id === todo.id)
+                set(({ todosState }) => {
+                    const index = todosState.todos.findIndex(_t => _t.id === todo.id)
                     if (index !== -1) {
-                        state.todos[index] = response.data
+                        todosState.todos[index] = response.data
                     }
+                    todosState.todos = sortTodos(todosState.todos)
                 })
                 showToast({
                     description: t('toast.todoUpdated'),
@@ -114,20 +105,20 @@ export const createTodosSlice: StateCreator<
                     status: 'error'
                 })
             } finally {
-                set(state => {
-                    state.loading[todo.id] = false
+                set(({ todosState }) => {
+                    todosState.loading[todo.id] = false
                 })
             }
         },
         deleteTodo: async todo => {
-            set(state => {
-                state.loading[todo.id] = true
+            set(({ todosState }) => {
+                todosState.loading[todo.id] = true
             })
             try {
                 await apiDeleteTodo(todo)
-                set(state => ({
-                    todos: state.todos.filter(_t => _t.id !== todo.id),
-                }))
+                set(({ todosState }) => {
+                    todosState.todos = sortTodos(todosState.todos.filter(_t => _t.id !== todo.id))
+                })
                 showToast({
                     description: t('toast.todoDeleted'),
                     status: 'info'
@@ -138,8 +129,8 @@ export const createTodosSlice: StateCreator<
                     status: 'error'
                 })
             } finally {
-                set(state => {
-                    state.loading[todo.id] = false
+                set(({ todosState }) => {
+                    todosState.loading[todo.id] = false
                 })
             }
         }
