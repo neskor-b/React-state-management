@@ -11,7 +11,7 @@ const Widget: FC = () => {
     return (
         <Table 
             title={
-                <Link href="https://docs.pmnd.rs/zustand/guides/how-to-use-store" isExternal>
+                <Link href="https://zustand.docs.pmnd.rs/getting-started/introduction" isExternal>
                     CORE API <ExternalLinkIcon mx='2px' />
                 </Link>
             } 
