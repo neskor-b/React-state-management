@@ -9,7 +9,7 @@ const CreateTodo: FC = () => {
     const { loading, createTodo } = useStore('todos');
     return (
         <TodoForm 
-            isLoading={loading.todoForm} 
+            isLoading={!!loading.todoForm} 
             onSubmit={createTodo} 
         />
     );

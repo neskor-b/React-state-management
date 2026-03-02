@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, reaction } from 'mobx';
+import { makeObservable, observable, action, reaction, runInAction } from 'mobx';
 import { t } from 'i18next';
 
 // api
@@ -46,9 +46,7 @@ class TodoStore {
 
         reaction(
             () => this.filters,
-            filters => {
-                this.fetchTodos(prepareQuery({ filters }))
-            }
+            () => this.fetchTodos(prepareQuery({ filters: this.filters }))
         )
     }
 
@@ -66,18 +64,20 @@ class TodoStore {
             showToast({
                 description: t('toast.todoUpdated'),
                 status: 'success'
-            })
-            this.items[findIndex(this.items, data.id)] = data;
-            this.items = sortTodos(this.items)
+            });
+            runInAction(() => {
+                this.items[findIndex(this.items, data.id)] = data;
+                this.items = sortTodos(this.items);
+            });
         } catch (e) {
             console.error(e);
-            this.refreshTodo(data)
+            runInAction(() => this.refreshTodo(data));
             showToast({
                 description: t('toast.somethingWentWrong'),
                 status: 'error'
-            })
+            });
         } finally {
-            this.disableLoading(data.id);
+            runInAction(() => this.disableLoading(data.id));
         }
     }
 
@@ -89,54 +89,60 @@ class TodoStore {
         this.enableLoading(data.id);
         try {
             await apiDeleteTodo(data);
-            this.items = this.items.filter(item => item.id !== data.id);
+            runInAction(() => {
+                this.items = this.items.filter(item => item.id !== data.id);
+            });
             showToast({
                 description: t('toast.todoDeleted'),
                 status: 'info'
-            })
+            });
         } catch (e) {
             console.error(e);
             showToast({
                 description: t('toast.somethingWentWrong'),
                 status: 'error'
-            })
+            });
         } finally {
-            this.disableLoading(data.id);
+            runInAction(() => this.disableLoading(data.id));
         }
     }
 
     fetchTodos = async (query?: TQuery) => {
-        this.setFetching(true)
+        this.setFetching(true);
         try {
             const { data } = await apiGetTodos(query);
-            this.items = sortTodos(data)
+            runInAction(() => {
+                this.items = sortTodos(data);
+            });
         } catch (e) {
             console.error(e);
             showToast({
                 description: t('toast.somethingWentWrong'),
                 status: 'error'
-            })
+            });
         } finally {
-            this.setFetching(false)
+            runInAction(() => this.setFetching(false));
         }
     }
 
     createTodo = async (data: TCreateTodo) => {
-        this.enableLoading('todoForm')
+        this.enableLoading('todoForm');
         try {
             const { data: newTodo } = await apiCreateTodo(data);
-            if (this.filters.status !== 'completed') {
-                this.items.unshift(newTodo);
-                this.items = sortTodos(this.items)
-            }
+            runInAction(() => {
+                if (this.filters.status !== 'completed') {
+                    this.items.unshift(newTodo);
+                    this.items = sortTodos(this.items);
+                }
+            });
             showToast({
                 description: t('toast.todoCreated'),
                 status: 'success'
-            })
+            });
         } catch (e) {
             console.error(e);
         } finally {
-            this.disableLoading('todoForm');
+            runInAction(() => this.disableLoading('todoForm'));
         }
     }
 }
