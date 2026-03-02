@@ -225,4 +225,4 @@ const TodoItem: FC<TodoItemProps> = ({ todo, isLoading, onChange, onDelete }) =>
     );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);

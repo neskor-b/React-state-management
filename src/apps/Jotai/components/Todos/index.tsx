@@ -1,27 +1,27 @@
 import React, { FC, useEffect } from 'react';
-import TodoList from 'shared/components/TodoList';
+
+// components
+import TodoListJotai from 'apps/Jotai/components/TodoListJotai';
 
 // atoms
-import { todosAtom, loadingAtom, isFetchingAtom, updateTodoAtom, deleteTodoAtom } from 'apps/Jotai/atoms/todo';
+import { todosAtom, isFetchingAtom, updateTodoAtom, deleteTodoAtom } from 'apps/Jotai/atoms/todo';
 import { useAtom, useSetAtom } from 'jotai';
 
 const Todos: FC = () => {
     const fetchTodos = useSetAtom(todosAtom);
     const [todos] = useAtom(todosAtom);
-    const [loading] = useAtom(loadingAtom);
     const [isFetching] = useAtom(isFetchingAtom);
-    const [, updateTodo] = useAtom(updateTodoAtom);
-    const [, deleteTodo] = useAtom(deleteTodoAtom);
+    const updateTodo = useSetAtom(updateTodoAtom);
+    const deleteTodo = useSetAtom(deleteTodoAtom);
 
     useEffect(() => {
         fetchTodos();
-    }, []);
+    }, [fetchTodos]);
 
     return (
-        <TodoList
-            loading={loading}
+        <TodoListJotai
+            todos={todos}
             isFetching={isFetching}
-            todos={todos} 
             onChange={updateTodo}
             onDelete={deleteTodo}
         />

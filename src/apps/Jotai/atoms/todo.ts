@@ -47,6 +47,8 @@ export const setLoadingAtom = atom(
 export const isLoadingAtom = (id: string) =>
     atom(get => !!get(loadingAtom)[id]);
 
+export const loadingCreateTodoAtom = atom(get => !!get(loadingAtom)['createTodo']);
+
 
 export const todosAtom = atom(
     get => get(todosStateAtom),

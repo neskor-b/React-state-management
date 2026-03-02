@@ -12,7 +12,7 @@ const Todos: FC = () => {
 
     useEffect(() => {
         fetchTodos(filters);
-    }, [filters]);
+    }, [filters, fetchTodos]);
 
     return (
         <TodoList

@@ -7,10 +7,12 @@ import { useStore } from 'apps/Zustand/store';
  
 
 const CreateTodo: FC = () => {
-    const { loading, createTodo } = useStore(state => state.todosState);
+    const isLoading = useStore(state => state.todosState.loading.createTodo ?? false);
+    const createTodo = useStore(state => state.todosState.createTodo);
+
     return (
         <TodoForm 
-            isLoading={loading.createTodo} 
+            isLoading={isLoading} 
             onSubmit={createTodo} 
         />
     );

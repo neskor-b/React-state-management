@@ -10,10 +10,6 @@ import { prepareQuery } from 'shared/utils/query';
 // components
 import TodoList from 'shared/components/TodoList';
 
-
-const TodoListObserved = observer(TodoList)
-
-
 const Todos: FC = () => {
     const { loading, isFetching, items, filters, updateTodo, deleteTodo, fetchTodos } = useStore('todos');
 
@@ -22,7 +18,7 @@ const Todos: FC = () => {
     }, [])
 
     return (
-        <TodoListObserved
+        <TodoList
             loading={loading}
             isFetching={isFetching}
             todos={items} 
@@ -31,5 +27,6 @@ const Todos: FC = () => {
         />
     );
 }
+
 
 export default observer(Todos);

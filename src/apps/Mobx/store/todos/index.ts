@@ -1,5 +1,5 @@
-import { makeObservable, observable, action, spy, reaction } from 'mobx';
-import t from 'i18n';
+import { makeObservable, observable, action, reaction } from 'mobx';
+import { t } from 'i18next';
 
 // api
 import { apiGetTodos, apiCreateTodo, apiUpdateTodo, apiDeleteTodo } from 'shared/api/apiRequests';
@@ -46,16 +46,10 @@ class TodoStore {
 
         reaction(
             () => this.filters,
-            filters => { 
+            filters => {
                 this.fetchTodos(prepareQuery({ filters }))
             }
         )
-    
-        spy(event => {
-            if (event.type === "action") {
-                console.log(`${event.name} with args: ${JSON.stringify(event.arguments)}`)
-            }
-        })
     }
 
     private enableLoading = (id: string) => this.loading[id] = true;
