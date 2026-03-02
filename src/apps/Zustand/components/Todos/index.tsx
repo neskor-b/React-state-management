@@ -2,12 +2,13 @@ import React, { FC, useEffect } from 'react';
 
 // components
 import TodoList from 'shared/components/TodoList';
+import TodoItemWithLoading from './TodoItemWithLoading';
 
 // store
 import { useStore } from 'apps/Zustand/store';
 
 const Todos: FC = () => {
-    const { loading, isFetching, todos, deleteTodo, updateTodo, fetchTodos } = useStore(state => state.todosState);
+    const { isFetching, todos, deleteTodo, updateTodo, fetchTodos } = useStore(state => state.todosState);
     const { filters } = useStore(state => state.filterState);
 
     useEffect(() => {
@@ -16,9 +17,9 @@ const Todos: FC = () => {
 
     return (
         <TodoList
-            loading={loading}
+            TodoItemComponent={TodoItemWithLoading}
             isFetching={isFetching}
-            todos={todos} 
+            todos={todos}
             onChange={updateTodo}
             onDelete={deleteTodo}
         />

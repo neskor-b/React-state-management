@@ -9,9 +9,10 @@ import { prepareQuery } from 'shared/utils/query';
 
 // components
 import TodoList from 'shared/components/TodoList';
+import TodoItemWithLoading from './TodoItemWithLoading';
 
 const Todos: FC = () => {
-    const { loading, isFetching, items, filters, updateTodo, deleteTodo, fetchTodos } = useStore('todos');
+    const { isFetching, items, filters, updateTodo, deleteTodo, fetchTodos } = useStore('todos');
 
     useEffect(() => {
         fetchTodos(prepareQuery({ filters }));
@@ -19,9 +20,9 @@ const Todos: FC = () => {
 
     return (
         <TodoList
-            loading={loading}
+            TodoItemComponent={TodoItemWithLoading}
             isFetching={isFetching}
-            todos={items} 
+            todos={items}
             onChange={updateTodo}
             onDelete={deleteTodo}
         />

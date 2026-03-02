@@ -5,22 +5,34 @@ import { useTranslation } from 'react-i18next';
 import { Flex, Center } from '@chakra-ui/react'
 
 // components
-import TodoItem from 'shared/components/TodoItem';
 import Spinner from 'shared/components/Spinner';
 
 // types
 import Ttodo from 'shared/api/models/todo';
 
-type TodoListProps = {
-    todos: Ttodo[];
-    loading: Record<string, boolean>
-    isFetching: boolean
+export type TodoItemComponentProps = {
+    todo: Ttodo;
     onChange: (data: Ttodo) => void;
     onDelete: (data: Ttodo) => void;
-}
+};
 
-const TodoListInner: FC<TodoListProps> = ({ todos, loading, isFetching, onChange, onDelete }) => {
+type TodoListProps = {
+    todos: Ttodo[];
+    isFetching: boolean;
+    onChange: (data: Ttodo) => void;
+    onDelete: (data: Ttodo) => void;
+    TodoItemComponent: React.ComponentType<TodoItemComponentProps>;
+};
+
+const TodoListInner: FC<TodoListProps> = ({
+    todos,
+    isFetching,
+    onChange,
+    onDelete,
+    TodoItemComponent
+}) => {
     const { t } = useTranslation();
+
     return (
         <Spinner isLoading={isFetching} size="xl">
             <Flex 
@@ -28,15 +40,14 @@ const TodoListInner: FC<TodoListProps> = ({ todos, loading, isFetching, onChange
                 gap={3}
                 width="100%"
             >
-                {todos.map(todo => 
-                    <TodoItem
-                        isLoading={loading[todo.id]}
+                {todos.map(todo => (
+                    <TodoItemComponent
                         key={todo.id}
-                        todo={todo} 
+                        todo={todo}
                         onChange={onChange}
                         onDelete={onDelete}
                     />
-                )}
+                ))}
             </Flex>
             {todos.length === 0 && !isFetching && (
                 <Center 
