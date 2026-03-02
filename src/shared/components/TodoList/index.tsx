@@ -19,7 +19,7 @@ type TodoListProps = {
     onDelete: (data: Ttodo) => void;
 }
 
-const TodoList: FC<TodoListProps> = ({ todos, loading, isFetching, onChange, onDelete }) => {
+const TodoListInner: FC<TodoListProps> = ({ todos, loading, isFetching, onChange, onDelete }) => {
     const { t } = useTranslation();
     return (
         <Spinner isLoading={isFetching} size="xl">
@@ -49,6 +49,9 @@ const TodoList: FC<TodoListProps> = ({ todos, loading, isFetching, onChange, onD
         </Spinner>
 
     );
-}
+};
+
+const TodoList = React.memo(TodoListInner);
+TodoList.displayName = 'TodoList';
 
 export default TodoList;
