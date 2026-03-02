@@ -89,7 +89,7 @@ class TodoStore {
         this.enableLoading(data.id);
         try {
             await apiDeleteTodo(data);
-            this.items.splice(findIndex(this.items, data.id), 1);            
+            this.items = this.items.filter(item => item.id !== data.id);
             showToast({
                 description: t('toast.todoDeleted'),
                 status: 'info'
