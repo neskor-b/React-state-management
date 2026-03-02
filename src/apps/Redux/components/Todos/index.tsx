@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useCallback } from 'react';
 
 // redux
 import { updateTodo, deleteTodo, fetchTodos } from 'apps/Redux/store/slices/todosSlice';
@@ -12,26 +12,26 @@ import { prepareQuery } from 'shared/utils/query';
 
 // types
 import Ttodo from 'shared/api/models/todo';
-import TQuery from 'shared/api/models/query';
 
 
 const Todos: FC = () => {
     const dispatch = useAppDispatch();
-    const { loading, isFetching, items, filters, onUpdate, onDelete, onFetch } = {
-        ...useAppSelector(state => state.todos),
-        onUpdate: (data: Ttodo) => dispatch(updateTodo(data)),
-        onDelete: (data: Ttodo) => dispatch(deleteTodo(data)),
-        onFetch: (query?: TQuery) => dispatch(fetchTodos(query))
-    }
+    const items = useAppSelector(state => state.todos.items);
+    const loading = useAppSelector(state => state.todos.loading);
+    const isFetching = useAppSelector(state => state.todos.isFetching);
+    const filters = useAppSelector(state => state.todos.filters);
+
+    const onUpdate = useCallback((data: Ttodo) => dispatch(updateTodo(data)), [dispatch]);
+    const onDelete = useCallback((data: Ttodo) => dispatch(deleteTodo(data)), [dispatch]);
 
     useEffect(() => {
-        onFetch(prepareQuery({ filters }));
-    }, [filters]);
+        dispatch(fetchTodos(prepareQuery({ filters })));
+    }, [filters, dispatch]);
 
     return (
         <TodoList
             loading={loading}
-            isFecthing={isFetching}
+            isFetching={isFetching}
             todos={items} 
             onChange={onUpdate}
             onDelete={onDelete}

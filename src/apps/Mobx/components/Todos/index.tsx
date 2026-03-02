@@ -24,7 +24,7 @@ const Todos: FC = () => {
     return (
         <TodoListObserved
             loading={loading}
-            isFecthing={isFetching}
+            isFetching={isFetching}
             todos={items} 
             onChange={updateTodo}
             onDelete={deleteTodo}

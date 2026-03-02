@@ -14,15 +14,15 @@ import Ttodo from 'shared/api/models/todo';
 type TodoListProps = {
     todos: Ttodo[];
     loading: Record<string, boolean>
-    isFecthing: boolean
+    isFetching: boolean
     onChange: (data: Ttodo) => void;
     onDelete: (data: Ttodo) => void;
 }
 
-const TodoList: FC<TodoListProps> = ({ todos, loading, isFecthing, onChange, onDelete }) => {
+const TodoList: FC<TodoListProps> = ({ todos, loading, isFetching, onChange, onDelete }) => {
     const { t } = useTranslation();
     return (
-        <Spinner isLoading={isFecthing} size="xl">
+        <Spinner isLoading={isFetching} size="xl">
             <Flex 
                 direction="column" 
                 gap={3}
@@ -38,7 +38,7 @@ const TodoList: FC<TodoListProps> = ({ todos, loading, isFecthing, onChange, onD
                     />
                 )}
             </Flex>
-            {todos.length === 0 && !isFecthing && (
+            {todos.length === 0 && !isFetching && (
                 <Center 
                     width="100%" 
                     height="81px" 

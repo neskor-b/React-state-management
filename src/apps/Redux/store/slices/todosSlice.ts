@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
-import { t } from 'i18next';
 
 // api
 import { apiCreateTodo, apiGetTodos, apiDeleteTodo, apiUpdateTodo } from 'shared/api/apiRequests';
-
-// utils
-import { showToast } from 'shared/components/Toast';
 
 // types
 import Ttodo from 'shared/api/models/todo';
@@ -86,10 +82,6 @@ export const todosSlice = createSlice({
                     state.items.unshift(action.payload);
                 }
                 state.loading['createTodo'] = false;
-                showToast({
-                    description: t('toast.todoCreated'),
-                    status: 'success'
-                })
             })
             .addCase(createTodo.rejected, state => {
                 state.loading['createTodo'] = false;
@@ -114,13 +106,9 @@ export const todosSlice = createSlice({
             .addCase(deleteTodo.fulfilled, (state, action) => {
                 state.items = state.items.filter(todo => todo.id !== action.payload.id);
                 state.loading[action.payload.id] = false;
-                showToast({
-                    description: t('toast.todoDeleted'),
-                    status: 'info'
-                })
             })
-            .addCase(deleteTodo.rejected, state => {
-                state.loading['deleteTodo'] = false;
+            .addCase(deleteTodo.rejected, (state, action) => {
+                state.loading[action.meta.arg.id] = false;
             })
 
             // update todo
@@ -130,13 +118,9 @@ export const todosSlice = createSlice({
             .addCase(updateTodo.fulfilled, (state, action) => {
                 state.items[findIndex(state.items, action.payload.id)] = action.payload;
                 state.loading[action.payload.id] = false;
-                showToast({
-                    description: t('toast.todoUpdated'),
-                    status: 'info'
-                })
             })
-            .addCase(updateTodo.rejected, state => {
-                state.loading['updateTodo'] = false;
+            .addCase(updateTodo.rejected, (state, action) => {
+                state.loading[action.meta.arg.id] = false;
             })
 
             .addMatcher(

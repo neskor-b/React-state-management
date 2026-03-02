@@ -13,14 +13,12 @@ import TCreateTodo from 'shared/api/models/createTodo';
 
 const CreateTodo: FC = () => {
     const dispatch = useAppDispatch();
-    const { loading, onSubmit } = {
-        ...useAppSelector(state => state.todos),
-        onSubmit: (data: TCreateTodo) => dispatch(createTodo(data))
-    }
+    const isLoading = useAppSelector(state => state.todos.loading['createTodo'] ?? false);
+    const onSubmit = (data: TCreateTodo) => dispatch(createTodo(data));
 
     return (
         <TodoForm 
-            isLoading={loading.createTodo} 
+            isLoading={isLoading} 
             onSubmit={onSubmit} 
         />
     );
